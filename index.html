@@ -245,13 +245,20 @@
 			}, 100)
 		})
 		const query = window.location.search
+		const osXdownloadUrl = "https://www.starpy.me/appcast/StarpyApp.tar.xz"
+    const a = document.getElementById('joinButton');
 		if(query.search("join") > -1) {
 			const sUrl = "starpy://"+window.location.search.replace("?", "")
-      const a = document.getElementById('joinButton');
       a.className = ""
       a.innerHTML = "Join <span style='color:gray;'>"+window.location.search.split("=")[1]+"</span>"
       a.href = sUrl
       // a.click()
+		}
+		else {
+
+      a.className = ""
+      a.innerHTML = "Download For Mac Os X"
+      a.href = osXdownloadUrl
 		}
 	</script>
 </body>
