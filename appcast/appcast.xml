@@ -3,6 +3,14 @@
     <channel>
         <title>StarpyApp</title>
         <item>
+            <title>1.3.0</title>
+            <pubDate>Fri, 02 Dec 2022 03:12:23 +0400</pubDate>
+            <sparkle:version>12</sparkle:version>
+            <sparkle:shortVersionString>1.3.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://www.starpy.me/appcast/StarpyApp.tar.xz" length="36918620" type="application/octet-stream" sparkle:edSignature="bPMqUcmejSN6fvssRfJYde72IulcyNwVM4szSjxzefk60QIVx0JQWEKcZEsucAmCQ4NHo5y5kt67KwCpwZCWCQ=="/>
+        </item>
+        <item>
             <title>1.2.9</title>
             <pubDate>Fri, 02 Dec 2022 02:58:23 +0400</pubDate>
             <sparkle:version>11</sparkle:version>
@@ -17,14 +25,6 @@
             <sparkle:shortVersionString>1.2.8</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
             <enclosure url="https://www.starpy.me/appcast/StarpyApp.tar.xz" length="36909084" type="application/octet-stream" sparkle:edSignature="Ceurawurl50mPUg9H/+WsqW5C4z5FUXy3q1WqmwTA9tF0TVoW3+hPR/lB0QGChu9W8i8wXARACLCZ8u4z9oBAg=="/>
-        </item>
-        <item>
-            <title>1.2.1</title>
-            <pubDate>Thu, 01 Dec 2022 18:56:18 +0400</pubDate>
-            <sparkle:version>9</sparkle:version>
-            <sparkle:shortVersionString>1.2.1</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure url="https://www.starpy.me/appcast/StarpyApp.tar.xz" length="36910704" type="application/octet-stream" sparkle:edSignature="jHbWL0WABrxm273y+G3p9T39LT0BNL9Y8R7ST7k+576DRDgA8/acmXKf3vnIC5wa2k0y2dNgPUJ5tkAoYVCsCQ=="/>
         </item>
     </channel>
 </rss>
