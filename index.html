@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Starpy*</title>
-  <link href="https://starpy.me/connect4/bootstrap.min.css" rel="stylesheet">
   <style type="text/css">
 
 	@font-face {
@@ -46,6 +45,19 @@
 		height:100%;
 		text-align: center;
 	}
+	#joinButton {
+ 		text-decoration: none;
+ 		background-color: palegoldenrod;
+ 		display: inline-block;
+ 		color:black;
+ 		padding: 20px;
+ 		margin-top:20px;
+ 		font-size: 20px;
+ 		border-radius: 15px;
+	}
+	.hidden {
+		display: none !important;
+	}
   </style>
 </head>
 <body>
@@ -57,6 +69,10 @@
 		  	<div class="container">
 			  	<h1>Starpy*</h1>
 			  	<p>Same stars experience.</p>
+			  	<a class="hidden" id="joinButton" href="#">
+			  		Join  
+			  	</a>
+			  	</div>
 		  	</div>
 		</div>
 	</div>
@@ -205,6 +221,16 @@
 			requestAnimationFrame(animate);
 		}
 		animate();
+
+		const query = window.location.search
+		if(query.search("join") > -1) {
+			const sUrl = "starpy://"+window.location.search.replace("?", "")
+      var a = document.getElementById('joinButton');
+      a.className = ""
+      a.innerHTML = "Join <span style='color:gray;'>"+window.location.search.split("=")[1]+"</span>"
+      a.href = sUrl
+      // a.click()
+		}
 	</script>
 </body>
 </html>
