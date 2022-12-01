@@ -1,0 +1,30 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>StarpyApp</title>
+        <item>
+            <title>1.1.4</title>
+            <pubDate>Thu, 01 Dec 2022 02:24:06 +0400</pubDate>
+            <sparkle:version>6</sparkle:version>
+            <sparkle:shortVersionString>1.1.4</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://appcast.starpy.me/StarpyApp.tar.xz" length="36896564" type="application/octet-stream" sparkle:edSignature="nSOFwOAJ1x16JqFsovGE23JTm4hEFqWQot/opUC2xe4dY37GWqFBC6gJBtG4x9uvvv7cbq61OTYyob8g+/z9BQ=="/>
+        </item>
+        <item>
+            <title>1.1.0</title>
+            <pubDate>Wed, 30 Nov 2022 21:31:09 +0400</pubDate>
+            <sparkle:version>4</sparkle:version>
+            <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://appcast.starpy.me/StarpyApp.tar.xz" length="36884232" type="application/octet-stream" sparkle:edSignature="hpnoHYXxrNLTmqAZOQErlrxYmddsm1DekbrHS5MIOeLbVxWCEAEdXGktXmG1B1ILiuzQtZkPVXOmIPt6qV4cDQ=="/>
+        </item>
+        <item>
+            <title>1.0.2</title>
+            <pubDate>Wed, 30 Nov 2022 20:49:20 +0400</pubDate>
+            <sparkle:version>3</sparkle:version>
+            <sparkle:shortVersionString>1.0.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://appcast.starpy.me/StarpyApp.tar.xz" length="36886200" type="application/octet-stream" sparkle:edSignature="X41ceV/x4+CzpDwIGKXdbfMaufdAJ1fHfg8uw+EQkADugE/U+upWXdVMEVfp15JZMmPJpT654nQZUo1UapnyCg=="/>
+        </item>
+    </channel>
+</rss>
