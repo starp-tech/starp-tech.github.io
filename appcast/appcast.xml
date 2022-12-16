@@ -6,9 +6,9 @@
             <title>1.9.5</title>
             <pubDate>Wed, 07 Dec 2022 19:54:36 +0400</pubDate>
             <sparkle:version>22</sparkle:version>
-            <sparkle:shortVersionString>1.9.5</sparkle:shortVersionString>
+            <sparkle:shortVersionString>1.9.6</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure url="https://www.starpy.me/appcast/StarpyApp.tar.xz" length="57560856" type="application/octet-stream" sparkle:edSignature="0XoGCsBzf/qnoM494dKIyntDIfDKnftluh6xiH7ziQ6+LiNSqXcCnTRetRJuUdDMvPupEnf+uskiSvI7VvcaAg=="/>
+            <enclosure url="https://www.starpy.me/appcast/StarpyApp.tar.xz" length="57554804" type="application/octet-stream" sparkle:edSignature="0q08HEPxhHKzDyHbrbTey0oy0ctF0vvOKoNlw5y57YI4WtH6geS5JaXIzWAzUmp29tzo6Y+vweMrOljZFYiICQ=="/>
         </item>
         <item>
             <title>1.5.4</title>
