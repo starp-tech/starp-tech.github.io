@@ -299,7 +299,7 @@
 				    return file.name.endsWith('.mp4')
 				  })
 				  window.starpyFile = file
-				  file.getStreamURL((fileBlob)=>{
+				  file.getBlobURL((fileBlob)=>{
 					  console.info(file, fileBlob)
 					  // Display the file by adding it to the DOM.
 					  // Supports video, audio, image files, and more!
