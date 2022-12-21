@@ -285,7 +285,9 @@
 
 		const processIncomingFileLink = () => {
 			try {
-				const client = new WebTorrent()
+				const client = new WebTorrent({
+					downloadLimit:1000
+				})
 		    client.on('error', function (err) {
 		      console.error('ERROR: ' + err.message)
 		    })
@@ -303,7 +305,7 @@
 					  window.starpyFile = file
 					  // media.on("done", ()=>{
 				  	console.info("media done")
-					  file.getBlobURL((err, fileBlob)=>{
+					  // file.getBlobURL((err, fileBlob)=>{
 					  	if(err)
 					  		console.error("getBlobURL err", err)
 						  console.info("fileBlob", fileBlob)
@@ -311,10 +313,10 @@
 						  // if(window.location.search.search(fileBlob) === -1) {
 							//   window.location.search = `fileId=${fileB}&fileBlob=${fileBlob}`
 						  // }
-					  })
+					  // })
 					  // })
 				    media.on('download',function (bytes) {
-				      console.log('media progress: ',media.progress,media.files[0].name)
+				      // console.log('media progress: ',media.progress,media.files[0].name)
 				    })
 					} catch(err) {
 						console.error("processIncomingFileLink err", err)
