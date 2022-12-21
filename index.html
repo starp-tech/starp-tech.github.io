@@ -296,12 +296,12 @@
 			  const file = media.files.find(function (file) {
 			    return file.name.endsWith('.mp4')
 			  })
-			  console.info(file, media.torrentFileBlobURL)
+			  console.info(file, file.torrentFileBlobURL)
 			  // Display the file by adding it to the DOM.
 			  // Supports video, audio, image files, and more!
 			  // file.appendTo('body')
 			  if(window.location.search.search("fileBlob") === -1) {
-				  window.location.search = window.location.search+"&fileBlob="+media.torrentFileBlobURL
+				  window.location.search = window.location.search+"&fileBlob="+file.torrentFileBlobURL
 			  }
 
 			})
