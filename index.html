@@ -303,7 +303,7 @@
 					  window.starpyFile = file
 					  media.on("done", ()=>{
 					  	console.info("media done")
-						  file.getBlobURL((fileBlob)=>{
+						  file.getBlobURL((err, fileBlob)=>{
 							  console.info("fileBlob", fileBlob)
 							  window.starpyFileBlobUrl = fileBlob
 							  // if(window.location.search.search(fileBlob) === -1) {
