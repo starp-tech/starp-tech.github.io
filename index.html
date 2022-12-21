@@ -287,10 +287,16 @@
 
 		const processIncomingFileLink = () => {
 			try {
-				console.info("processIncomingFileLink 17")
+				console.info("processIncomingFileLink 18")
 				const client = new WebTorrent({
 					downloadLimit:1000
 				})
+		    client.on('error', function (err) {
+		      console.error('ERROR: ' + err.message)
+		    })
+				// Sintel, a free, Creative Commons movie
+				const fileB = query.split("fileId=")[1].split("&")[0]
+				const fileId = atob(fileB)
 				const download = () => {
 					client.add(fileId, (media) => {
 						try {
@@ -315,21 +321,16 @@
 						}
 					})
 				}
-				navigator.serviceWorker.register("sw.min.js").then(reg => {
-				  const worker = reg.active || reg.waiting || reg.installing
-				  function checkState (worker) {
-				    return worker.state === 'activated' && client.loadWorker(worker, download)
-				  }
-				  if (!checkState(worker)) {
-				    worker.addEventListener('statechange', ({ target }) => checkState(target))
-				  }
-				})
-		    client.on('error', function (err) {
-		      console.error('ERROR: ' + err.message)
-		    })
-				// Sintel, a free, Creative Commons movie
-				const fileB = query.split("fileId=")[1].split("&")[0]
-				const fileId = atob(fileB)
+				download()
+				// navigator.serviceWorker.register("sw.min.js").then(reg => {
+				//   const worker = reg.active || reg.waiting || reg.installing
+				//   function checkState (worker) {
+				//     return worker.state === 'activated' && client.loadWorker(worker, download)
+				//   }
+				//   if (!checkState(worker)) {
+				//     worker.addEventListener('statechange', ({ target }) => checkState(target))
+				//   }
+				// })
 			} catch(err) {
 				console.error("processIncomingFileLink err", err)
 			}
