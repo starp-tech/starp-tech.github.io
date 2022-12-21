@@ -301,12 +301,14 @@
 					  	file.name.endsWith('.mp4')
 					  )
 					  window.starpyFile = file
-					  file.getBlobURL((fileBlob)=>{
-						  console.info("fileBlob", fileBlob)
-						  window.starpyFileBlobUrl = fileBlob
-						  // if(window.location.search.search(fileBlob) === -1) {
-							//   window.location.search = `fileId=${fileB}&fileBlob=${fileBlob}`
-						  // }
+					  media.on("done", ()=>{
+						  file.getBlobURL((fileBlob)=>{
+							  console.info("fileBlob", fileBlob)
+							  window.starpyFileBlobUrl = fileBlob
+							  // if(window.location.search.search(fileBlob) === -1) {
+								//   window.location.search = `fileId=${fileB}&fileBlob=${fileBlob}`
+							  // }
+						  })
 					  })
 				    media.on('download',function (bytes) {
 				      console.log('media progress: ',media.progress,media.files[0].name)
