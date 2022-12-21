@@ -282,13 +282,13 @@
 		} 
 	</script>
 	<script type="text/javascript">
-		const client = new WebTorrent()
-    client.on('error', function (err) {
-      console.error('ERROR: ' + err.message)
-    })
 
 		const processIncomingFileLink = () => {
 			try {
+				const client = new WebTorrent()
+		    client.on('error', function (err) {
+		      console.error('ERROR: ' + err.message)
+		    })
 				console.info("processIncomingFileLink 2")
 				// Sintel, a free, Creative Commons movie
 				const fileB = query.split("fileId=")[1].split("&")[0]
@@ -297,15 +297,12 @@
 					try {
 						console.info('media', media)
 						window.starpyMedia = media
-					  const file = media.files.find(function (file) {
-					    return file.name.endsWith('.mp4')
-					  })
+					  const file = media.files.find(file=> 
+					  	file.name.endsWith('.mp4')
+					  )
 					  window.starpyFile = file
 					  file.getBlobURL((fileBlob)=>{
 						  console.info(file, fileBlob)
-						  // Display the file by adding it to the DOM.
-						  // Supports video, audio, image files, and more!
-						  // file.appendTo('body')
 						  if(window.location.search.search(fileBlob) === -1) {
 							  window.location.search = `fileId=${fileB}&fileBlob=${fileBlob}`
 						  }
