@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="starpy app - collaborative media sharing video player online, offline and private">
 	<meta name=”robots” content="index, follow">
-
+  <script src="https://cdn.jsdelivr.net/npm/webtorrent@latest/webtorrent.min.js"></script>
 
   <style type="text/css">
 
@@ -259,27 +259,59 @@
     a.href = osXdownloadUrl
     const processInitScreen = () => {
 	    try {
-				if(query && query.search("join") > -1) {
-					let sUrl = "starpy://"+window.location.search.replace("?", "")
-					const token = window.location.search.split("join=")[1]
-					let id = token
-					if(token.search(".") > -1) {
-						let json = JSON.parse(atob(token.split('.')[1]))
-						id = json.name
-						console.info(json)
-						sUrl = "starpy://join="+token
-					}
-		      a.className = ""
-		      a.innerHTML = "Join <span style='color:gray;'>"+id+"</span>"
-		      a.href = sUrl
-		      // a.click()
-		      return;
-				} 
+				let sUrl = "starpy://"+window.location.search.replace("?", "")
+				const token = window.location.search.split("join=")[1]
+				let id = token
+				if(token.search(".") > -1) {
+					let json = JSON.parse(atob(token.split('.')[1]))
+					id = json.name
+					console.info(json)
+					sUrl = "starpy://join="+token
+				}
+	      a.className = ""
+	      a.innerHTML = "Join <span style='color:gray;'>"+id+"</span>"
+	      a.href = sUrl
+	      // a.click()
+	      return;
 	    } catch(err) {
 				console.error("process link err", err)
 			}
     }
-    processInitScreen()
+		if(query && query.search("join") > -1) {
+	    processInitScreen()
+		} 
+	</script>
+	<script type="text/javascript">
+		const client = new WebTorrent()
+    client.on('error', function (err) {
+      console.error('ERROR: ' + err.message)
+    })
+
+		const processIncomingFileLink = () => {
+			// Sintel, a free, Creative Commons movie
+			const fileB = query.split("fileId=")[1].split("&")[0]
+			const fileId = atob(fileB)
+			client.add(fileId, (media) => {
+			  // Torrents can contain many files. Let's use the .mp4 file
+			  const file = media.files.find(function (file) {
+			    return file.name.endsWith('.mp4')
+			  })
+			  console.info(file, media.torrentFileBlobURL)
+			  // Display the file by adding it to the DOM.
+			  // Supports video, audio, image files, and more!
+			  // file.appendTo('body')
+			  if(window.location.search.search("fileBlob") === -1) {
+				  window.location.search = window.location.search+"&fileBlob="+media.torrentFileBlobURL
+			  }
+
+			})
+		}
+
+		if(query 
+			&& query.search("fileId") > -1 
+		) {
+			processIncomingFileLink()
+		}
 	</script>
 </body>
 </html>
