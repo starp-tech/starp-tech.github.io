@@ -289,26 +289,30 @@
 
 		const processIncomingFileLink = () => {
 			try {
-				console.info("processIncomingFileLink")
+				console.info("processIncomingFileLink 2")
 				// Sintel, a free, Creative Commons movie
 				const fileB = query.split("fileId=")[1].split("&")[0]
 				const fileId = atob(fileB)
 				client.add(fileId, (media) => {
-					console.info('media', media)
-					window.starpyMedia = media
-				  const file = media.files.find(function (file) {
-				    return file.name.endsWith('.mp4')
-				  })
-				  window.starpyFile = file
-				  file.getBlobURL((fileBlob)=>{
-					  console.info(file, fileBlob)
-					  // Display the file by adding it to the DOM.
-					  // Supports video, audio, image files, and more!
-					  // file.appendTo('body')
-					  if(window.location.search.search(fileBlob) === -1) {
-						  window.location.search = `fileId=${fileB}&fileBlob=${fileBlob}`
-					  }
-				  })
+					try {
+						console.info('media', media)
+						window.starpyMedia = media
+					  const file = media.files.find(function (file) {
+					    return file.name.endsWith('.mp4')
+					  })
+					  window.starpyFile = file
+					  file.getBlobURL((fileBlob)=>{
+						  console.info(file, fileBlob)
+						  // Display the file by adding it to the DOM.
+						  // Supports video, audio, image files, and more!
+						  // file.appendTo('body')
+						  if(window.location.search.search(fileBlob) === -1) {
+							  window.location.search = `fileId=${fileB}&fileBlob=${fileBlob}`
+						  }
+					  })
+					} catch(err) {
+						console.error("processIncomingFileLink err", err)
+					}
 				})
 			} catch(err) {
 				console.error("processIncomingFileLink err", err)
