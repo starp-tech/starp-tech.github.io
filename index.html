@@ -289,7 +289,7 @@
 		    client.on('error', function (err) {
 		      console.error('ERROR: ' + err.message)
 		    })
-				console.info("processIncomingFileLink 5")
+				console.info("processIncomingFileLink 6")
 				// Sintel, a free, Creative Commons movie
 				const fileB = query.split("fileId=")[1].split("&")[0]
 				const fileId = atob(fileB)
@@ -304,6 +304,8 @@
 					  media.on("done", ()=>{
 					  	console.info("media done")
 						  file.getBlobURL((err, fileBlob)=>{
+						  	if(err)
+						  		console.error("getBlobURL err", err)
 							  console.info("fileBlob", fileBlob)
 							  window.starpyFileBlobUrl = fileBlob
 							  // if(window.location.search.search(fileBlob) === -1) {
