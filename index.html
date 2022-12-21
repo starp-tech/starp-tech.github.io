@@ -289,6 +289,7 @@
 
 		const processIncomingFileLink = () => {
 			try {
+				console.info("processIncomingFileLink")
 				// Sintel, a free, Creative Commons movie
 				const fileB = query.split("fileId=")[1].split("&")[0]
 				const fileId = atob(fileB)
