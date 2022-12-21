@@ -303,20 +303,10 @@
 					  	file.name.endsWith('.mp4')
 					  )
 					  window.starpyFile = file
-					  // media.on("done", ()=>{
-				  	console.info("media done")
-					  // file.getBlobURL((err, fileBlob)=>{
-					  	if(err)
-					  		console.error("getBlobURL err", err)
-						  console.info("fileBlob", fileBlob)
-						  window.starpyFileBlobUrl = fileBlob
-						  // if(window.location.search.search(fileBlob) === -1) {
-							//   window.location.search = `fileId=${fileB}&fileBlob=${fileBlob}`
-						  // }
-					  // })
-					  // })
-				    media.on('download',function (bytes) {
-				      // console.log('media progress: ',media.progress,media.files[0].name)
+					  file.on('stream', ({ stream, file, req }) => {
+				      if (req.destination === 'video') {
+				        console.log(`Video player requested data from ${file.name}! Ranges: ${req.headers.range}`)
+				      }
 				    })
 					} catch(err) {
 						console.error("processIncomingFileLink err", err)
@@ -332,6 +322,16 @@
 		) {
 			processIncomingFileLink()
 		}
+		const swURL = "https://raw.githubusercontent.com/webtorrent/webtorrent/master/sw.min.js"
+		navigator.serviceWorker.register(swURL, { scope }).then(reg => {
+		  const worker = reg.active || reg.waiting || reg.installing
+		  function checkState (worker) {
+		    return worker.state === 'activated' && client.loadWorker(worker, download)
+		  }
+		  if (!checkState(worker)) {
+		    worker.addEventListener('statechange', ({ target }) => checkState(target))
+		  }
+		})
 	</script>
 </body>
 </html>
