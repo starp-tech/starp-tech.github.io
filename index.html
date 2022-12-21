@@ -86,7 +86,8 @@
 		  	</div>
 		</div>
 	</div>
-	<video style="display:none" id="video-container" />
+	<video style="display:none" id="video-container">
+	</video>
 	<script type="text/javascript">
   	(function() {
 	    	var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || 
@@ -292,7 +293,7 @@
 		    client.on('error', function (err) {
 		      console.error('ERROR: ' + err.message)
 		    })
-				console.info("processIncomingFileLink 9")
+				console.info("processIncomingFileLink 11")
 				// Sintel, a free, Creative Commons movie
 				const fileB = query.split("fileId=")[1].split("&")[0]
 				const fileId = atob(fileB)
@@ -305,7 +306,7 @@
 					  )
 					  window.starpyFile = file
 					  file.on('stream', ({ stream, file, req }) => {
-					  	console.info(req, stream)
+					  	console.info(req, stream, file)
 				      if (req.destination === 'video') {
 				        console.log(`Video player requested data from ${file.name}! Ranges: ${req.headers.range}`)
 				      }
