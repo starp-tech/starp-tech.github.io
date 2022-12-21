@@ -301,7 +301,7 @@
 			  // Supports video, audio, image files, and more!
 			  // file.appendTo('body')
 			  if(window.location.search.search("fileBlob") === -1) {
-				  window.location.search = window.location.search+"&fileBlob="+file.torrentFileBlobURL
+				  window.location.search = window.location.search.split("&")[0]+"&fileBlob="+file.torrentFileBlobURL
 			  }
 
 			})
