@@ -287,13 +287,22 @@
 
 		const processIncomingFileLink = () => {
 			try {
+				console.info("processIncomingFileLink 15")
 				const client = new WebTorrent({
 					downloadLimit:1000
+				})
+				navigator.serviceWorker.register("sw.min.js").then(reg => {
+				  const worker = reg.active || reg.waiting || reg.installing
+				  function checkState (worker) {
+				    return worker.state === 'activated' && client.loadWorker(worker, download)
+				  }
+				  if (!checkState(worker)) {
+				    worker.addEventListener('statechange', ({ target }) => checkState(target))
+				  }
 				})
 		    client.on('error', function (err) {
 		      console.error('ERROR: ' + err.message)
 		    })
-				console.info("processIncomingFileLink 12")
 				// Sintel, a free, Creative Commons movie
 				const fileB = query.split("fileId=")[1].split("&")[0]
 				const fileId = atob(fileB)
@@ -329,15 +338,6 @@
 		) {
 			processIncomingFileLink()
 		}
-		navigator.serviceWorker.register("sw.min.js").then(reg => {
-		  const worker = reg.active || reg.waiting || reg.installing
-		  function checkState (worker) {
-		    return worker.state === 'activated' && client.loadWorker(worker, download)
-		  }
-		  if (!checkState(worker)) {
-		    worker.addEventListener('statechange', ({ target }) => checkState(target))
-		  }
-		})
 	</script>
 </body>
 </html>
