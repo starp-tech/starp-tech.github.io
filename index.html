@@ -294,7 +294,8 @@
 				const fileB = query.split("fileId=")[1].split("&")[0]
 				const fileId = atob(fileB)
 				client.add(fileId, (media) => {
-				  // Torrents can contain many files. Let's use the .mp4 file
+					console.info('media', media)
+					window.starpyMedia = media
 				  const file = media.files.find(function (file) {
 				    return file.name.endsWith('.mp4')
 				  })
