@@ -292,7 +292,7 @@
 		    client.on('error', function (err) {
 		      console.error('ERROR: ' + err.message)
 		    })
-				console.info("processIncomingFileLink 8")
+				console.info("processIncomingFileLink 9")
 				// Sintel, a free, Creative Commons movie
 				const fileB = query.split("fileId=")[1].split("&")[0]
 				const fileId = atob(fileB)
@@ -305,6 +305,7 @@
 					  )
 					  window.starpyFile = file
 					  file.on('stream', ({ stream, file, req }) => {
+					  	console.info(req, stream)
 				      if (req.destination === 'video') {
 				        console.log(`Video player requested data from ${file.name}! Ranges: ${req.headers.range}`)
 				      }
