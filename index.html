@@ -287,10 +287,34 @@
 
 		const processIncomingFileLink = () => {
 			try {
-				console.info("processIncomingFileLink 15")
+				console.info("processIncomingFileLink 16")
 				const client = new WebTorrent({
 					downloadLimit:1000
 				})
+				const download = () => {
+					client.add(fileId, (media) => {
+						try {
+							console.info('media', media)
+							window.starpyMedia = media
+						  const file = media.files.find(file=> 
+						  	file.name.endsWith('.mp4')
+						  )
+						  window.starpyFile = file
+						  file.on('stream', ({ stream, file, req }) => {
+						  	console.info(req, stream, file)
+					      if (req.destination === 'video') {
+					        console.log(`Video player requested data from ${file.name}! Ranges: ${req.headers.range}`)
+					      }
+					    })
+					    // Render to a <video> element by providing an ID. Alternatively, one can also provide a DOM element.
+			        file.renderTo("#video-container", {}, () => {
+			          console.log("Ready to play!");
+			        });
+						} catch(err) {
+							console.error("processIncomingFileLink err", err)
+						}
+					})
+				}
 				navigator.serviceWorker.register("sw.min.js").then(reg => {
 				  const worker = reg.active || reg.waiting || reg.installing
 				  function checkState (worker) {
@@ -306,28 +330,6 @@
 				// Sintel, a free, Creative Commons movie
 				const fileB = query.split("fileId=")[1].split("&")[0]
 				const fileId = atob(fileB)
-				client.add(fileId, (media) => {
-					try {
-						console.info('media', media)
-						window.starpyMedia = media
-					  const file = media.files.find(file=> 
-					  	file.name.endsWith('.mp4')
-					  )
-					  window.starpyFile = file
-					  file.on('stream', ({ stream, file, req }) => {
-					  	console.info(req, stream, file)
-				      if (req.destination === 'video') {
-				        console.log(`Video player requested data from ${file.name}! Ranges: ${req.headers.range}`)
-				      }
-				    })
-				    // Render to a <video> element by providing an ID. Alternatively, one can also provide a DOM element.
-		        file.renderTo("#video-container", {}, () => {
-		          console.log("Ready to play!");
-		        });
-					} catch(err) {
-						console.error("processIncomingFileLink err", err)
-					}
-				})
 			} catch(err) {
 				console.error("processIncomingFileLink err", err)
 			}
