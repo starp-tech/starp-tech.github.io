@@ -288,25 +288,29 @@
     })
 
 		const processIncomingFileLink = () => {
-			// Sintel, a free, Creative Commons movie
-			const fileB = query.split("fileId=")[1].split("&")[0]
-			const fileId = atob(fileB)
-			client.add(fileId, (media) => {
-			  // Torrents can contain many files. Let's use the .mp4 file
-			  const file = media.files.find(function (file) {
-			    return file.name.endsWith('.mp4')
-			  })
-			  file.getBlobURL((fileBlob)=>{
-				  console.info(file, fileBlob)
-				  // Display the file by adding it to the DOM.
-				  // Supports video, audio, image files, and more!
-				  // file.appendTo('body')
-				  window.starpyFile = file
-				  if(window.location.search.search(fileBlob) === -1) {
-					  window.location.search = `fileId=${fileB}&fileBlob=${fileBlob}`
-				  }
-			  })
-			})
+			try {
+				// Sintel, a free, Creative Commons movie
+				const fileB = query.split("fileId=")[1].split("&")[0]
+				const fileId = atob(fileB)
+				client.add(fileId, (media) => {
+				  // Torrents can contain many files. Let's use the .mp4 file
+				  const file = media.files.find(function (file) {
+				    return file.name.endsWith('.mp4')
+				  })
+				  file.getBlobURL((fileBlob)=>{
+					  console.info(file, fileBlob)
+					  // Display the file by adding it to the DOM.
+					  // Supports video, audio, image files, and more!
+					  // file.appendTo('body')
+					  window.starpyFile = file
+					  if(window.location.search.search(fileBlob) === -1) {
+						  window.location.search = `fileId=${fileB}&fileBlob=${fileBlob}`
+					  }
+				  })
+				})
+			} catch(err) {
+				console.error("processIncomingFileLink err", err)
+			}
 		}
 
 		if(query 
