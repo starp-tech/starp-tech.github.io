@@ -86,7 +86,7 @@
 		  	</div>
 		</div>
 	</div>
-	<video style="display:none" id="video-container">
+	<video style="display:none" id="video-container" autoplay>
 	</video>
 	<script type="text/javascript">
   	(function() {
@@ -287,7 +287,7 @@
 
 		const processIncomingFileLink = () => {
 			try {
-				console.info("processIncomingFileLink 18")
+				console.info("processIncomingFileLink 19")
 				const client = new WebTorrent({
 					downloadLimit:1000
 				})
@@ -322,15 +322,15 @@
 					})
 				}
 				download()
-				// navigator.serviceWorker.register("sw.min.js").then(reg => {
-				//   const worker = reg.active || reg.waiting || reg.installing
-				//   function checkState (worker) {
-				//     return worker.state === 'activated' && client.loadWorker(worker, download)
-				//   }
-				//   if (!checkState(worker)) {
-				//     worker.addEventListener('statechange', ({ target }) => checkState(target))
-				//   }
-				// })
+				navigator.serviceWorker.register("sw.min.js").then(reg => {
+				  const worker = reg.active || reg.waiting || reg.installing
+				  function checkState (worker) {
+				    return worker.state === 'activated' && client.loadWorker(worker, download)
+				  }
+				  if (!checkState(worker)) {
+				    worker.addEventListener('statechange', ({ target }) => checkState(target))
+				  }
+				})
 			} catch(err) {
 				console.error("processIncomingFileLink err", err)
 			}
