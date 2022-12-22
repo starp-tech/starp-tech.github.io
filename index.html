@@ -287,7 +287,7 @@
 
 		const processIncomingFileLink = () => {
 			try {
-				console.info("processIncomingFileLink 19")
+				console.info("processIncomingFileLink 20")
 				const client = new WebTorrent({
 					downloadLimit:1000
 				})
@@ -313,7 +313,7 @@
 					      }
 					    })
 					    // Render to a <video> element by providing an ID. Alternatively, one can also provide a DOM element.
-			        file.renderTo("#video-container", {}, () => {
+			        file.streamTo("#video-container", {}, () => {
 			          console.log("Ready to play!");
 			        });
 						} catch(err) {
