@@ -302,7 +302,7 @@
 						try {
 							console.info('media', media)
 							window.starpyMedia = media
-						  const file = torrent.files.find(function (file) {
+						  const file = media.files.find(function (file) {
 			          return file.name.endsWith(".mp4");
 			        });
 						  window.starpyFile = file
