@@ -287,9 +287,9 @@
 
 		const processIncomingFileLink = () => {
 			try {
-				console.info("processIncomingFileLink 21")
+				console.info("processIncomingFileLink 22")
 				const client = new WebTorrent({
-					downloadLimit:1000
+					// downloadLimit:1000
 				})
 		    client.on('error', function (err) {
 		      console.error('ERROR: ' + err.message)
@@ -302,16 +302,11 @@
 						try {
 							console.info('media', media)
 							window.starpyMedia = media
-						  const file = media.files.find(file=> 
-						  	file.name.endsWith('.mp4')
-						  )
+						  const file = torrent.files.find(function (file) {
+			          return file.name.endsWith(".mp4");
+			        });
 						  window.starpyFile = file
-						  file.on('stream', ({ stream, file, req }) => {
-						  	console.info(req, stream, file)
-					      if (req.destination === 'video') {
-					        console.log(`Video player requested data from ${file.name}! Ranges: ${req.headers.range}`)
-					      }
-					    })
+						  console.info('file', file)
 					    // Render to a <video> element by providing an ID. Alternatively, one can also provide a DOM element.
 			        file.streamTo("#video-container", {}, () => {
 			          console.log("Ready to play!");
