@@ -22,7 +22,7 @@
 		  height: 100%;
 		  margin: 0;
 		  padding: 0;
-		  overflow: hidden;
+/*		  overflow: hidden;*/
 		}
 		canvas {
 			position:absolute;
@@ -55,7 +55,7 @@
 			height:100%;
 			text-align: center;
 		}
-		#joinButton {
+		#joinButton, .joinButton {
 	 		text-decoration: none;
 	 		background-color: palegoldenrod;
 	 		display: inline-block;
@@ -68,24 +68,120 @@
 		.hidden {
 			display: none !important;
 		}
+		.pageContainer {
+			width: 100%;
+			height: 800px;
+			background-size: cover;
+			background-position: center;
+	    -webkit-filter: contrast(1px);
+		  -moz-filter: contrast(1px);
+		  -o-filter: contrast(1px);
+		  -ms-filter: contrast(1px);
+		  filter: contrast(1px);   
+		}
+		.jumbotron p.big-message {
+			color:black;
+			font-size: 50px;
+		}
   </style>
 </head>
 <body>
 	<canvas id="bgCanvas"></canvas>
 	<canvas id="terCanvas"></canvas>
-
-	<div class="container parent-vertical heading-info">
-		<div class="jumbotron">
-		  	<div class="container">
-			  	<h1>Starpy*</h1>
-			  	<p>Same stars experience.</p>
-			  	<a class="hidden" id="joinButton" href="#">
-			  		Join  
-			  	</a>
+	<div class="pageContainer">
+		<div class="container parent-vertical heading-info">
+			<div class="jumbotron">
+			  	<div class="container">
+				  	<h1>Starpy*</h1>
+				  	<p>Same stars experience.</p>
+				  	<a class="hidden" id="joinButton" href="#">
+				  		Join  
+				  	</a>
+				  	</div>
 			  	</div>
-		  	</div>
+			</div>
 		</div>
 	</div>
+
+	<div class="pageContainer" 
+		style="background-image: url(img/4.png);"
+	>
+		<div class="container parent-vertical heading-info">
+			<div class="jumbotron">
+			  	<div class="container">
+				  	<h1 style="color:royalblue;">Privacy</h1>
+				  	<p class="big-message" style="color:yellow;">
+				  	for your family content
+				  	</p>
+				  	<!-- <a class="hidden" id="joinButton" href="#">
+				  		Join  
+				  	</a> -->
+				  	</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<div class="pageContainer" 
+		style="background-image: url(img/3.png);"
+	>
+		<div class="container parent-vertical heading-info">
+			<div class="jumbotron">
+			  	<div class="container">
+				  	<h1 style="color:seagreen;">
+				  			Any
+				  		<span style="color:coral;">
+				  			Platform
+				  		</span> <br> 
+				  		<span style="color:seagreen;">
+				  			Any
+				  		</span>  
+				  		<span style="color:coral;">
+				  			Place
+				  		</span> 
+				  	</h1>
+				  	<p class="big-message" style="color:yellow;">
+				  		together with friends
+					  </p>
+				  	<!-- <a class="hidden" id="joinButton" href="#">
+				  		Join  
+				  	</a> -->
+				  	</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<div class="pageContainer" 
+		style="
+			background-image: url(img/6.png);
+			background-position: right;
+		"
+	>
+		<div class="container parent-vertical heading-info">
+			<div class="jumbotron">
+			  	<div class="container">
+				  	<h1 style="color:black;">Store Your Data</h1>
+				  	<p class="big-message">with full encryption</p>
+				  	<!-- <a class="hidden" id="joinButton" href="#">
+				  		Join  
+				  	</a> -->
+				  	</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<div class="pageContainer" style="background-image: url(img/7.png);">
+		<div class="container parent-vertical heading-info">
+			<div class="jumbotron">
+			  	<div class="container">
+				  	<h1 style="color:black;">Connect</h1>
+				  	<p class="big-message">with people nearby</p>
+				  	<a class="joinButton" href="https://www.starpy.me/appcast/StarpyApp.tar.xz">Download For Mac OS X</a>
+				  	</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+
 	<script type="text/javascript">
   	(function() {
 	    	var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || 
@@ -251,86 +347,10 @@
 				isResizeLocked = false;
 			}, 100)
 		})
-		const query = window.location.search
-		const osXdownloadUrl = "https://www.starpy.me/appcast/StarpyApp.tar.xz"
-    const a = document.getElementById('joinButton');
-    a.className = ""
-    a.innerHTML = "Download For Mac OS X"
-    a.href = osXdownloadUrl
-    const processInitScreen = () => {
-	    try {
-				let sUrl = "starpy://"+window.location.search.replace("?", "")
-				const token = window.location.search.split("join=")[1]
-				let id = token
-				if(token.search(".") > -1) {
-					let json = JSON.parse(atob(token.split('.')[1]))
-					id = json.name
-					console.info(json)
-					sUrl = "starpy://join="+token
-				}
-	      a.className = ""
-	      a.innerHTML = "Join <span style='color:gray;'>"+id+"</span>"
-	      a.href = sUrl
-	      // a.click()
-	      return;
-	    } catch(err) {
-				console.error("process link err", err)
-			}
-    }
-		if(query && query.search("join") > -1) {
-	    processInitScreen()
-		} 
 	</script>
-	<script type="text/javascript">
-
-		const processIncomingFileLink = () => {
-			try {
-				console.info("processIncomingFileLink 23")
-				const client = new WebTorrent({
-					// downloadLimit:1000
-				})
-		    client.on('error', function (err) {
-		      console.error('ERROR: ' + err.message)
-		    })
-				const fileB = query.split("fileId=")[1].split("&")[0]
-				const fileId = atob(fileB)
-				const download = () => 
-					client.add(fileId, (media) => {
-						try {
-							console.info('media', media)
-							window.starpyMedia = media
-						  const file = media.files.find(function (file) {
-			          return file.name.endsWith(".mp4");
-			        });
-						  window.starpyFile = file
-						  console.info('file', file)
-					    // Render to a <video> element by providing an ID. Alternatively, one can also provide a DOM element.
-			        file.getStreamURL((err, url) => {
-			          console.log("Ready to play!", url);
-			        });
-						} catch(err) {
-							console.error("processIncomingFileLink err", err)
-						}
-					})
-				navigator.serviceWorker.register("sw.min.js").then(reg => {
-				  const worker = reg.active || reg.waiting || reg.installing
-				  function checkState (worker) {
-				    return worker.state === 'activated' && client.loadWorker(worker, download)
-				  }
-				  if (!checkState(worker)) {
-				    worker.addEventListener('statechange', ({ target }) => checkState(target))
-				  }
-				})
-			} catch(err) {
-				console.error("processIncomingFileLink err", err)
-			}
-		}
-
-		if(query 
-			&& query.search("fileId") > -1 
-		) {
-			processIncomingFileLink()
-		}
+	<script type="text/javascript" src="js/contact.js">
+	</script>
+	<script type="text/javascript" src="js/media.js">
 	</script>
 </body>
 </html>
