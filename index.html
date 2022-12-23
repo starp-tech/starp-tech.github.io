@@ -86,8 +86,6 @@
 		  	</div>
 		</div>
 	</div>
-	<video style="display:none" id="video-container" autoplay>
-	</video>
 	<script type="text/javascript">
   	(function() {
 	    	var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || 
@@ -294,7 +292,6 @@
 		    client.on('error', function (err) {
 		      console.error('ERROR: ' + err.message)
 		    })
-				// Sintel, a free, Creative Commons movie
 				const fileB = query.split("fileId=")[1].split("&")[0]
 				const fileId = atob(fileB)
 				const download = () => 
