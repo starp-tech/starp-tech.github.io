@@ -182,7 +182,7 @@
 			<div class="jumbotron">
 			  	<div class="container">
 				  	<h1>Store Your Data Encrypted</h1>
-				  	<p class="big-message">in your own private cloud or starpy cloud</p>
+				  	<p class="big-message">in your own private cloud <br> or starpy cloud</p>
 				  	<a class="joinButton" target="blank" href="https://github.com/starp-tech">
 				  		Start Hacking  
 				  	</a>
@@ -250,25 +250,25 @@
 			}
 
 			// draw the terrain
-			terCtx.beginPath();
+			// terCtx.beginPath();
 							
-			for(var i = 0; i<=width; i++){
-				if(i === 0){
-					terCtx.moveTo(0, points[0]);
-				}else if(points[i] !== undefined){
-					terCtx.lineTo(i, points[i]);
-				}
-			}
+			// for(var i = 0; i<=width; i++){
+			// 	if(i === 0){
+			// 		terCtx.moveTo(0, points[0]);
+			// 	}else if(points[i] !== undefined){
+			// 		terCtx.lineTo(i, points[i]);
+			// 	}
+			// }
 
-			terCtx.lineTo(width,terrain.height);
-			terCtx.lineTo(0,terrain.height);
-			terCtx.lineTo(0,points[0]);
-			terCtx.fill();
+			// terCtx.lineTo(width,terrain.height);
+			// terCtx.lineTo(0,terrain.height);
+			// terCtx.lineTo(0,points[0]);
+			// terCtx.fill();
 
 
-			// Second canvas used for the stars
-			bgCtx.fillStyle = '#05004c';
-			bgCtx.fillRect(0,0,width,height);
+			// // Second canvas used for the stars
+			// bgCtx.fillStyle = '#05004c';
+			// bgCtx.fillRect(0,0,width,height);
 
 			// stars
 			function Star(options){
