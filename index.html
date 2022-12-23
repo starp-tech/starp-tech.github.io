@@ -24,10 +24,15 @@
 		  padding: 0;
 /*		  overflow: hidden;*/
 		}
-		canvas {
+		#bgCanvas {
 			position:absolute;
 			top:0;
 			left:0
+		}
+		#terCanvas {
+			position: relative;
+			height: 100px;
+			width: 100%;
 		}
 		.jumbotron {
 			background: transparent;
@@ -107,7 +112,6 @@
 </head>
 <body>
 	<canvas id="bgCanvas"></canvas>
-	<canvas id="terCanvas"></canvas>
 	<div class="pageContainer">
 		<div class="background-overlay" style="
 			background-color: rgba(0,0,0,0.1);
@@ -213,6 +217,7 @@
 			  	</div>
 			</div>
 		</div>
+		<canvas style="display:none;" id="terCanvas"></canvas>
 	</div>
 
 	<script type="text/javascript">
@@ -255,25 +260,25 @@
 			}
 
 			// draw the terrain
-			// terCtx.beginPath();
+			terCtx.beginPath();
 							
-			// for(var i = 0; i<=width; i++){
-			// 	if(i === 0){
-			// 		terCtx.moveTo(0, points[0]);
-			// 	}else if(points[i] !== undefined){
-			// 		terCtx.lineTo(i, points[i]);
-			// 	}
-			// }
+			for(var i = 0; i<=width; i++){
+				if(i === 0){
+					terCtx.moveTo(0, points[0]);
+				}else if(points[i] !== undefined){
+					terCtx.lineTo(i, points[i]);
+				}
+			}
 
-			// terCtx.lineTo(width,terrain.height);
-			// terCtx.lineTo(0,terrain.height);
-			// terCtx.lineTo(0,points[0]);
-			// terCtx.fill();
+			terCtx.lineTo(width,terrain.height);
+			terCtx.lineTo(0,terrain.height);
+			terCtx.lineTo(0,points[0]);
+			terCtx.fill();
 
 
-			// // Second canvas used for the stars
-			// bgCtx.fillStyle = '#05004c';
-			// bgCtx.fillRect(0,0,width,height);
+			// Second canvas used for the stars
+			bgCtx.fillStyle = '#05004c';
+			bgCtx.fillRect(0,0,width,height);
 
 			// stars
 			function Star(options){
