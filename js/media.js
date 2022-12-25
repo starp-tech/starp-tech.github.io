@@ -42,29 +42,32 @@ const processIncomingFileLink = () => {
 }
 const playMediaLink = (mediaLink) => {
 	try {
-		console.info("processIncomingFileLink 23")
+		console.info("playMediaLink", mediaLink)
 		const client = new WebTorrent({
 			// downloadLimit:1000
 		})
     client.on('error', function (err) {
       console.error('ERROR: ' + err.message)
     })
-		const download = () => 
+		const download = () =>  {
+			console.info('playMediaLink on download')
 			client.add(mediaLink, (media) => {
 				try {
-					console.info('media', media)
+					console.info('playMediaLink on media', media)
 				  const file = media.files.find(function (file) {
 	          return file.name.endsWith(".mp4");
 	        });
-				  console.info('file', file)
+				  console.info('playMediaLink on file', file)
 			    // Render to a <video> element by providing an ID. Alternatively, one can also provide a DOM element.
 	        file.getStreamURL((err, url) => {
 	          console.log("Ready to play!", url);
+	          // document.get
 	        });
 				} catch(err) {
-					console.error("processIncomingFileLink err", err)
+					console.error("playMediaLink err", err)
 				}
 			})
+		}
 		navigator.serviceWorker.register("sw.min.js").then(reg => {
 		  const worker = reg.active || reg.waiting || reg.installing
 		  function checkState (worker) {

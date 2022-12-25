@@ -62,20 +62,23 @@ new function() {
     });
   }
 
-  const startMedia = async () => {
+  const startRandomMedia = async () => {
     await getPartyList()
     party = partyList.rows[0].value
     partyId = party.id
     await getPartyMedia()
     currentMedia = partyMedia
       .find(i=>i.messageType === "party_media").media
+    
+    console.info("currentMedia", currentMedia)
+
     await playMediaLink(currentMedia.url)
   }
 
   const pressJoinPublic = async () => {
     console.info("pressJoinPublic start")
     try {
-      await startMedia()
+      await startRandomMedia()
       await createSocket()
     } catch(err) {
       console.info("pressJoinPublic start", err)
