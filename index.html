@@ -166,7 +166,7 @@
 		  top: 0.15em;
 		  transform: rotate(-45deg);
 		  vertical-align: top;
-		  border-color: white;
+		  border-color: palegoldenrod;
 		  width: 0.45em;
 		}
 
@@ -194,6 +194,50 @@
 	    cursor: pointer;
 	    display: block;
 	    z-index: 100000;
+		}
+
+		.close {
+		  position: absolute;
+		  right: 0;
+		  top: 20px;
+		  width: 60px;
+		  height: 60px;
+		  opacity: 0.7;
+		  cursor: pointer;
+		  z-index: 1000000000000000;
+		}
+
+		.close:hover {
+		  opacity: 1;
+		}
+
+		.close:before, .close:after {
+		  position: absolute;
+		  left: 15px;
+		  content: ' ';
+		  height: 60px;
+		  width: 2px;
+		  background-color: palegoldenrod;
+		}
+		.close:before {
+		  transform: rotate(45deg);
+		}
+		.close:after {
+		  transform: rotate(-45deg);
+		}
+		.playPrevParty {
+			position: absolute;
+	    top: calc(50% - 50px);
+	    left: 20px;
+	    font-size: 100px;
+	    cursor: pointer;
+		}
+		.playNextParty {
+			position: absolute;
+	    top: calc(50% - 50px);
+	    right: 20px;
+	    font-size: 100px;
+	    cursor: pointer;
 		}
   </style>
 </head>
@@ -337,8 +381,12 @@
 	<div 
 		class="hidden"
 		id="videoContainer"
-		onclick="hideVideoPlayer()"
 	>
+		<a href="#videoPlayer" class="close" onclick="hideVideoPlayer()"></a>
+  	<a class="chevron left playPrevParty" id="playPrevParty">
+    </a>
+  	<a class="chevron right playNextParty" id="playNextParty">
+    </a>
 		<video id="videoPlayer" src="" controls autoplay></video>
 	</div>
 	<script type="text/javascript">
@@ -577,7 +625,9 @@
 			videoPlayer.src = mediaLink
 			videoContainer.className = ""
 		}
-		const hideVideoPlayer = () => {
+		const hideVideoPlayer = (e) => {
+			if(e)
+				e.preventDefault()
 			videoPlayer.src = ""
 			videoContainer.className = "hidden"
 			isPlaying = false;

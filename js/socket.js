@@ -30,7 +30,8 @@ new function() {
 
   const getPartyList = async () => {
     partyList = await (await fetch(partyListUrl)).json()
-    console.info(partyList.rows)
+    partyList = partyList.rows.map(i=>i.value)
+    console.info(partyList)
   }
   
   const createSocket = async () => {
@@ -71,7 +72,7 @@ new function() {
 
   const startRandomMedia = async () => {
     await getPartyList()
-    party = partyList.rows[0].value
+    party = partyList[0]
     partyId = party.id
     await getPartyMedia()
     currentItem = partyMedia
@@ -84,6 +85,35 @@ new function() {
     await playMediaLink(currentExtract.url)
   }
 
+  const playAnotherParty = async () => {
+    console.info("playAnotherParty")
+    console.info('current party', party.id)
+    await getPartyList()
+    party = partyList.find(p=>p.id !== partyId)
+    console.info('found a new party', party.id)
+    partyId = party.id
+    await getPartyMedia()
+    if(partyMedia.length === 0)
+      await playAnotherParty()
+    
+    currentItem = partyMedia
+      .find(i=>i.messageType === "party_media")
+    currentExtract = currentItem.ex
+    currentMedia = currentItem.media
+    isPlaying = false
+    await playMediaLink(currentExtract.url)
+  }
+
+  const pressNextParty = async () => {
+    console.info('pressNextParty')
+    playAnotherParty()
+  }
+
+  const pressPrevParty = async () => {
+    console.info('pressPrevParty')
+    playAnotherParty()
+  }
+
   const pressJoinPublic = async () => {
     console.info("pressJoinPublic start")
     try {
@@ -93,11 +123,26 @@ new function() {
       console.info("pressJoinPublic start", err)
     }
   }
+
   
-  const button = document.getElementById("joinParty")
-  
-  button.addEventListener("click", (e)=>{
+  const joinRandomButton = 
+    document.getElementById("joinParty")
+  const playPrevPartyButton = 
+    document.getElementById("playPrevParty")
+  const playNextPartyButton = 
+    document.getElementById("playNextParty")
+
+  joinRandomButton.addEventListener("click", (e)=>{
     e.preventDefault()
     pressJoinPublic()
+  })
+
+  playNextPartyButton.addEventListener("click", (e)=>{
+    e.preventDefault()
+    pressNextParty()
+  })
+  playPrevPartyButton.addEventListener("click", (e)=>{
+    e.preventDefault()
+    pressPrevParty()
   })
 }
