@@ -175,6 +175,25 @@ new function() {
     checkDirection()
   })
 
+  videoContainer.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX
+  })
+
+  videoContainer.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX
+    checkDirection()
+  })
+  
+  videoPlayer.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX
+    checkDirection()
+  })
+
+  videoPlayer.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX
+  })
+
+
   const pressJoinPublic = async () => {
     console.info("pressJoinPublic start")
     try {
