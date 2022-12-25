@@ -82,10 +82,10 @@ new function() {
       partyId = party.id
       await getPartyMedia()
       await getCurrentMediaItem()
-      console.info("currentMedia", currentMedia)
       await hideVideoPlayer()
       playedParties.push(partyId)
       await playMediaLink(currentExtract.url)
+      await setupPartyView()
     } catch(err) {
       console.error('startRandomMedia error', err)
     }
@@ -113,7 +113,7 @@ new function() {
           playedParties = []
 
         party = partyList.find(p=>!playedParties.includes(p.id))
-        console.info('found a new party', party.id)
+        console.info('found a new party', party)
         partyId = party.id
         playedParties.push(partyId)
       }
@@ -135,12 +135,15 @@ new function() {
 
       isPlaying = false
       await playMediaLink(currentExtract.url)
+      await setupPartyView()
     } catch(err) {
       console.error('startRandomMedia error', err)
     }
     isLoadingParty = false
   }
+  const setupPartyView = () => {
 
+  }
   const pressNextParty = async () => {
     console.info('pressNextParty')
     playAnotherParty(false)
@@ -150,6 +153,21 @@ new function() {
     console.info('pressPrevParty')
     playAnotherParty(true)
   }
+  let touchendX = 0
+    
+  function checkDirection() {
+    if (touchendX < touchstartX && isPlaying) pressPrevParty()
+    if (touchendX > touchstartX && isPlaying) pressNextParty()
+  }
+
+  document.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX
+  })
+
+  document.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX
+    checkDirection()
+  })
 
   const pressJoinPublic = async () => {
     console.info("pressJoinPublic start")
