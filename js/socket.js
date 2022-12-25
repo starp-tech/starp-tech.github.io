@@ -51,7 +51,7 @@ new function() {
     ws.addEventListener("message", async (event) => {
       console.info('new party message', event)
       // let data = JSON.parse(event.data);
-      await getPartyMedia()
+      // await getPartyMedia()
     });
 
     ws.addEventListener("close", event => {
