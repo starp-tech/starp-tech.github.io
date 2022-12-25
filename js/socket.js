@@ -13,6 +13,8 @@ new function() {
   let partyId;
   let partyMedia;
   let currentMedia;
+  let currentItem;
+  let currentExtract;
 
   const getPartyMedia = async () => {
     const url = partyMediaUrl()
@@ -72,12 +74,14 @@ new function() {
     party = partyList.rows[0].value
     partyId = party.id
     await getPartyMedia()
-    currentMedia = partyMedia
-      .find(i=>i.messageType === "party_media").media
+    currentItem = partyMedia
+      .find(i=>i.messageType === "party_media")
+    currentExtract = currentItem.ex
+    currentMedia = currentItem.media
     
     console.info("currentMedia", currentMedia)
     await hideVideoPlayer()
-    await playMediaLink(currentMedia.url)
+    await playMediaLink(currentExtract.url)
   }
 
   const pressJoinPublic = async () => {
