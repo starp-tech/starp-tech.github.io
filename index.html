@@ -108,7 +108,7 @@
 	    bottom: 0;
 	    margin: 0;
 	    background-color: rgba(0, 0, 0, .2);
-			z-index: 10000000000;
+	    z-index: 1000;
 		}
 		#videoPlayer {
 	    width: 80%;
@@ -119,7 +119,7 @@
 	    bottom: 0;
 	    margin: 0;
 			position: fixed;
-			z-index: 10000000000;
+	    z-index: 1000;
 			border-radius: 10px;
 		}
 		.jumbotron p.big-message {
@@ -172,7 +172,7 @@
 	    font-size: 32px;
 	    cursor: pointer;
 	    display: block;
-	    z-index: 999997;
+	    z-index: 100;
 		}
 
 		.close {
@@ -212,6 +212,10 @@
 	    cursor: pointer;
 		  z-index: 2000;
 		}
+
+		.playPrevParty:before {
+			left:0 !important;
+		}
 		.playNextParty {
 			position: fixed;
 	    top: calc(50% - 30px);
@@ -229,7 +233,7 @@
 		    right: 10px;
 		  }
 			.playPrevParty {
-		    right: 10px;
+		    left: 10px;
 		  }
 			.jumbotron p.big-message {
 				font-size: 30px;
@@ -248,7 +252,6 @@
 		    bottom: 0;
 		    margin: 0;
 		    position: fixed;
-		    z-index: 1000;
 		    border-radius: 10px;
 		  }
 		}
