@@ -37,9 +37,10 @@
 			left:0
 		}
 		#terCanvas {
-			position: relative;
-			height: 100px;
-			width: 100%;
+			position: absolute;
+	    height: 100px;
+	    width: 100%;
+	    bottom: 0;
 		}
 		.jumbotron {
 			background: transparent;
@@ -198,6 +199,7 @@
 </head>
 <body>
 	<canvas id="bgCanvas"></canvas>
+	<canvas id="terCanvas"></canvas>
 	<div class="pageContainer">
 		<div class="background-overlay" style="
 			background-color: rgba(0,0,0,0.1);
@@ -331,7 +333,6 @@
 			  	</div>
 			</div>
 		</div>
-		<canvas style="display:none;" id="terCanvas"></canvas>
 	</div>
 	<div 
 		class="hidden"
