@@ -466,8 +466,13 @@
 				isResizeLocked = false;
 			}, 100)
 		})
-
+		let isPlaying = false
 		const playMediaLink = (mediaLink) => {
+			if(isPlaying)
+				return
+
+			isPlaying = true;
+			
 			try {
 				console.info("playMediaLink", mediaLink)
 				const client = new WebTorrent({
@@ -504,6 +509,7 @@
 				  }
 				})
 			} catch(err) {
+				isPlaying = false
 				console.error("playMediaLink err", err)
 			}
 		}
