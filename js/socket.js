@@ -1,8 +1,8 @@
 new function() {
   const apiHost = "www.starpy.me"
   const partyListUrl = `https://${apiHost}/api/v1/party-list`
-  const partyMediaUrl = (partyId) => 
-    `https://${apiHost}/api/v1/party-media?partyId="${partyId}"`
+  const partyMediaUrl = () => 
+    `https://${apiHost}/api/v1/party-media/?partyId="${partyId}"`
   const socketUrl = `wss://${apiHost}/api/v1/socket`
 
   let currentSocket;
@@ -12,8 +12,30 @@ new function() {
   let party;
   let partyId;
   let partyMedia;
+  let currentMedia;
+
+  const getPartyMedia = async () => {
+    const url = partyMediaUrl()
+    const f = await fetch(url)
+    const partyData = await f.json()
+    partyMedia = 
+      partyData
+      .rows
+      .map(i=>i.value)
+      .sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt))
+    currentMedia = partyMedia
+      .find(i=>i.messageType === "party_media").media
+    console.info("partyMedia", partyMedia, currentMedia)
+    await playMediaLink(currentMedia.url)
+  }
+
+  const getPartyList = async () => {
+    partyList = await (await fetch(partyListUrl)).json()
+    console.info(partyList.rows)
+  }
+  
   const createSocket = async () => {
-    
+
     const ws = new WebSocket(socketUrl);
 
     ws.addEventListener("open", event => {
@@ -26,9 +48,10 @@ new function() {
       }));
     });
 
-    ws.addEventListener("message", event => {
-      let data = JSON.parse(event.data);
-      console.info('new party message', data)
+    ws.addEventListener("message", async (event) => {
+      console.info('new party message', event)
+      // let data = JSON.parse(event.data);
+      await getPartyMedia()
     });
 
     ws.addEventListener("close", event => {
@@ -42,13 +65,17 @@ new function() {
     });
   }
 
+  const startMedia = async () => {
+    await getPartyList()
+    party = partyList.rows[0].value
+    partyId = party.id
+    await getPartyMedia()
+  }
+
   const pressJoinPublic = async () => {
     console.info("pressJoinPublic start")
     try {
-      partyList = (await (await fetch(partyListUrl)).json())
-      [party] = partyList.rows
-      partyId = party.id
-      partyMedia = await fetch(partyMediaUrl())
+      await startMedia()
       await createSocket()
     } catch(err) {
       console.info("pressJoinPublic start", err)
