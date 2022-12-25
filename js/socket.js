@@ -32,7 +32,10 @@ new function() {
   }
   
   const createSocket = async () => {
-
+    
+    if(currentSocket)
+      return
+    
     const ws = new WebSocket(socketUrl);
 
     ws.addEventListener("open", event => {
@@ -53,6 +56,8 @@ new function() {
 
     ws.addEventListener("close", event => {
       console.log("WebSocket closed, reconnecting:", event.code, event.reason);
+      currentSocket.close()
+      currentSocket = null;
       createSocket()
     });
 
