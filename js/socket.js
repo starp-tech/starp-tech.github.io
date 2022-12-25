@@ -78,7 +78,7 @@ new function() {
     isLoadingParty = true;
     try {
       await getPartyList()
-      party = partyList.find(p=>!playedParties.includes(p.id)
+      party = partyList.find(p=>!playedParties.includes(p.id))
       partyId = party.id
       await getPartyMedia()
       await getCurrentMediaItem()
