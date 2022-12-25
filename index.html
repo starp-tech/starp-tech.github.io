@@ -634,12 +634,12 @@
 			document.body.className = document.body.className + " overflowHidden"
 		}
 		const hideVideoPlayer = (e) => {
+			document.body.className = ""
 			if(e)
 				e.preventDefault()
 			videoPlayer.src = ""
 			videoContainer.className = "hidden"
 			isPlaying = false;
-			document.body.className = document.body.className.replace(" overflowHidden", "")
 		}
 	</script>
 	<script type="text/javascript" src="js/contact.js">
