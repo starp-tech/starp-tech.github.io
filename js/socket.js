@@ -76,7 +76,7 @@ new function() {
       .find(i=>i.messageType === "party_media").media
     
     console.info("currentMedia", currentMedia)
-
+    await hideVideoPlayer()
     await playMediaLink(currentMedia.url)
   }
 
