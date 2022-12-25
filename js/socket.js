@@ -22,7 +22,7 @@ new function() {
       partyData
       .rows
       .map(i=>i.value)
-      .sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt))
+      .sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))
     console.info("partyMedia", partyMedia)
   }
 
