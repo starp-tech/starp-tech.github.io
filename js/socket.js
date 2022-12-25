@@ -15,7 +15,8 @@ new function() {
   let currentMedia;
   let currentItem;
   let currentExtract;
-
+  let prevParty;
+  let playedParties = []
   const getPartyMedia = async () => {
     const url = partyMediaUrl()
     const f = await fetch(url)
@@ -70,48 +71,84 @@ new function() {
     });
   }
 
+  let isLoadingParty = false
   const startRandomMedia = async () => {
-    await getPartyList()
-    party = partyList[0]
-    partyId = party.id
-    await getPartyMedia()
-    currentItem = partyMedia
-      .find(i=>i.messageType === "party_media")
-    currentExtract = currentItem.ex
-    currentMedia = currentItem.media
-    
-    console.info("currentMedia", currentMedia)
-    await hideVideoPlayer()
-    await playMediaLink(currentExtract.url)
+    if(isLoadingParty === true)
+      return
+    isLoadingParty = true;
+    try {
+      await getPartyList()
+      party = partyList[0]
+      partyId = party.id
+      await getPartyMedia()
+      await getCurrentMediaItem()
+      console.info("currentMedia", currentMedia)
+      await hideVideoPlayer()
+      playedParties.push(partyId)
+      await playMediaLink(currentExtract.url)
+    } catch(err) {
+      console.error('startRandomMedia error', err)
+    }
+    isLoadingParty = false
   }
+  const getCurrentMediaItem = () => {
 
-  const playAnotherParty = async () => {
-    console.info("playAnotherParty")
-    console.info('current party', party.id)
-    await getPartyList()
-    party = partyList.find(p=>p.id !== partyId)
-    console.info('found a new party', party.id)
-    partyId = party.id
-    await getPartyMedia()
-    if(partyMedia.length === 0)
-      await playAnotherParty()
-    
-    currentItem = partyMedia
-      .find(i=>i.messageType === "party_media")
-    currentExtract = currentItem.ex
-    currentMedia = currentItem.media
-    isPlaying = false
-    await playMediaLink(currentExtract.url)
+      currentItem = partyMedia
+        .find(i=>i.messageType === "party_media")
+      currentExtract = currentItem.ex
+      currentMedia = currentItem.media
+  }
+  const playAnotherParty = async (prev) => {
+    if(isLoadingParty === true)
+      return
+    isLoadingParty = true
+    try {
+      console.info("playAnotherParty")
+      console.info('current party', party.id)
+      if(!prev) {
+        prevParty = party
+        await getPartyList()
+        
+        if(playedParties.length === partyList.length)
+          playedParties = []
+
+        party = partyList.find(p=>!playedParties.includes(p.id))
+        console.info('found a new party', party.id)
+        partyId = party.id
+        playedParties.push(partyId)
+      }
+      else {
+        if(!prevParty) return playAnotherParty()
+        party = prevParty
+        partyId = party.id
+        playedParties.pop()
+      }
+
+      await getPartyMedia()
+
+      if(partyMedia.length === 0) {
+        isLoadingParty = false
+        return playAnotherParty(prev)
+      }
+
+      await getCurrentMediaItem()
+
+      isPlaying = false
+      await playMediaLink(currentExtract.url)
+    } catch(err) {
+      console.error('startRandomMedia error', err)
+    }
+    isLoadingParty = false
   }
 
   const pressNextParty = async () => {
     console.info('pressNextParty')
-    playAnotherParty()
+    playAnotherParty(false)
   }
 
   const pressPrevParty = async () => {
     console.info('pressPrevParty')
-    playAnotherParty()
+    playAnotherParty(true)
   }
 
   const pressJoinPublic = async () => {
