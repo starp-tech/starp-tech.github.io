@@ -150,7 +150,7 @@
 		    bottom: 0;
 		    margin: 0;
 		    position: fixed;
-		    z-index: 10000000000;
+		    z-index: 10000000;
 		    border-radius: 10px;
 		  }
 		}
@@ -197,14 +197,14 @@
 		}
 
 		.close {
-		  position: absolute;
+		  position: fixed;
 		  right: 0;
 		  top: 20px;
 		  width: 60px;
 		  height: 60px;
 		  opacity: 0.7;
 		  cursor: pointer;
-		  z-index: 1000000000000000;
+		  z-index: 9999999999999;
 		}
 
 		.close:hover {
@@ -212,7 +212,7 @@
 		}
 
 		.close:before, .close:after {
-		  position: absolute;
+		  position: fixed;
 		  left: 15px;
 		  content: ' ';
 		  height: 60px;
@@ -226,18 +226,20 @@
 		  transform: rotate(-45deg);
 		}
 		.playPrevParty {
-			position: absolute;
-	    top: calc(50% - 50px);
+			position: fixed;
+	    top: calc(50% - 30px);
 	    left: 20px;
-	    font-size: 100px;
+	    font-size: 60px;
 	    cursor: pointer;
+		  z-index: 9999999999999;
 		}
 		.playNextParty {
-			position: absolute;
-	    top: calc(50% - 50px);
+			position: fixed;
+	    top: calc(50% - 30px);
 	    right: 20px;
-	    font-size: 100px;
+	    font-size: 60px;
 	    cursor: pointer;
+		  z-index: 9999999999999;
 		}
   </style>
 </head>
