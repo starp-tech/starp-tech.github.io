@@ -23,10 +23,7 @@ new function() {
       .rows
       .map(i=>i.value)
       .sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt))
-    currentMedia = partyMedia
-      .find(i=>i.messageType === "party_media").media
-    console.info("partyMedia", partyMedia, currentMedia)
-    await playMediaLink(currentMedia.url)
+    console.info("partyMedia", partyMedia)
   }
 
   const getPartyList = async () => {
@@ -51,7 +48,7 @@ new function() {
     ws.addEventListener("message", async (event) => {
       console.info('new party message', event)
       // let data = JSON.parse(event.data);
-      // await getPartyMedia()
+      await getPartyMedia()
     });
 
     ws.addEventListener("close", event => {
@@ -70,6 +67,9 @@ new function() {
     party = partyList.rows[0].value
     partyId = party.id
     await getPartyMedia()
+    currentMedia = partyMedia
+      .find(i=>i.messageType === "party_media").media
+    await playMediaLink(currentMedia.url)
   }
 
   const pressJoinPublic = async () => {
