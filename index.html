@@ -134,29 +134,6 @@
 			height: 100%;
 			background-color: rgba(0,0,0,0.3);
 		}
-		@media (max-width: 800px) {
-			.jumbotron p.big-message {
-				font-size: 30px;
-				padding: 20px;
-			}
-			.jumbotron h1 {
-				font-size: 52px;
-				padding: 20px;
-			}
-			#videoPlayer {
-				width: 90%;
-		    height: 90%;
-		    left: 5%;
-		    right: 0;
-		    top: 5%;
-		    bottom: 0;
-		    margin: 0;
-		    position: fixed;
-		    z-index: 10000000;
-		    border-radius: 10px;
-		  }
-		}
-
 		.chevron::before {
 		  border-style: solid;
 		  border-width: 2px 2px 0 0;
@@ -195,7 +172,7 @@
 	    font-size: 32px;
 	    cursor: pointer;
 	    display: block;
-	    z-index: 100000;
+	    z-index: 999997;
 		}
 
 		.close {
@@ -206,7 +183,7 @@
 		  height: 60px;
 		  opacity: 0.7;
 		  cursor: pointer;
-		  z-index: 9999999999999;
+		  z-index: 2000;
 		}
 
 		.close:hover {
@@ -233,19 +210,49 @@
 	    left: 20px;
 	    font-size: 60px;
 	    cursor: pointer;
-		  z-index: 9999999999999;
+		  z-index: 2000;
 		}
 		.playNextParty {
-			position: absolute;
+			position: fixed;
 	    top: calc(50% - 30px);
 	    right: 20px;
 	    font-size: 60px;
 	    cursor: pointer;
-		  z-index: 9999999999999;
+		  z-index: 2000;
 		}
+
 		.overflowHidden {
 			overflow: hidden;
 		}
+		@media (max-width: 800px) {
+			.playNextParty {
+		    right: 10px;
+		  }
+			.playPrevParty {
+		    right: 10px;
+		  }
+			.jumbotron p.big-message {
+				font-size: 30px;
+				padding: 20px;
+			}
+			.jumbotron h1 {
+				font-size: 52px;
+				padding: 20px;
+			}
+			#videoPlayer {
+				width: 100%;
+		    height: 100%;
+		    left: 0;
+		    right: 0;
+		    top: 0;
+		    bottom: 0;
+		    margin: 0;
+		    position: fixed;
+		    z-index: 1000;
+		    border-radius: 10px;
+		  }
+		}
+
   </style>
 </head>
 <body>
