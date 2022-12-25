@@ -243,6 +243,9 @@
 	    cursor: pointer;
 		  z-index: 9999999999999;
 		}
+		.overflowHidden {
+			overflow: hidden;
+		}
   </style>
 </head>
 <body>
@@ -628,6 +631,7 @@
 		const showVideoPlayer = (mediaLink) => {
 			videoPlayer.src = mediaLink
 			videoContainer.className = ""
+			document.body.className = document.body.className + " overflowHidden"
 		}
 		const hideVideoPlayer = (e) => {
 			if(e)
@@ -635,6 +639,7 @@
 			videoPlayer.src = ""
 			videoContainer.className = "hidden"
 			isPlaying = false;
+			document.body.className = document.body.className.replace(" overflowHidden", "")
 		}
 	</script>
 	<script type="text/javascript" src="js/contact.js">
