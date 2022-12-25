@@ -84,7 +84,10 @@ new function() {
       await getCurrentMediaItem()
       await hideVideoPlayer()
       playedParties.push(partyId)
-      await playMediaLink(currentExtract.url)
+      await playMediaLink(
+        currentExtract.url,
+        currentMedia.currentPosition
+        )
       await setupPartyView()
     } catch(err) {
       console.error('startRandomMedia error', err)
@@ -134,7 +137,10 @@ new function() {
       await getCurrentMediaItem()
 
       isPlaying = false
-      await playMediaLink(currentExtract.url)
+      await playMediaLink(
+        currentExtract.url, 
+        currentMedia.currentPosition
+        )
       await setupPartyView()
     } catch(err) {
       console.error('startRandomMedia error', err)

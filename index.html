@@ -406,7 +406,7 @@
     </a>
   	<a class="chevron right playNextParty" id="playNextParty"  href="#videoPlayer">
     </a>
-		<video id="videoPlayer" src="" autoplay></video>
+		<video id="videoPlayer" src="" autoplay controls></video>
 	</div>
 	<script type="text/javascript">
   	(function() {
@@ -576,7 +576,7 @@
 			}, 100)
 		})
 		let isPlaying = false
-		const playMediaLink = async (mediaLink) => {
+		const playMediaLink = async (mediaLink, currentPosition) => {
 			if(isPlaying)
 				return
 
@@ -585,9 +585,9 @@
 			try {
 				
 				if(mediaLink.search("magnet") > -1) {
-					await playMesh(mediaLink)
+					await playMesh(mediaLink, currentPosition)
 				} else {
-					showVideoPlayer(mediaLink)
+					showVideoPlayer(mediaLink, currentPosition)
 				}
 
 			} catch(err) {
@@ -596,7 +596,7 @@
 			}
 		}
 
-		const playMesh = async (mediaLink) => 
+		const playMesh = async (mediaLink, currentPosition) => 
 			new Promise((resolve,reject)=> {
 				console.info("playMediaLink", mediaLink)
 				const client = new WebTorrent({
@@ -617,7 +617,7 @@
 						  console.info('playMediaLink on file', file)
 			        file.getStreamURL((err, url) => {
 			          console.log("playMediaLink ready", url);
-			          showVideoPlayer(url)
+			          showVideoPlayer(url, currentPosition)
 			          resolve(url)
 			        });
 						} catch(err) {
@@ -639,13 +639,30 @@
 
 		const videoContainer = document.getElementById("videoContainer")
 		const videoPlayer = document.getElementById("videoPlayer")
+		let currentPosition;
 		
-		const showVideoPlayer = (mediaLink) => {
+		const showVideoPlayer = (mediaLink, cp) => {
+			currentPosition = cp
 			videoPlayer.src = mediaLink
 			videoContainer.className = ""
 			document.body.className = document.body.className + " overflowHidden"
 		}
+
+		videoPlayer.addEventListener('loadedmetadata', (meta) => {
+			console.info(meta)
+			if(currentPosition) {
+				const percent = 
+				// Math.round(
+					videoPlayer.duration * currentPosition
+					// )
+				// const one = 
+				console.info(videoPlayer.duration, percent, currentPosition)
+			  videoPlayer.currentTime = percent
+			}
+		}, false);
 		const hideVideoPlayer = (e) => {
+			if(videoContainer.className === "hidden")
+				return
 			document.body.className = ""
 			if(e)
 				e.preventDefault()
