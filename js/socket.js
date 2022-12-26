@@ -170,7 +170,9 @@ new function() {
           currentPosition = syncData.percent
           const percent = 
             videoPlayer.duration * currentPosition
-          videoPlayer.currentTime = percent+syncDiff
+          const currentTime = percent+syncDiff
+          console.info("currentTime", currentTime)
+          videoPlayer.currentTime = currentTime
         }
 
       }
