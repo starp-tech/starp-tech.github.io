@@ -343,5 +343,8 @@ new function() {
     e.preventDefault()
     pressPrevParty()
   })
-  videoPlayer.onerror = () => window.startRandomMedia()
+  videoPlayer.onerror = () => {
+    if(videoContainer.className !== "hidden")
+      window.startRandomMedia()
+  }
 }
