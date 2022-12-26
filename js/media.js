@@ -24,20 +24,6 @@ let mediaClient;
 let currentMediaLink;
 const playMesh = async (mediaLink, currentPosition) => 
 	new Promise((resolve,reject)=> {
-		console.info("playMediaLink", mediaLink)
-    showVideoPlayer("", currentPosition)
-    currentMediaLink = mediaLink
-    if(mediaWorker && mediaClient) {
-    	download()
-    	return;
-    }
-		mediaClient = new WebTorrent({
-			// downloadLimit:1000
-		})
-    mediaClient.on('error', function (err) {
-      console.error('playMediaLink err: ' + err.message)
-      // reject(err)
-    })
 		const download = () =>  {
 			console.info('playMediaLink on download')
 			mediaClient.add(mediaLink, (media) => {
@@ -61,6 +47,20 @@ const playMesh = async (mediaLink, currentPosition) =>
 				}
 			})
 		}
+		console.info("playMediaLink", mediaLink)
+    showVideoPlayer("", currentPosition)
+    currentMediaLink = mediaLink
+    if(mediaWorker && mediaClient) {
+    	download()
+    	return;
+    }
+		mediaClient = new WebTorrent({
+			// downloadLimit:1000
+		})
+    mediaClient.on('error', function (err) {
+      console.error('playMediaLink err: ' + err.message)
+      // reject(err)
+    })
 		navigator.serviceWorker.register("sw.min.js")
 		.then(reg => {
 		  const worker = reg.active || reg.waiting || reg.installing
