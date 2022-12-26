@@ -24,8 +24,14 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 	}
 }
 const playMesh = async (mediaLink, currentPosition) => 
-	new Promise((resolve,reject)=> {
-		Object.keys(prevMeshMedia).map(m=>m.pause())
+	new Promise(async (resolve,reject)=> {
+		await Promise.all(
+			Object.keys(prevMeshMedia)
+			.map(m=>
+				prevMeshMedia[m].pause()
+			)
+		)
+
 		if(prevMeshMedia[mediaLink]) {
 			prevMeshMedia[mediaLink].resume()
 			play(prevMeshMedia[mediaLink])
