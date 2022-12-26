@@ -35,7 +35,9 @@ const playMesh = async (mediaLink, currentPosition) =>
 				try {
 					console.info('playMediaLink on media', media)
 				  const file = media.files.find(function (file) {
-	          return file.name.endsWith(".mp4");
+	          return file.name.endsWith(".mp4") 
+	          || file.name.endsWith(".webm") 
+	          || file.name.endsWith(".mov");
 	        });
 				  console.info('playMediaLink on file', file)
 	        file.getStreamURL((err, url) => {
