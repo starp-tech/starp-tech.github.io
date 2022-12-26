@@ -406,7 +406,7 @@
     </a>
   	<a class="chevron right playNextParty" id="playNextParty"  href="#videoPlayer">
     </a>
-		<video id="videoPlayer" src="" autoplay controls></video>
+		<video id="videoPlayer" src="" autoplay></video>
 	</div>
 	<script type="text/javascript">
   	(function() {
@@ -652,11 +652,7 @@
 			console.info(meta)
 			if(currentPosition) {
 				const percent = 
-				// Math.round(
 					videoPlayer.duration * currentPosition
-					// )
-				// const one = 
-				console.info(videoPlayer.duration, percent, currentPosition)
 			  videoPlayer.currentTime = percent
 			}
 		}, false);
