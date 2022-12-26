@@ -17,7 +17,10 @@ if(isMacintosh()) {
 else {
 	a.innerHTML = "JOIN RANDOM PARTY"
 	a.href = "#platform"
-	a.onclick = startRandomMedia
+	a.addEventListener("click", (e)=>{
+		e.preventDefault()
+		window.startRandomMedia()
+	})
 }
 const processInitScreen = () => {
   try {

@@ -1,4 +1,3 @@
-
 let isResizeLocked = false
 let resizeTimeout;
 document.getElementById("platform").style = "background-image: url(img/fr.jpeg);background-position:"+window.innerWidth/2+"px;"
