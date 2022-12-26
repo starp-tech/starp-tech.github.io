@@ -65,7 +65,10 @@ const videoPlayer = document.getElementById("videoPlayer")
 let currentPosition;
 
 const showVideoPlayer = (mediaLink, cp) => {
-	currentPosition = cp
+	
+	if(!didSyncCurrentPosition)
+		currentPosition = cp
+
 	videoPlayer.src = mediaLink
 	videoContainer.className = ""
 	document.body.className = document.body.className + " overflowHidden"

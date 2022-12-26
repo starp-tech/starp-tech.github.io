@@ -1,12 +1,13 @@
 
+let didSyncCurrentPosition = false
 new function() {
   const apiHost = "www.starpy.me"
   const apiURL = `https://${apiHost}/api/v1/`
   const partyListUrl = `${apiURL}party-list`
   const partyMediaUrl = () => 
     `${apiURL}party-one/?partyId=${partyId}`
-  const partyLastUrl = () => 
-    `${apiURL}party-last/?partyId=${partyId}`
+  const partySyncUrl = () => 
+    `${apiURL}party-one/?partyId=${partyId}&messageType=party_media_sync`
   const socketUrl = `wss://${apiHost}/api/v1/socket`
 
   const joinRandomButton = 
@@ -50,11 +51,35 @@ new function() {
     return array;
   }
   const getPartyMedia = async () => {
-    const url = partyMediaUrl()
-    const f = await fetch(url)
-    const partyData = await f.json()
-    partyMedia = [partyData.results[0]._default]
-    console.info("partyMedia", partyMedia)
+    try {
+      didSyncCurrentPosition = false
+      const [f, s] = 
+        await Promise.all([
+          fetch(partyMediaUrl()), 
+          fetch(partySyncUrl())
+        ])
+      const [partyData, syncMessage] = 
+        await Promise.all([f.json(), s.json()])
+      if(partyData.results[0]) {
+        partyMedia = [partyData.results[0]._default]
+      }
+      else {
+        partyMedia = []
+      }
+      console.info('syncMessage', syncMessage)
+      if(syncMessage 
+        && syncMessage.results[0]
+        && syncMessage.results[0]._default
+        && syncMessage.results[0]._default.syncData) {
+        didSyncCurrentPosition = true
+        const {syncData} = syncMessage.results[0]._default
+        currentPosition = syncData.percent
+      }
+      console.info("partyMedia", partyMedia)
+    } catch(err) {
+      console.error("getPartyMedia error", err)
+      partyMedia = []
+    }
   }
 
   const getLastPartyMessage = async () => {
@@ -116,15 +141,26 @@ new function() {
         } = data
         if(id === "sync" || chatId !== partyId)
           return;
-        if(new Date(createdAt).valueOf() < timeJoined) {
+        const messageTime = new Date(createdAt).valueOf()
+        const now = new Date().valueOf()
+
+        if(!createdAt || messageTime < timeJoined) {
           console.info('old party message', data)
           return
         }
-        console.info('new party message', data)
+
+        console.info('new party message', data, now, messageTime)
+        let syncDiff = (now - messageTime) / 1000
+        console.info(syncDiff)
+        
+        if(isNaN(syncDiff))
+          syncDiff = 0
+
         if(media && media.id !== currentMedia.id) {
           partyMedia = [data]
           isPlaying = false
           await getCurrentMediaItem()
+          setupPartyView()
           playMediaLink(
             currentExtract.url,
             currentMedia.currentPosition
@@ -134,7 +170,7 @@ new function() {
           currentPosition = syncData.percent
           const percent = 
             videoPlayer.duration * currentPosition
-          videoPlayer.currentTime = percent
+          videoPlayer.currentTime = percent+syncDiff
         }
 
       }
