@@ -25,6 +25,8 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 }
 const playMesh = async (mediaLink, currentPosition) => 
 	new Promise(async (resolve,reject)=> {
+		
+    showVideoPlayer("", 0)
 		await Promise.all(
 			Object.keys(prevMeshMedia)
 			.map(m=>
@@ -59,7 +61,7 @@ const playMesh = async (mediaLink, currentPosition) =>
 			play(prevMeshMedia[mediaLink])
 			return
 		}
-		
+
 		const download = () =>  {
 			console.info('playMediaLink on download')
 			mediaClient.add(mediaLink, (media) => {
@@ -70,7 +72,6 @@ const playMesh = async (mediaLink, currentPosition) =>
 				}
 			})
 		}
-    showVideoPlayer("", 0)
     if(mediaWorker && mediaClient) {
     	download()
     	return;
