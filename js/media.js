@@ -21,10 +21,12 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 let registeredWorker = false;
 let mediaWorker;
 let mediaClient;
+let currentMediaLink;
 const playMesh = async (mediaLink, currentPosition) => 
 	new Promise((resolve,reject)=> {
 		console.info("playMediaLink", mediaLink)
     showVideoPlayer("", currentPosition)
+    currentMediaLink = mediaLink
     if(mediaWorker && mediaClient) {
     	download()
     	return;
@@ -34,7 +36,7 @@ const playMesh = async (mediaLink, currentPosition) =>
 		})
     mediaClient.on('error', function (err) {
       console.error('playMediaLink err: ' + err.message)
-      reject(err)
+      // reject(err)
     })
 		const download = () =>  {
 			console.info('playMediaLink on download')
@@ -49,8 +51,10 @@ const playMesh = async (mediaLink, currentPosition) =>
 				  console.info('playMediaLink on file', file)
 	        file.getStreamURL((err, url) => {
 	          console.log("playMediaLink ready", url);
-	          showVideoPlayer(url, currentPosition)
-	          resolve(url)
+	          if(currentMediaLink === mediaLink) {
+		          showVideoPlayer(url, currentPosition)
+		          resolve(url)
+	          }
 	        });
 				} catch(err) {
 					console.error("playMediaLink err", err)
