@@ -114,7 +114,7 @@ new function() {
       await hideVideoPlayer()
       playedParties.push(partyId)
       await setupPartyView()
-      await playMediaLink(
+      playMediaLink(
         currentExtract.url,
         currentMedia.currentPosition
         )
@@ -168,7 +168,7 @@ new function() {
 
       isPlaying = false
       await setupPartyView()
-      await playMediaLink(
+      playMediaLink(
         currentExtract.url, 
         currentMedia.currentPosition
         )
