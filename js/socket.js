@@ -195,6 +195,8 @@ new function() {
   window.startRandomMedia = async () => {
     if(isLoadingParty === true)
       return
+    clearTimeout(videoPlayerErrorTimeout)
+    videoPlayerErrorTimeout = null;
     isLoadingParty = true;
     try {
       await getPartyList()
@@ -230,6 +232,8 @@ new function() {
     if(isLoadingParty === true)
       return
     isLoadingParty = true
+    clearTimeout(videoPlayerErrorTimeout)
+    videoPlayerErrorTimeout = null;
     try {
       console.info("playAnotherParty")
       console.info('current party', party.id)
