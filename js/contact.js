@@ -1,9 +1,9 @@
 
-window.isMacintosh() {
+function isMacintosh() {
   return navigator.platform.indexOf('Mac') > -1
 }
 
-window.isWindows() {
+function isWindows() {
   return navigator.platform.indexOf('Win') > -1
 }
 
