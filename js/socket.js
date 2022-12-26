@@ -121,7 +121,9 @@ new function() {
     } catch(err) {
       console.error('startRandomMedia error', err)
       isLoadingParty = false
-      await startRandomMedia()
+      isPlaying = false;
+      startRandomMedia()
+      return;
     }
     isLoadingParty = false
   }
@@ -145,7 +147,7 @@ new function() {
         if(playedParties.length === partyList.length)
           playedParties = []
 
-        party = partyList.find(p=>!playedParties.includes(p.id))
+        party = shuffle(partyList).find(p=>!playedParties.includes(p.id))
         console.info('found a new party', party)
         partyId = party.id
         playedParties.push(partyId)
