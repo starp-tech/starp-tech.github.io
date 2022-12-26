@@ -1,8 +1,12 @@
 let isPlaying = false
+let registeredWorker = false;
+let mediaWorker;
+let mediaClient;
+let currentMediaLink;
 const playMediaLink = async (mediaLink, currentPosition) => {
 	if(isPlaying)
 		return
-
+	currentMediaLink = mediaLink;
 	isPlaying = true;
 	
 	try {
@@ -18,38 +22,34 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 		console.error("playMediaLink err", err)
 	}
 }
-let registeredWorker = false;
-let mediaWorker;
-let mediaClient;
-let currentMediaLink;
 const playMesh = async (mediaLink, currentPosition) => 
 	new Promise((resolve,reject)=> {
 		const download = () =>  {
 			console.info('playMediaLink on download')
 			mediaClient.add(mediaLink, (media) => {
 				try {
-					console.info('playMediaLink on media', media)
-				  const file = media.files.find(function (file) {
-	          return file.name.endsWith(".mp4") 
-	          || file.name.endsWith(".webm") 
-	          || file.name.endsWith(".mov");
-	        });
-				  console.info('playMediaLink on file', file)
-	        file.getStreamURL((err, url) => {
-	          console.log("playMediaLink ready", url);
-	          if(currentMediaLink === mediaLink) {
-		          showVideoPlayer(url, currentPosition)
-		          resolve(url)
-	          }
-	        });
+          if(currentMediaLink === mediaLink) {
+						console.info('playMediaLink on media', media)
+					  const file = media.files.find(function (file) {
+		          return file.name.endsWith(".mp4") 
+		          || file.name.endsWith(".webm") 
+		          || file.name.endsWith(".mov");
+		        });
+					  console.info('playMediaLink on file', file)
+		        file.getStreamURL((err, url) => {
+		          console.log("playMediaLink ready", url);
+		          if(currentMediaLink === mediaLink) {
+			          showVideoPlayer(url, currentPosition)
+			          resolve(url)
+		          }
+		        });
+		      }
 				} catch(err) {
 					console.error("playMediaLink err", err)
 				}
 			})
 		}
-		console.info("playMediaLink", mediaLink)
-    showVideoPlayer("", currentPosition)
-    currentMediaLink = mediaLink
+    showVideoPlayer("", 0)
     if(mediaWorker && mediaClient) {
     	download()
     	return;
