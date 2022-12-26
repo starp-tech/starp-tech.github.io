@@ -199,7 +199,8 @@ new function() {
     try {
       await getPartyList()
       if(playedParties.length > 5) playedParties = []
-      party = shuffle(partyList).find(p=>!playedParties.includes(p.id))
+      party = shuffle(partyList)
+        .find(p=>!playedParties.includes(p.id))
       partyId = party.id
       await getPartyMedia()
       await getCurrentMediaItem()

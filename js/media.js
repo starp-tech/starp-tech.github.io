@@ -22,6 +22,7 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 const playMesh = async (mediaLink, currentPosition) => 
 	new Promise((resolve,reject)=> {
 		console.info("playMediaLink", mediaLink)
+    showVideoPlayer("", currentPosition)
 		const client = new WebTorrent({
 			// downloadLimit:1000
 		})
