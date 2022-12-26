@@ -31,12 +31,6 @@ const playMesh = async (mediaLink, currentPosition) =>
 				prevMeshMedia[m].pause()
 			)
 		)
-
-		if(prevMeshMedia[mediaLink]) {
-			prevMeshMedia[mediaLink].resume()
-			play(prevMeshMedia[mediaLink])
-			return
-		}
 		const play = (media) => {
 			
 			if(!prevMeshMedia[mediaLink])
@@ -59,6 +53,13 @@ const playMesh = async (mediaLink, currentPosition) =>
 	      });
 	    }
 		}
+
+		if(prevMeshMedia[mediaLink]) {
+			prevMeshMedia[mediaLink].resume()
+			play(prevMeshMedia[mediaLink])
+			return
+		}
+		
 		const download = () =>  {
 			console.info('playMediaLink on download')
 			mediaClient.add(mediaLink, (media) => {
