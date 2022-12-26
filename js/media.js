@@ -84,6 +84,7 @@ videoPlayer.addEventListener('loadedmetadata', (meta) => {
 			videoPlayer.duration * currentPosition
 	  videoPlayer.currentTime = percent
 	}
+	videoPlayer.play()
 }, false);
 const hideVideoPlayer = (e) => {
 	if(videoContainer.className === "hidden")
