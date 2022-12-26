@@ -5,6 +5,16 @@ new function() {
     `https://${apiHost}/api/v1/party-media/?partyId="${partyId}"`
   const socketUrl = `wss://${apiHost}/api/v1/socket`
 
+  const joinRandomButton = 
+    document.getElementById("joinParty")
+  const playPrevPartyButton = 
+    document.getElementById("playPrevParty")
+  const playNextPartyButton = 
+    document.getElementById("playNextParty")
+  const partyTitle = 
+    document.getElementById('partyTitle')
+  const videoTitle = 
+    document.getElementById('videoTitle')
   let currentSocket;
   let username = "anon"
   let userId = "anon"
@@ -84,11 +94,11 @@ new function() {
       await getCurrentMediaItem()
       await hideVideoPlayer()
       playedParties.push(partyId)
+      await setupPartyView()
       await playMediaLink(
         currentExtract.url,
         currentMedia.currentPosition
         )
-      await setupPartyView()
     } catch(err) {
       console.error('startRandomMedia error', err)
     }
@@ -137,18 +147,19 @@ new function() {
       await getCurrentMediaItem()
 
       isPlaying = false
+      await setupPartyView()
       await playMediaLink(
         currentExtract.url, 
         currentMedia.currentPosition
         )
-      await setupPartyView()
     } catch(err) {
       console.error('startRandomMedia error', err)
     }
     isLoadingParty = false
   }
   const setupPartyView = () => {
-
+    partyTitle.innerHTML = `${party.name} by ${party.partyUserName}`
+    videoTitle.innerHTML = currentMedia.title
   }
   const pressNextParty = async () => {
     console.info('pressNextParty')
@@ -203,14 +214,6 @@ new function() {
       console.info("pressJoinPublic start", err)
     }
   }
-
-  
-  const joinRandomButton = 
-    document.getElementById("joinParty")
-  const playPrevPartyButton = 
-    document.getElementById("playPrevParty")
-  const playNextPartyButton = 
-    document.getElementById("playNextParty")
 
   joinRandomButton.addEventListener("click", (e)=>{
     e.preventDefault()

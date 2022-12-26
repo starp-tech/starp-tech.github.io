@@ -47,16 +47,16 @@
 		.jumbotron {
 			background: transparent;
 		}
-		.jumbotron h1, p, a {
+		.jumbotron h1, p, a, #partyTitle, #videoTitle {
 			color:palegoldenrod;
 			font-family: CODE_Bold, Helvetica, Arial, sans-serif;
 		}
-		.jumbotron p {
+		.jumbotron p, #videoTitle {
 			font-size: 28px;
 /*		  text-shadow: 2px 2px black;*/
 			-webkit-font-smoothing:antialiased;
 		}
-		.jumbotron h1 {
+		.jumbotron h1, #partyTitle {
 			font-size: 88px;
 /*		  text-shadow: 2px 2px black;*/
 			-webkit-font-smoothing:antialiased;
@@ -107,7 +107,7 @@
 	    top: 0%;
 	    bottom: 0;
 	    margin: 0;
-	    background-color: rgba(0, 0, 0, .2);
+	    background-color: rgba(0, 0, 0, .8);
 	    z-index: 1000;
 		}
 		#videoPlayer {
@@ -257,6 +257,18 @@
 		    border-radius: 10px;
 		  }
 		}
+		#partyTitle {
+			font-size: 44px;
+			margin:5px;
+	    position: absolute;
+	    z-index: 1001;
+		}
+		#videoTitle {
+			margin: 5px;
+	    position: absolute;
+	    z-index: 1001;
+	    top:100px;
+		}
 
   </style>
 </head>
@@ -401,6 +413,8 @@
 		class="hidden"
 		id="videoContainer"
 	>
+		<h1 id="partyTitle"></h1>
+		<h2 id="videoTitle"></h2>
 		<a href="#videoPlayer" class="close" onclick="hideVideoPlayer()"></a>
   	<a class="chevron left playPrevParty" id="playPrevParty" href="#videoPlayer">
     </a>
