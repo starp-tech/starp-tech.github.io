@@ -100,7 +100,7 @@ new function() {
   }
 
   let isLoadingParty = false
-  const startRandomMedia = async () => {
+  window.startRandomMedia = async () => {
     if(isLoadingParty === true)
       return
     isLoadingParty = true;

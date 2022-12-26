@@ -1,33 +1,55 @@
-const processIncomingFileLink = () => {
+let isPlaying = false
+const playMediaLink = async (mediaLink, currentPosition) => {
+	if(isPlaying)
+		return
+
+	isPlaying = true;
+	
 	try {
-		console.info("processIncomingFileLink 23")
+		
+		if(mediaLink.search("magnet") > -1) {
+			await playMesh(mediaLink, currentPosition)
+		} else {
+			showVideoPlayer(mediaLink, currentPosition)
+		}
+
+	} catch(err) {
+		isPlaying = false
+		console.error("playMediaLink err", err)
+	}
+}
+
+const playMesh = async (mediaLink, currentPosition) => 
+	new Promise((resolve,reject)=> {
+		console.info("playMediaLink", mediaLink)
 		const client = new WebTorrent({
 			// downloadLimit:1000
 		})
     client.on('error', function (err) {
-      console.error('ERROR: ' + err.message)
+      console.error('playMediaLink err: ' + err.message)
+      reject(err)
     })
-		const fileB = query.split("fileId=")[1].split("&")[0]
-		const fileId = atob(fileB)
-		const download = () => 
-			client.add(fileId, (media) => {
+		const download = () =>  {
+			console.info('playMediaLink on download')
+			client.add(mediaLink, (media) => {
 				try {
-					console.info('media', media)
-					window.starpyMedia = media
+					console.info('playMediaLink on media', media)
 				  const file = media.files.find(function (file) {
 	          return file.name.endsWith(".mp4");
 	        });
-				  window.starpyFile = file
-				  console.info('file', file)
-			    // Render to a <video> element by providing an ID. Alternatively, one can also provide a DOM element.
+				  console.info('playMediaLink on file', file)
 	        file.getStreamURL((err, url) => {
-	          console.log("Ready to play!", url);
+	          console.log("playMediaLink ready", url);
+	          showVideoPlayer(url, currentPosition)
+	          resolve(url)
 	        });
 				} catch(err) {
-					console.error("processIncomingFileLink err", err)
+					console.error("playMediaLink err", err)
 				}
 			})
-		navigator.serviceWorker.register("sw.min.js").then(reg => {
+		}
+		navigator.serviceWorker.register("sw.min.js")
+		.then(reg => {
 		  const worker = reg.active || reg.waiting || reg.installing
 		  function checkState (worker) {
 		    return worker.state === 'activated' && client.loadWorker(worker, download)
@@ -36,14 +58,34 @@ const processIncomingFileLink = () => {
 		    worker.addEventListener('statechange', ({ target }) => checkState(target))
 		  }
 		})
-	} catch(err) {
-		console.error("processIncomingFileLink err", err)
-	}
+	})
+
+const videoContainer = document.getElementById("videoContainer")
+const videoPlayer = document.getElementById("videoPlayer")
+let currentPosition;
+
+const showVideoPlayer = (mediaLink, cp) => {
+	currentPosition = cp
+	videoPlayer.src = mediaLink
+	videoContainer.className = ""
+	document.body.className = document.body.className + " overflowHidden"
 }
 
-
-if(query 
-	&& query.search("fileId") > -1 
-) {
-	processIncomingFileLink()
+videoPlayer.addEventListener('loadedmetadata', (meta) => {
+	console.info(meta)
+	if(currentPosition) {
+		const percent = 
+			videoPlayer.duration * currentPosition
+	  videoPlayer.currentTime = percent
+	}
+}, false);
+const hideVideoPlayer = (e) => {
+	if(videoContainer.className === "hidden")
+		return
+	document.body.className = ""
+	if(e)
+		e.preventDefault()
+	videoPlayer.src = ""
+	videoContainer.className = "hidden"
+	isPlaying = false;
 }

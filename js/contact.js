@@ -1,9 +1,24 @@
+
+function isMacintosh() {
+  return navigator.platform.indexOf('Mac') > -1
+}
+
+function isWindows() {
+  return navigator.platform.indexOf('Win') > -1
+}
 const query = window.location.search
 const osXdownloadUrl = "https://www.starpy.me/appcast/StarpyApp.tar.xz"
 const a = document.getElementById('joinButton');
 a.className = ""
-a.innerHTML = "Download For Mac OS X"
-a.href = osXdownloadUrl
+if(isMacintosh()) {
+	a.innerHTML = "Download For Mac OS X"
+	a.href = osXdownloadUrl
+}
+else {
+	a.innerHTML = "JOIN RANDOM PARTY"
+	a.href = "#platform"
+	a.onclick = startRandomMedia
+}
 const processInitScreen = () => {
   try {
 		let sUrl = "starpy://"+window.location.search.replace("?", "")
