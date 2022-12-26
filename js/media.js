@@ -29,7 +29,7 @@ const playMesh = async (mediaLink, currentPosition) =>
 
     showVideoPlayer("", 0)
 		await Promise.all(
-			mediaClient
+			mediaClient.torrents
 			.map(m=>m.pause())
 		)
 		const play = (media) => {
