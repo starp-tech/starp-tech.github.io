@@ -195,8 +195,8 @@ new function() {
   let touchendX = 0
     
   function checkDirection() {
-    if (touchendX < touchstartX && isPlaying) pressPrevParty()
-    if (touchendX > touchstartX && isPlaying) pressNextParty()
+    if (touchendX < touchstartX && isPlaying) pressNextParty()
+    if (touchendX > touchstartX && isPlaying) pressPrevParty()
   }
 
   document.addEventListener('touchstart', e => {
