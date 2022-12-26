@@ -6,6 +6,18 @@ function isMacintosh() {
 function isWindows() {
   return navigator.platform.indexOf('Win') > -1
 }
+function isiOS() {
+  return [
+    'iPad Simulator',
+    'iPhone Simulator',
+    'iPod Simulator',
+    'iPad',
+    'iPhone',
+    'iPod'
+  ].includes(navigator.platform)
+  // iPad on iOS 13 detection
+  || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+}
 
 const query = window.location.search
 const osXdownloadUrl = "https://www.starpy.me/appcast/StarpyApp.tar.xz"

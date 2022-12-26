@@ -350,14 +350,18 @@ new function() {
   
   window.videoPlayerErrorTimeout = null;
 
-  const videoPlayerErrorTimeoutTimer = 2000
+  const videoPlayerErrorTimeoutTimer = 5000
   videoPlayer.onerror = (e, err) => {
     console.error("videoPlayerError", e, videoPlayer.error)
 
     if(videoContainer.className === "hidden") 
       return;
     if(!videoPlayer.error || videoPlayer.error.message === 'MEDIA_ELEMENT_ERROR: Empty src attribute')
-      return
+      return;
+
+    if(currentMediaLink.search("magnet") > -1)
+      return;
+
     clearTimeout(videoPlayerErrorTimeout)
     videoPlayerErrorTimeout = null;
     videoPlayerErrorTimeout = setTimeout(()=>{

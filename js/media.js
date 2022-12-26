@@ -2,8 +2,9 @@ let isPlaying = false
 let registeredWorker = false;
 let mediaWorker;
 let mediaClient;
-let currentMediaLink;
 let prevMeshMedia = {}
+let meshLinksAdded = {}
+window.currentMediaLink;
 const playMediaLink = async (mediaLink, currentPosition) => {
 	if(isPlaying)
 		return
@@ -25,13 +26,11 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 }
 const playMesh = async (mediaLink, currentPosition) => 
 	new Promise(async (resolve,reject)=> {
-		
+
     showVideoPlayer("", 0)
 		await Promise.all(
-			Object.keys(prevMeshMedia)
-			.map(m=>
-				prevMeshMedia[m].pause()
-			)
+			mediaClient
+			.map(m=>m.pause())
 		)
 		const play = (media) => {
 			
@@ -55,7 +54,10 @@ const playMesh = async (mediaLink, currentPosition) =>
 	      });
 	    }
 		}
-
+		const prevPeerMedia = mediaClient.torrents.find((mt)=>mt.magnetURI===mediaLink)
+		if(prevPeerMedia) {
+			prevMeshMedia[mediaLink] = prevPeerMedia
+		}
 		if(prevMeshMedia[mediaLink]) {
 			prevMeshMedia[mediaLink].resume()
 			play(prevMeshMedia[mediaLink])
@@ -64,6 +66,11 @@ const playMesh = async (mediaLink, currentPosition) =>
 
 		const download = () =>  {
 			console.info('playMediaLink on download')
+			if(meshLinksAdded[mediaLink])
+				return;
+			
+			meshLinksAdded[mediaLink] = true
+
 			mediaClient.add(mediaLink, (media) => {
 				try {
 					play(media)
