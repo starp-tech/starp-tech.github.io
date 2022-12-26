@@ -18,21 +18,27 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 		console.error("playMediaLink err", err)
 	}
 }
-
+let registeredWorker = false;
+let mediaWorker;
+let mediaClient;
 const playMesh = async (mediaLink, currentPosition) => 
 	new Promise((resolve,reject)=> {
 		console.info("playMediaLink", mediaLink)
     showVideoPlayer("", currentPosition)
-		const client = new WebTorrent({
+    if(mediaWorker && mediaClient) {
+    	download()
+    	return;
+    }
+		mediaClient = new WebTorrent({
 			// downloadLimit:1000
 		})
-    client.on('error', function (err) {
+    mediaClient.on('error', function (err) {
       console.error('playMediaLink err: ' + err.message)
       reject(err)
     })
 		const download = () =>  {
 			console.info('playMediaLink on download')
-			client.add(mediaLink, (media) => {
+			mediaClient.add(mediaLink, (media) => {
 				try {
 					console.info('playMediaLink on media', media)
 				  const file = media.files.find(function (file) {
@@ -55,12 +61,15 @@ const playMesh = async (mediaLink, currentPosition) =>
 		.then(reg => {
 		  const worker = reg.active || reg.waiting || reg.installing
 		  function checkState (worker) {
-		    return worker.state === 'activated' && client.loadWorker(worker, download)
+		  	mediaWorker = worker
+		    return worker.state === 'activated' 
+		    	&& mediaClient.loadWorker(worker, download)
 		  }
 		  if (!checkState(worker)) {
-		    worker.addEventListener('statechange', ({ target }) => checkState(target))
+		    mediaWorker.addEventListener('statechange', ({ target }) => checkState(target))
 		  }
 		})
+		registeredWorker = true;
 	})
 
 const videoContainer = document.getElementById("videoContainer")
@@ -84,8 +93,12 @@ videoPlayer.addEventListener('loadedmetadata', (meta) => {
 			videoPlayer.duration * currentPosition
 	  videoPlayer.currentTime = percent
 	}
-	videoPlayer.play()
 }, false);
+
+videoPlayer.addEventListener("loadeddata", (data)=>{
+	videoPlayer.play()
+})
+
 const hideVideoPlayer = (e) => {
 	if(videoContainer.className === "hidden")
 		return
