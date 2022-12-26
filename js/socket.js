@@ -343,8 +343,18 @@ new function() {
     e.preventDefault()
     pressPrevParty()
   })
+  let videoPlayerErrorTimeout;
+  const videoPlayerErrorTimeoutTimer = 2000
   videoPlayer.onerror = () => {
-    if(videoContainer.className !== "hidden")
+
+    if(videoContainer.className === "hidden") 
+      return;
+
+    clearTimeout(videoPlayerErrorTimeout)
+    videoPlayerErrorTimeout = null;
+    videoPlayerErrorTimeout = setTimeout(()=>{
       window.startRandomMedia()
+    }, videoPlayerErrorTimeoutTimer)
+
   }
 }
