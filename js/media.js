@@ -3,6 +3,7 @@ let registeredWorker = false;
 let mediaWorker;
 let mediaClient;
 let currentMediaLink;
+let prevMeshMedia = {}
 const playMediaLink = async (mediaLink, currentPosition) => {
 	if(isPlaying)
 		return
@@ -24,26 +25,39 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 }
 const playMesh = async (mediaLink, currentPosition) => 
 	new Promise((resolve,reject)=> {
+		Object.keys(prevMeshMedia).map(m=>m.pause())
+		if(prevMeshMedia[mediaLink]) {
+			prevMeshMedia[mediaLink].resume()
+			play(prevMeshMedia[mediaLink])
+			return
+		}
+		const play = (media) => {
+			
+			if(!prevMeshMedia[mediaLink])
+				prevMeshMedia[mediaLink] = media
+
+	    if(currentMediaLink === mediaLink) {
+				console.info('playMediaLink on media', media)
+			  const file = media.files.find(function (file) {
+	        return file.name.endsWith(".mp4") 
+	        || file.name.endsWith(".webm") 
+	        || file.name.endsWith(".mov");
+	      });
+			  console.info('playMediaLink on file', file)
+	      file.getStreamURL((err, url) => {
+	        console.log("playMediaLink ready", url);
+	        if(currentMediaLink === mediaLink) {
+	          showVideoPlayer(url, currentPosition)
+	          resolve(url)
+	        }
+	      });
+	    }
+		}
 		const download = () =>  {
 			console.info('playMediaLink on download')
 			mediaClient.add(mediaLink, (media) => {
 				try {
-          if(currentMediaLink === mediaLink) {
-						console.info('playMediaLink on media', media)
-					  const file = media.files.find(function (file) {
-		          return file.name.endsWith(".mp4") 
-		          || file.name.endsWith(".webm") 
-		          || file.name.endsWith(".mov");
-		        });
-					  console.info('playMediaLink on file', file)
-		        file.getStreamURL((err, url) => {
-		          console.log("playMediaLink ready", url);
-		          if(currentMediaLink === mediaLink) {
-			          showVideoPlayer(url, currentPosition)
-			          resolve(url)
-		          }
-		        });
-		      }
+					play(media)
 				} catch(err) {
 					console.error("playMediaLink err", err)
 				}
