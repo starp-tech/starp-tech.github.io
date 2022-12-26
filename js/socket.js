@@ -343,13 +343,17 @@ new function() {
     e.preventDefault()
     pressPrevParty()
   })
-  let videoPlayerErrorTimeout;
+  
+  window.videoPlayerErrorTimeout = null;
+
   const videoPlayerErrorTimeoutTimer = 2000
-  videoPlayer.onerror = () => {
+  videoPlayer.onerror = (e, err) => {
+    console.error("videoPlayerError", e, videoPlayer.error)
 
     if(videoContainer.className === "hidden") 
       return;
-
+    if(!videoPlayer.error || videoPlayer.error.message === 'MEDIA_ELEMENT_ERROR: Empty src attribute')
+      return
     clearTimeout(videoPlayerErrorTimeout)
     videoPlayerErrorTimeout = null;
     videoPlayerErrorTimeout = setTimeout(()=>{
