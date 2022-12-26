@@ -1,9 +1,12 @@
 
 new function() {
   const apiHost = "www.starpy.me"
-  const partyListUrl = `https://${apiHost}/api/v1/party-list`
+  const apiURL = `https://${apiHost}/api/v1/`
+  const partyListUrl = `${apiURL}party-list`
   const partyMediaUrl = () => 
-    `https://${apiHost}/api/v1/party-one/?partyId=${partyId}`
+    `${apiURL}party-one/?partyId=${partyId}`
+  const partyLastUrl = () => 
+    `${apiURL}party-last/?partyId=${partyId}`
   const socketUrl = `wss://${apiHost}/api/v1/socket`
 
   const joinRandomButton = 
@@ -28,6 +31,7 @@ new function() {
   let currentExtract;
   let prevParty;
   let playedParties = []
+  let timeJoined;
   const shuffle = (array) => {
     let currentIndex = array.length,  randomIndex;
 
@@ -53,6 +57,17 @@ new function() {
     console.info("partyMedia", partyMedia)
   }
 
+  const getLastPartyMessage = async () => {
+    const url = partyLastUrl()
+    const f = await fetch(url)
+    const json = await f.json()
+    const lastMessage = json.results[0]._default
+    console.info(lastMessage)
+    if(lastMessage.chatId === partyId) {
+      console.info('message for this chat', partyId, lastMessage.chatId, partyId === lastMessage.chatId)
+    }
+  }
+
   const getPartyList = async () => {
     partyList = await (await fetch(partyListUrl)).json()
     partyList = partyList.rows.map(i=>i.value)
@@ -61,25 +76,68 @@ new function() {
   
   const createSocket = async () => {
     
-    if(currentSocket)
+    timeJoined = new Date().valueOf()
+    if(currentSocket) {
+      currentSocket.send(JSON.stringify({
+        name: username, 
+        partyId, 
+        chatId:partyId,
+        userId
+      }));
+
       return
+    }
     
     const ws = new WebSocket(socketUrl);
 
     ws.addEventListener("open", event => {
       console.info('ws opened')
       currentSocket = ws
-      ws.send(JSON.stringify({
+      currentSocket.send(JSON.stringify({
         name: username, 
         partyId, 
+        chatId:partyId,
         userId
       }));
     });
 
     ws.addEventListener("message", async (event) => {
-      console.info('new party message', event)
-      // let data = JSON.parse(event.data);
-      await getPartyMedia()
+      // console.info('new party message', event)
+      // await getLastPartyMessage()
+      if(event.data) {
+        const data = JSON.parse(event.data)
+        const {
+          id, 
+          chatId, 
+          createdAt, 
+          media,
+          messageType,
+          syncData
+        } = data
+        if(id === "sync" || chatId !== partyId)
+          return;
+        if(new Date(createdAt).valueOf() < timeJoined) {
+          console.info('old party message', data)
+          return
+        }
+        console.info('new party message', data)
+        if(media && media.id !== currentMedia.id) {
+          partyMedia = [data]
+          isPlaying = false
+          await getCurrentMediaItem()
+          playMediaLink(
+            currentExtract.url,
+            currentMedia.currentPosition
+          )
+        }
+        if(syncData) {
+          currentPosition = syncData.percent
+          const percent = 
+            videoPlayer.duration * currentPosition
+          videoPlayer.currentTime = percent
+        }
+
+      }
     });
 
     ws.addEventListener("close", event => {
@@ -161,7 +219,7 @@ new function() {
         isLoadingParty = false
         return playAnotherParty(prev)
       }
-
+      await createSocket()
       await getCurrentMediaItem()
 
       isPlaying = false
