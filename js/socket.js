@@ -343,4 +343,5 @@ new function() {
     e.preventDefault()
     pressPrevParty()
   })
+  videoPlayer.onerror = () => window.startRandomMedia()
 }
