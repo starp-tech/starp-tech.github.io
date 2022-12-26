@@ -1,3 +1,4 @@
+
 new function() {
   const apiHost = "www.starpy.me"
   const partyListUrl = `https://${apiHost}/api/v1/party-list`
@@ -27,6 +28,23 @@ new function() {
   let currentExtract;
   let prevParty;
   let playedParties = []
+  const shuffle = (array) => {
+    let currentIndex = array.length,  randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+  }
   const getPartyMedia = async () => {
     const url = partyMediaUrl()
     const f = await fetch(url)
@@ -88,7 +106,7 @@ new function() {
     isLoadingParty = true;
     try {
       await getPartyList()
-      party = partyList.find(p=>!playedParties.includes(p.id))
+      party = shuffle(partyList).find(p=>!playedParties.includes(p.id))
       partyId = party.id
       await getPartyMedia()
       await getCurrentMediaItem()
@@ -101,11 +119,12 @@ new function() {
         )
     } catch(err) {
       console.error('startRandomMedia error', err)
+      isLoadingParty = false
+      await startRandomMedia()
     }
     isLoadingParty = false
   }
   const getCurrentMediaItem = () => {
-
       currentItem = partyMedia
         .find(i=>i.messageType === "party_media")
       currentExtract = currentItem.ex
