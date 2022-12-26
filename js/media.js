@@ -28,11 +28,13 @@ const playMesh = async (mediaLink, currentPosition) =>
 	new Promise(async (resolve,reject)=> {
 
     showVideoPlayer("", 0)
-		if(mediaClient)
+		if(mediaClient) {
 			await Promise.all(
 				mediaClient.torrents
 				.map(m=>m.pause())
 			)
+			prevMeshMedia[mediaLink] = mediaClient.torrents.find((mt)=>mt.magnetURI===mediaLink)
+		}
 		const play = (media) => {
 			
 			if(!prevMeshMedia[mediaLink])
@@ -54,10 +56,6 @@ const playMesh = async (mediaLink, currentPosition) =>
 	        }
 	      });
 	    }
-		}
-		const prevPeerMedia = mediaClient.torrents.find((mt)=>mt.magnetURI===mediaLink)
-		if(prevPeerMedia) {
-			prevMeshMedia[mediaLink] = prevPeerMedia
 		}
 		if(prevMeshMedia[mediaLink]) {
 			prevMeshMedia[mediaLink].resume()
