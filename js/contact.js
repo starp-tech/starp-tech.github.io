@@ -6,6 +6,7 @@ function isMacintosh() {
 function isWindows() {
   return navigator.platform.indexOf('Win') > -1
 }
+
 const query = window.location.search
 const osXdownloadUrl = "https://www.starpy.me/appcast/StarpyApp.tar.xz"
 const a = document.getElementById('joinButton');
