@@ -3,7 +3,7 @@ new function() {
   const apiHost = "www.starpy.me"
   const partyListUrl = `https://${apiHost}/api/v1/party-list`
   const partyMediaUrl = () => 
-    `https://${apiHost}/api/v1/party-media/?partyId="${partyId}"`
+    `https://${apiHost}/api/v1/party-one/?partyId=${partyId}`
   const socketUrl = `wss://${apiHost}/api/v1/socket`
 
   const joinRandomButton = 
@@ -49,11 +49,7 @@ new function() {
     const url = partyMediaUrl()
     const f = await fetch(url)
     const partyData = await f.json()
-    partyMedia = 
-      partyData
-      .rows
-      .map(i=>i.value)
-      .sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))
+    partyMedia = [partyData.results[0]._default]
     console.info("partyMedia", partyMedia)
   }
 
