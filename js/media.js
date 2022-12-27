@@ -30,13 +30,13 @@ const playMesh = async (mediaLink, currentPosition) =>
     showVideoPlayer("", 0)
 		if(mediaClient) {
 			await Promise.all(
-				mediaClient.torrents
-				.map(m=>m.pause())
+				Object.keys(prevMeshMedia)
+				.map(m=>prevMeshMedia[m].pause())
 			)
 			// if(!prevMeshMedia[mediaLink])
 			// 	prevMeshMedia[mediaLink] = mediaClient.torrents.find((mt)=>mt.magnetURI===mediaLink)
 		}
-		
+
 		const play = (media) => {
 			
 			if(!prevMeshMedia[mediaLink])
