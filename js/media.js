@@ -167,11 +167,13 @@ const hideVideoPlayer = (e) => {
 
 const parseMediaFile = async () => {
 	const file = query.split("?file=")[1]
+	const fspl = file.split("/")
+	const filename = fspl[fspl.length-1]
 	createMediaClient()
 	mediaClient.seed(
-		await (
+		new File([await (
 			await fetch(file)
-		).blob()
+		).blob()], filename)
 	, (media)=>{
 		console.info("media", media)
 	})
