@@ -246,7 +246,7 @@ new function() {
 
         party = shuffle(partyList).find(p=>!playedParties.includes(p.id))
         if(!prevParty)
-          prevParty = part
+          prevParty = party
         console.info('found a new party', party)
         partyId = party.id
         playedParties.push(partyId)
