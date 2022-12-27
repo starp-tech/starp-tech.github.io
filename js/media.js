@@ -173,8 +173,11 @@ const parseMediaFile = async () => {
 		console.info('worker did set up')
 	})
 	try {
-		window.getFiles = () => {}
-		mediaClient.seed(file
+		const nfile = new File([
+			await (await fetch(file)).blob()
+		], filename)
+
+		mediaClient.seed(nfile
 		, (media)=>{
 			console.info("media", media)
 			if(window.ReactNativeWebView 
