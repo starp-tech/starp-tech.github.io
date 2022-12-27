@@ -25,7 +25,7 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 	}
 }
 
-const createMediaClient = () => {
+const createMediaClient = (download) => {
 	mediaClient = new WebTorrent({
 		// downloadLimit:1000
 	})
@@ -124,7 +124,7 @@ const playMesh = async (mediaLink, currentPosition) =>
     	download()
     	return;
     }
-    createMediaClient()
+    createMediaClient(download)
 	})
 
 const videoContainer = document.getElementById("videoContainer")
@@ -169,7 +169,9 @@ const parseMediaFile = async () => {
 	const file = query.split("?file=")[1]
 	const fspl = file.split("/")
 	const filename = fspl[fspl.length-1]
-	createMediaClient()
+	createMediaClient(()=>{
+		console.info('worker did set up')
+	})
 	mediaClient.seed(
 		new File([await (
 			await fetch(file)
