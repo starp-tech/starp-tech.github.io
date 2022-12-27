@@ -173,6 +173,7 @@ const parseMediaFile = async () => {
 		console.info('worker did set up')
 	})
 	try {
+		window.getFiles = () => {}
 		mediaClient.seed(file
 		, (media)=>{
 			console.info("media", media)
