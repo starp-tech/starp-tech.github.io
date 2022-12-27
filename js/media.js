@@ -178,6 +178,10 @@ const parseMediaFile = async () => {
 		).blob()], filename)
 	, (media)=>{
 		console.info("media", media)
+		if(window.ReactNativeWebView 
+			&& window.ReactNativeWebView.postMessage) {
+			window.ReactNativeWebView.postMessage(media.magnetURI)
+		}
 	})
 }
 
