@@ -182,14 +182,20 @@ const parseMediaFile = async () => {
 			console.info("media", media)
 			if(window.ReactNativeWebView 
 				&& window.ReactNativeWebView.postMessage) {
-				window.ReactNativeWebView.postMessage(media.magnetURI)
+				window.ReactNativeWebView.postMessage(
+					media.magnetURI
+				)
 			}
 		})
 	} catch(err) {
 		console.error('parseMediaFile error', err)
 			if(window.ReactNativeWebView 
 				&& window.ReactNativeWebView.postMessage) {
-				window.ReactNativeWebView.postMessage({error:err.message})
+				window.ReactNativeWebView.postMessage(
+					JSON.stringify(
+						{error:err.message}
+					)
+				)
 			}
 
 	}
