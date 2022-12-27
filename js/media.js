@@ -33,8 +33,10 @@ const playMesh = async (mediaLink, currentPosition) =>
 				mediaClient.torrents
 				.map(m=>m.pause())
 			)
-			prevMeshMedia[mediaLink] = mediaClient.torrents.find((mt)=>mt.magnetURI===mediaLink)
+			if(!prevMeshMedia[mediaLink])
+				prevMeshMedia[mediaLink] = mediaClient.torrents.find((mt)=>mt.magnetURI===mediaLink)
 		}
+		
 		const play = (media) => {
 			
 			if(!prevMeshMedia[mediaLink])
