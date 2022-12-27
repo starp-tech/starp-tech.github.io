@@ -24,6 +24,29 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 		console.error("playMediaLink err", err)
 	}
 }
+
+const createMediaClient = () => {
+	mediaClient = new WebTorrent({
+		// downloadLimit:1000
+	})
+  mediaClient.on('error', function (err) {
+    console.error('playMediaLink err: ' + err.message)
+    // reject(err)
+  })
+	navigator.serviceWorker.register("sw.min.js")
+	.then(reg => {
+	  const worker = reg.active || reg.waiting || reg.installing
+	  function checkState (worker) {
+	  	mediaWorker = worker
+	    return worker.state === 'activated' 
+	    	&& mediaClient.loadWorker(worker, download)
+	  }
+	  if (!checkState(worker)) {
+	    mediaWorker.addEventListener('statechange', ({ target }) => checkState(target))
+	  }
+	})
+	registeredWorker = true;
+}
 const playMesh = async (mediaLink, currentPosition) => 
 	new Promise(async (resolve,reject)=> {
 
@@ -44,11 +67,16 @@ const playMesh = async (mediaLink, currentPosition) =>
 
 	    if(currentMediaLink === mediaLink && media.files.length) {
 				console.info('playMediaLink on media', media)
-			  const file = media.files.find(function (file) {
+			  let file = media.files.find(function (file) {
 	        return file.name.endsWith(".mp4") 
 	        || file.name.endsWith(".webm") 
 	        || file.name.endsWith(".mov");
 	      });
+	      
+	      if(!file && media.files.length) {
+	      	file = media.files[0]
+	      }
+
 			  console.info('playMediaLink on file', file)
 	      file.getStreamURL((err, url) => {
 	        console.log("playMediaLink ready", url);
@@ -96,26 +124,7 @@ const playMesh = async (mediaLink, currentPosition) =>
     	download()
     	return;
     }
-		mediaClient = new WebTorrent({
-			// downloadLimit:1000
-		})
-    mediaClient.on('error', function (err) {
-      console.error('playMediaLink err: ' + err.message)
-      // reject(err)
-    })
-		navigator.serviceWorker.register("sw.min.js")
-		.then(reg => {
-		  const worker = reg.active || reg.waiting || reg.installing
-		  function checkState (worker) {
-		  	mediaWorker = worker
-		    return worker.state === 'activated' 
-		    	&& mediaClient.loadWorker(worker, download)
-		  }
-		  if (!checkState(worker)) {
-		    mediaWorker.addEventListener('statechange', ({ target }) => checkState(target))
-		  }
-		})
-		registeredWorker = true;
+    createMediaClient()
 	})
 
 const videoContainer = document.getElementById("videoContainer")
@@ -154,4 +163,20 @@ const hideVideoPlayer = (e) => {
 	videoPlayer.src = ""
 	videoContainer.className = "hidden"
 	isPlaying = false;
+}
+
+const parseMediaFile = async () => {
+	const file = query.split("?file=")[1]
+	createMediaClient()
+	mediaClient.seed(
+		await (
+			await fetch(file)
+		).blob()
+	, (media)=>{
+		console.info("media", media)
+	})
+}
+
+if(query && query.search("file") > -1) {
+	parseMediaFile()
 }
