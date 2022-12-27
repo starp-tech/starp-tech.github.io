@@ -287,18 +287,29 @@ new function() {
   }
   const pressNextParty = async () => {
     console.info('pressNextParty')
+    isLoadingParty = false
+    isPlaying = false
     playAnotherParty(false)
   }
 
   const pressPrevParty = async () => {
     console.info('pressPrevParty')
+    isLoadingParty = false
+    isPlaying = false
     playAnotherParty(true)
   }
   let touchendX = 0
-    
+  let swipeTimeout;
+
   function checkDirection() {
-    if (touchendX < touchstartX && isPlaying) pressNextParty()
-    if (touchendX > touchstartX && isPlaying) pressPrevParty()
+    if (touchendX < touchstartX && isPlaying) {
+      clearTimeout(swipeTimeout) 
+      swipeTimeout = setTimeout(pressNextParty, 300)
+    }
+    if (touchendX > touchstartX && isPlaying) {
+      clearTimeout(swipeTimeout) 
+      swipeTimeout = setTimeout(pressPrevParty, 300)
+    }
   }
 
   document.addEventListener('touchstart', e => {
@@ -331,26 +342,31 @@ new function() {
 
   const pressJoinPublic = async () => {
     console.info("pressJoinPublic start")
+    isLoadingParty = false
+    isPlaying = false
     try {
       await startRandomMedia()
       await createSocket()
     } catch(err) {
-      console.info("pressJoinPublic start", err)
+      console.info("pressJoinPublic err", err)
     }
   }
 
   joinRandomButton.addEventListener("click", (e)=>{
     e.preventDefault()
-    pressJoinPublic()
+    clearTimeout(swipeTimeout) 
+    swipeTimeout = setTimeout(pressJoinPublic, 300)
   })
 
   playNextPartyButton.addEventListener("click", (e)=>{
     e.preventDefault()
-    pressNextParty()
+    clearTimeout(swipeTimeout) 
+    swipeTimeout = setTimeout(pressNextParty, 300)
   })
   playPrevPartyButton.addEventListener("click", (e)=>{
     e.preventDefault()
-    pressPrevParty()
+    clearTimeout(swipeTimeout) 
+    swipeTimeout = setTimeout(pressPrevParty, 300)
   })
   
   window.videoPlayerErrorTimeout = null;
