@@ -250,7 +250,10 @@ new function() {
         playedParties.push(partyId)
       }
       else {
-        if(!prevParty) return playAnotherParty()
+        if(!prevParty) {
+          isLoadingParty = false
+          return playAnotherParty()
+        }
         party = prevParty
         partyId = party.id
         playedParties.pop()
