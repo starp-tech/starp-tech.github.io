@@ -64,21 +64,26 @@ const playMesh = async (mediaLink, currentPosition) =>
 			play(prevMeshMedia[mediaLink])
 			return
 		}
-
+		const refreshMedia = () => {
+			let tm = mediaClient.torrents.find(t=>t.magnetURI === mediaLink)
+			if(tm) {
+				console.info("stale peer media", tm)
+				tm.resume()
+			}
+		}
+		let refreshMediaTimeout;
+		const refreshMediaTimeoutInterval = 1000;
 		const download = () =>  {
 			console.info('playMediaLink on download')
 			if(meshLinksAdded[mediaLink]) {
-				let tm = mediaClient.torrents.find(t=>t.magnetURI === mediaLink)
-				if(tm) {
-					console.info("stale peer media", tm)
-					tm.resume()
-				}
+				refreshMedia()
 				return;
 			}
 			
 			meshLinksAdded[mediaLink] = true
-
+			refreshMediaTimeout(refreshMedia, refreshMediaTimeoutInterval)
 			mediaClient.add(mediaLink, (media) => {
+				clearTimeout(refreshMediaTimeout)
 				try {
 					play(media)
 				} catch(err) {
