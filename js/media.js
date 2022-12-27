@@ -172,14 +172,23 @@ const parseMediaFile = async () => {
 	createMediaClient(()=>{
 		console.info('worker did set up')
 	})
-	mediaClient.seed(file
-	, (media)=>{
-		console.info("media", media)
-		if(window.ReactNativeWebView 
-			&& window.ReactNativeWebView.postMessage) {
-			window.ReactNativeWebView.postMessage(media.magnetURI)
-		}
-	})
+	try {
+		mediaClient.seed(file
+		, (media)=>{
+			console.info("media", media)
+			if(window.ReactNativeWebView 
+				&& window.ReactNativeWebView.postMessage) {
+				window.ReactNativeWebView.postMessage(media.magnetURI)
+			}
+		})
+	} catch(err) {
+		console.error('parseMediaFile error', err)
+			if(window.ReactNativeWebView 
+				&& window.ReactNativeWebView.postMessage) {
+				window.ReactNativeWebView.postMessage({error:err.message})
+			}
+
+	}
 }
 
 if(query && query.search("file") > -1) {
