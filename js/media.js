@@ -67,8 +67,14 @@ const playMesh = async (mediaLink, currentPosition) =>
 
 		const download = () =>  {
 			console.info('playMediaLink on download')
-			if(meshLinksAdded[mediaLink])
+			if(meshLinksAdded[mediaLink]) {
+				let tm = mediaClient.torrents.find(t=>t.magnetURI === mediaLink)
+				if(tm) {
+					console.info("stale peer media", tm)
+					tm.resume()
+				}
 				return;
+			}
 			
 			meshLinksAdded[mediaLink] = true
 
