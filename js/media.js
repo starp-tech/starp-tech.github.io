@@ -81,7 +81,7 @@ const playMesh = async (mediaLink, currentPosition) =>
 			}
 			
 			meshLinksAdded[mediaLink] = true
-			refreshMediaTimeout(refreshMedia, refreshMediaTimeoutInterval)
+			refreshMediaTimeout = refreshMediaTimeout(refreshMedia, refreshMediaTimeoutInterval)
 			mediaClient.add(mediaLink, (media) => {
 				clearTimeout(refreshMediaTimeout)
 				try {
