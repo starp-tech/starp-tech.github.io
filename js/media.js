@@ -69,7 +69,7 @@ const playMesh = async (mediaLink, currentPosition, cb) =>
 			if(!prevMeshMedia[mediaLink])
 				prevMeshMedia[mediaLink] = media
 
-	    if(currentMediaLink === mediaLink && media.files.length) {
+	    if(currentMediaLink && currentMediaLink === mediaLink && media.files.length) {
 				console.info('playMediaLink on media', media)
 			  let file = media.files.find(function (file) {
 	        return file.name.endsWith(".mp4") 
