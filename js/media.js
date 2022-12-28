@@ -31,14 +31,14 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 let refreshMediaTimeout;
 const refreshMediaTimeoutInterval = 5000;
 const refreshMedia = (mediaLink) => {
+	clearTimeout(refreshMediaTimeout)
+	console.info("refreshMedia", mediaLink)
 	let tm = mediaClient.torrents.find(t=>t.magnetURI === mediaLink)
 	if(tm) {
-		clearTimeout(refreshMediaTimeout)
-		console.info("stale peer media", tm)
 		tm.resume()
-		refreshMediaTimeout = 
-			setTimeout(refreshMedia, refreshMediaTimeoutInterval)
 	}
+	refreshMediaTimeout = 
+		setTimeout(refreshMedia, refreshMediaTimeoutInterval)
 }
 
 const createMediaClient = (download) => {
@@ -196,13 +196,13 @@ const parseMediaFile = async (nfile, cb) => {
 			console.info("media", media)
 			const { magnetURI } = media
 
+			refreshMedia(magnetURI)
 			if(window.ReactNativeWebView 
 				&& window.ReactNativeWebView.postMessage) {
 				window
 				.ReactNativeWebView
 				.postMessage(magnetURI)
 			}
-			refreshMedia(magnetURI)
 			if(cb) cb(media)
 		})
 
