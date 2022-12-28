@@ -97,7 +97,7 @@ new function() {
     partyList = partyList.rows.map(i=>i.value)
     console.info(partyList)
   }
-  const socketCreatTimeout = null;
+  let socketCreatTimeout = null;
   const socketCreatTimeoutInterval = 20*1000
   const resetSocket = async () => {
       clearTimeout(socketCreatTimeout)

@@ -172,7 +172,6 @@ const hideVideoPlayer = (e) => {
 	videoContainer.className = "hidden"
 	isPlaying = false;
 }
-
 const parseMediaFile = async (nfile, cb) => {
 	console.info('nfile', nfile)
 	try {
