@@ -100,9 +100,11 @@ new function() {
   let socketCreatTimeout = null;
   const socketCreatTimeoutInterval = 20*1000
   const resetSocket = async () => {
+      let lastSocket = currentSocket;
       clearTimeout(socketCreatTimeout)
-      currentSocket.close()
       currentSocket = null;
+      await lastSocket.close()
+      lastSocket.destroy()
       createSocket()
   }
 
@@ -110,7 +112,12 @@ new function() {
     
     timeJoined = new Date().valueOf()
     if(currentSocket) {
-      resetSocket()
+      currentSocket.send(JSON.stringify({
+        name: username, 
+        partyId, 
+        chatId:partyId,
+        userId
+      }));
       return
     }
     
@@ -126,7 +133,7 @@ new function() {
         userId
       }));
       clearTimeout(socketCreatTimeout)
-      socketCreatTimeout = setTimeout(resetSocket, socketCreatTimeoutInterval)
+      // socketCreatTimeout = setTimeout(resetSocket, socketCreatTimeoutInterval)
     });
 
     ws.addEventListener("message", async (event) => {
@@ -181,9 +188,11 @@ new function() {
       }
     });
     const onClose = (event) => {
+      if(!currentSocket)
+        return;
       console.log("WebSocket closed, reconnecting:", event.code, event.reason);
-      resetSocket()
       ws.removeEventListener("close", onClose)
+      resetSocket()
     }
     ws.addEventListener("close", onClose);
 
