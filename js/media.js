@@ -89,7 +89,7 @@ const createMediaClient = (download) => {
 	})
 	registeredWorker = true;
 }
-const playMesh = async (mediaLink, currentPosition, cb) => 
+const playMesh = async (mediaLink, currentPosition, cb, blob) => 
 	new Promise(async (resolve,reject)=> {
 
     if(!cb)
@@ -120,7 +120,17 @@ const playMesh = async (mediaLink, currentPosition, cb) =>
 	      if(!file && media.files.length) {
 	      	file = media.files[0]
 	      }
-
+	      if(blob) {
+	      	file.getBlobURL((err, url)=>{
+		        console.log("download ready", url);
+		        if(cb) {
+		        	cb(url)
+		        	resolve(url)
+		        	return;
+		        }
+	      	})
+	      	return;
+	      }
 			  console.info('playMediaLink on file', file)
 	      file.getStreamURL((err, url) => {
 	        console.log("playMediaLink ready", url);
@@ -261,7 +271,7 @@ const parseDownloadFile = async () => {
 			a.innerHTML = "Download File"
 			a.href = mUrl
 			// a.download = true
-		})
+		}, true)
 
 	} catch(err) {
 		console.error('parseDownloadFile', err)
