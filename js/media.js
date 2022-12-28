@@ -222,6 +222,7 @@ const parseMediaFile = async (nfile, cb) => {
 	}
 }
 let clipboardMediaUrl = null;
+let clipboardMediaFileName = "";
 const parseDownloadFile = async () => {
 	console.info('parseDownloadFile')
 
@@ -243,7 +244,19 @@ const parseDownloadFile = async () => {
 const handleFileClickSelect = async (e) => {
 	
 	if(clipboardMediaUrl) {
-		navigator.clipboard.writeText(clipboardMediaUrl)
+		try {
+			navigator.clipboard.writeText(clipboardMediaUrl)
+			const shareData = {
+			  title: 'Starpy file sharing',
+			  text: clipboardMediaFileName,
+			  url: clipboardMediaUrl
+			}
+			if(navigator.canShare())
+		    await navigator.share(shareData);
+
+		} catch(err) {
+			console.error(err)
+		}
 		return e.preventDefault();
 	}
 
@@ -259,7 +272,9 @@ const handleFileClickSelect = async (e) => {
 hackingFileInput.addEventListener("change", (e)=>{
 	console.info('new file', hackingFileInput.files)
 	if(hackingFileInput.files.length) {
-		parseMediaFile(hackingFileInput.files[0], (media)=>{
+		const file = hackingFileInput.files[0]
+		clipboardMediaFileName = file.fileName
+		parseMediaFile(file, (media)=>{
 			console.info("new media", media)
 			clipboardMediaUrl = "https://starpy.me/#download="+media.magnetURI
 			navigator.clipboard.writeText(clipboardMediaUrl)
