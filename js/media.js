@@ -278,8 +278,8 @@ hackingFileInput.addEventListener("change", (e)=>{
 			console.info("new media", media)
 			clipboardMediaUrl = "https://starpy.me/#download="+media.magnetURI
 			navigator.clipboard.writeText(clipboardMediaUrl)
-			fileHackingSelectButton.innerHTML = "Copy Link"
-			fileHackingSelectButton2.innerHTML = "Copy Link"
+			fileHackingSelectButton.innerHTML = "Share Link"
+			fileHackingSelectButton2.innerHTML = "Share Link"
 		})
 	}
 })
