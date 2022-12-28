@@ -7,7 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="starpy app - collaborative media sharing video player online, offline and private">
 	<meta name=”robots” content="index, follow">
+	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha512-2cbsQGdowNDPcKuoBd2bCcsJky87Mv0LEtD/nunJUgk6MOYTgVMGihS/xCEghNf04DPhNiJ4DZw5BxDd1uyOdw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/webtorrent/1.9.6/webtorrent.min.js" integrity="sha512-XF9ds+vUoIZQm451mANDmt7l9JeuCrNWNwSFjQrtp6Vsme9+qlCanROSUNrskIAtJhMEghJ+u3HdxGNB/FcG+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <link rel="stylesheet" href="minimal-pace.css">
 
   <style type="text/css">
@@ -463,16 +469,18 @@
 		<div class="background-overlay" style="
 			background-color: rgba(0,0,0,0.5);
 		"></div>
+		<input class="hidden" id="hackingFileInput" type="file">
 		<div class="container parent-vertical heading-info">
 			<div class="jumbotron">
 			  	<div class="container">
-				  	<h1>Store Your Media</h1>
-				  	<p class="big-message">locally, <br> use peer cloud <br> or use starpy cloud</p>
-				  	<a class="joinButton" target="blank" href="https://github.com/starp-tech">
-				  		Pricing 
-				  	</a>
-				  	<a class="joinButton" target="blank" href="https://github.com/starp-tech">
-				  		Start Hacking  
+				  	<h1>Transfer Your Data Encrypted</h1>
+				  	<p class="big-message">Try our instant upload</p>
+				  	<a 
+				  		id="fileHackingSelectButton"
+				  		class="joinButton" 
+				  		target="blank" 
+				  		href="#hacking">
+				  		Upload File 
 				  	</a>
 				  	</div>
 			  	</div>
@@ -525,11 +533,10 @@
 	</script>
 	<script type="text/javascript" src="js/socket.js">
 	</script>
-  <script
-  	src="https://cdn.jsdelivr.net/npm/webtorrent@latest/webtorrent.min.js">
   </script>
 	<script type="text/javascript" src="js/media.js">
 	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 </body>
 </html>

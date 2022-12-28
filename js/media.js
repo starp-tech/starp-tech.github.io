@@ -4,6 +4,8 @@ let mediaWorker;
 let mediaClient;
 let prevMeshMedia = {}
 let meshLinksAdded = {}
+const fileHackingSelectButton = document.getElementById("fileHackingSelectButton")
+const hackingFileInput = document.getElementById("hackingFileInput")
 window.currentMediaLink;
 const playMediaLink = async (mediaLink, currentPosition) => {
 	if(isPlaying)
@@ -47,10 +49,12 @@ const createMediaClient = (download) => {
 	})
 	registeredWorker = true;
 }
-const playMesh = async (mediaLink, currentPosition) => 
+const playMesh = async (mediaLink, currentPosition, cb) => 
 	new Promise(async (resolve,reject)=> {
 
-    showVideoPlayer("", 0)
+    if(!cb)
+    	showVideoPlayer("", 0)
+
 		if(mediaClient) {
 			await Promise.all(
 				Object.keys(prevMeshMedia)
@@ -80,6 +84,11 @@ const playMesh = async (mediaLink, currentPosition) =>
 			  console.info('playMediaLink on file', file)
 	      file.getStreamURL((err, url) => {
 	        console.log("playMediaLink ready", url);
+	        if(cb) {
+	        	cb(url)
+	        	resolve(url)
+	        	return;
+	        }
 	        if(currentMediaLink === mediaLink) {
 	          showVideoPlayer(url, currentPosition)
 	          resolve(url)
@@ -132,7 +141,6 @@ const videoPlayer = document.getElementById("videoPlayer")
 let currentPosition;
 
 const showVideoPlayer = (mediaLink, cp) => {
-	
 	if(!didSyncCurrentPosition)
 		currentPosition = cp
 
@@ -165,28 +173,35 @@ const hideVideoPlayer = (e) => {
 	isPlaying = false;
 }
 
-const parseMediaFile = async () => {
-	const file = query.split("?file=")[1]
-	const fspl = file.split("/")
-	const filename = fspl[fspl.length-1]
-	createMediaClient(()=>{
-		console.info('worker did set up')
-	})
+const parseMediaFile = async (nfile, cb) => {
+	console.info('nfile', nfile)
 	try {
-		const nfile = new File([
-			await (await fetch(file)).blob()
-		], filename)
+		if(!nfile) {
+			const file = query.split("?file=")[1]
+			const fspl = file.split("/")
+			const filename = fspl[fspl.length-1]
+			createMediaClient(()=>{
+				console.info('worker did set up')
+			})
+			nfile = new File([
+				await (await fetch(file)).blob()
+			], filename)
+		}
 
 		mediaClient.seed(nfile
 		, (media)=>{
 			console.info("media", media)
+			const { magnetURI } = media
+
 			if(window.ReactNativeWebView 
 				&& window.ReactNativeWebView.postMessage) {
-				window.ReactNativeWebView.postMessage(
-					media.magnetURI
-				)
+				window
+				.ReactNativeWebView
+				.postMessage(magnetURI)
 			}
+			if(cb) cb(media)
 		})
+
 	} catch(err) {
 		console.error('parseMediaFile error', err)
 			if(window.ReactNativeWebView 
@@ -202,7 +217,55 @@ const parseMediaFile = async () => {
 
 	}
 }
+let clipboardMediaUrl = null;
+const parseDownloadFile = async () => {
+	console.info('parseDownloadFile')
 
-if(query && query.search("file") > -1) {
+	try {
+		await createMediaClient()
+		const mediaLink = query.split("?download=")[1]
+		const meshUrl = await playMesh(mediaLink, 0, ()=>{})
+		a.innerHTML = "Download File"
+		a.href = meshUrl
+
+	} catch(err) {
+		console.error('parseDownloadFile', err)
+	}
+}
+const handleFileClickSelect = async (e) => {
+	
+	if(clipboardMediaUrl) {
+		navigator.clipboard.writeText(clipboardMediaUrl)
+		return e.preventDefault();
+	}
+
+	try {
+		await createMediaClient()
+	} catch(err) {
+		console.error("handleFileClickSelect client err", err)
+	}
+	hackingFileInput.click(); 
+	return e.preventDefault();
+}
+
+hackingFileInput.addEventListener("change", (e)=>{
+	console.info('new file', hackingFileInput.files)
+	if(hackingFileInput.files.length) {
+		parseMediaFile(hackingFileInput.files[0], (media)=>{
+			console.info("new media", media)
+			clipboardMediaUrl = "https://starpy.me/?download="+media.magnetURI
+			navigator.clipboard.writeText(clipboardMediaUrl)
+			fileHackingSelectButton.innerHTML = "Copy Link"
+		})
+	}
+})
+
+fileHackingSelectButton.addEventListener("click", handleFileClickSelect)
+
+if(query && query.indexOf("?file=") > -1) {
 	parseMediaFile()
+}
+
+if(query && query.indexOf("?download=") > -1) {
+	parseDownloadFile()
 }
