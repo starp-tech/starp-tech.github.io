@@ -1,4 +1,3 @@
-
 let didSyncCurrentPosition = false
 new function() {
   const apiHost = "www.starpy.me"
@@ -198,6 +197,8 @@ new function() {
     clearTimeout(videoPlayerErrorTimeout)
     videoPlayerErrorTimeout = null;
     isLoadingParty = true;
+    if(partyId)
+      playedParties.push(partyId)
     try {
       await getPartyList()
       if(playedParties.length > 5) playedParties = []
@@ -207,38 +208,52 @@ new function() {
       await getPartyMedia()
       await getCurrentMediaItem()
       await hideVideoPlayer()
-      playedParties.push(partyId)
       await setupPartyView()
       playMediaLink(
         currentExtract.url,
         currentMedia.currentPosition
         )
       window.location.hash = "#partyId="+partyId
+      await createSocket()
     } catch(err) {
       console.error('startRandomMedia error', err)
       isLoadingParty = false
       isPlaying = false;
       startRandomMedia()
-      return;
     }
     isLoadingParty = false
   }
 
   window.playPartyById = async (pid) => {
-    partyId = pid
-    await getPartyList()
-    party = partyList.find(p=>p.id===partyId)
-    console.info('playPartyById', partyId)
-    await getPartyMedia()
-    await getCurrentMediaItem()
-    await hideVideoPlayer()
-    playedParties.push(partyId)
-    await setupPartyView()
-    playMediaLink(
-      currentExtract.url,
-      currentMedia.currentPosition
-      )
-    playerPlayButton.className = ""
+    clearTimeout(videoPlayerErrorTimeout)
+    videoPlayerErrorTimeout = null;
+    isLoadingParty = true;
+    try {
+      if(partyId)
+        playedParties.push(partyId)
+      console.info(playedParties)
+      partyId = pid
+      window.location.hash = "#partyId="+partyId
+      await getPartyList()
+      party = partyList.find(p=>p.id===partyId)
+      console.info('playPartyById', partyId)
+      await getPartyMedia()
+      await getCurrentMediaItem()
+      await hideVideoPlayer()
+      await setupPartyView()
+      playMediaLink(
+        currentExtract.url,
+        currentMedia.currentPosition
+        )
+      playerPlayButton.className = ""
+      await createSocket()
+    } catch(err) {
+      console.error('startRandomMedia error', err)
+      isLoadingParty = false
+      isPlaying = false;
+      startRandomMedia()
+    }
+    isLoadingParty = false
   }
   const playerPlayButton = 
     document.getElementById("playerPlayButton")
@@ -261,55 +276,23 @@ new function() {
       currentMedia = currentItem.media
   }
   const playAnotherParty = async (prev) => {
-    if(isLoadingParty === true)
-      return
-    isLoadingParty = true
     clearTimeout(videoPlayerErrorTimeout)
     videoPlayerErrorTimeout = null;
     try {
-      console.info("playAnotherParty")
-      console.info('current party', party.id)
-      if(!prev) {
-        prevParty = party
-        await getPartyList()
-        
-        if(playedParties.length === partyList.length)
-          playedParties = []
 
-        party = shuffle(partyList).find(p=>!playedParties.includes(p.id))
-        if(!prevParty)
-          prevParty = party
-        console.info('found a new party', party)
-        partyId = party.id
-        playedParties.push(partyId)
+      if(prev) {
+        const preParty = 
+          playedParties.pop()
+        
+        if(preParty)
+          await playPartyById(preParty)
+        else 
+          await startRandomMedia()
       }
       else {
-        if(!prevParty) {
-          isLoadingParty = false
-          return playAnotherParty()
-        }
-        party = prevParty
-        partyId = party.id
-        playedParties.pop()
+        console.info('play next')
+        await startRandomMedia()
       }
-      window.location.hash = "#partyId="+partyId
-
-
-      await getPartyMedia()
-
-      if(partyMedia.length === 0) {
-        isLoadingParty = false
-        return playAnotherParty(prev)
-      }
-      await createSocket()
-      await getCurrentMediaItem()
-
-      isPlaying = false
-      await setupPartyView()
-      playMediaLink(
-        currentExtract.url, 
-        currentMedia.currentPosition
-        )
     } catch(err) {
       console.error('startRandomMedia error', err)
     }
@@ -432,7 +415,6 @@ new function() {
     console.info(hashStart, pid)
     try {
       playPartyById(pid)
-      await createSocket()
     } catch(err) {
       console.info("pressJoinPublic err", err)
     }
