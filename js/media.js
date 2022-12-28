@@ -231,7 +231,7 @@ const parseDownloadFile = async () => {
 		const meshUrl = await playMesh(mediaLink, 0, (mUrl)=>{
 			a.innerHTML = "Download File"
 			a.href = mUrl
-			a.download = true
+			// a.download = true
 		})
 
 	} catch(err) {
