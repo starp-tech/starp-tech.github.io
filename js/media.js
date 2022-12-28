@@ -128,6 +128,9 @@ const playMesh = async (mediaLink, currentPosition, cb, blob) =>
 	      	file = media.files[0]
 	      }
 	      if(blob) {
+
+
+				  media.on('download', ()=>updateSpeed(media))
 	      	file.getBlobURL((err, url)=>{
 		        console.log("download ready", url);
 		        if(cb) {
@@ -207,6 +210,28 @@ videoPlayer.addEventListener('loadedmetadata', (meta) => {
 videoPlayer.addEventListener("loadeddata", (data)=>{
 	videoPlayer.play()
 })
+
+const updateSpeed = (media) => {
+  const progress = (100 * media.progress).toFixed(1)
+  a.innerHTML = "Loading file "+progress+"%"
+  // let remaining
+  // if (media.done) {
+  //   remaining = 'Done.'
+  // } else {
+  //   remaining = media.timeRemaining !== Infinity
+  //     ? formatDistance(media.timeRemaining, 0, { includeSeconds: true })
+  //     : 'Infinity years'
+  //   remaining = remaining[0].toUpperCase() + remaining.substring(1) + ' remaining.'
+  // }
+  
+  // util.updateSpeed(
+  //   '<b>Peers:</b> ' + torrent.numPeers + ' ' +
+  //   '<b>Progress:</b> ' + progress + '% ' +
+  //   '<b>Download speed:</b> ' + prettierBytes(window.client.downloadSpeed) + '/s ' +
+  //   '<b>Upload speed:</b> ' + prettierBytes(window.client.uploadSpeed) + '/s ' +
+  //   '<b>ETA:</b> ' + remaining
+  // )
+}
 
 const hideVideoPlayer = (e) => {
 	if(videoContainer.className === "hidden")
