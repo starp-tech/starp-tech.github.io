@@ -8,7 +8,12 @@ const fileHackingSelectButton = document.getElementById("fileHackingSelectButton
 const fileHackingSelectButton2 = document.getElementById("fileHackingSelectButton2")
 const hackingFileInput = document.getElementById("hackingFileInput")
 window.currentMediaLink = "";
-const mediaHosts = [["wss://media.starpy.me"]]
+const mediaHosts = [
+	["wss://media.starpy.me"], 
+	["udp://media.starpy.me"],
+	["tcp://media.starpy.me"], 
+	["http://media.starpy.me"]
+]
 const playMediaLink = async (mediaLink, currentPosition) => {
 	if(isPlaying)
 		return
@@ -43,7 +48,28 @@ const refreshMedia = (mediaLink) => {
 
 const createMediaClient = (download) => {
 	mediaClient = new WebTorrent({
-		// downloadLimit:1000
+		tracker:{
+			rtcConfig:{
+	      {
+	        urls: "stun:relay.metered.ca:80",
+	      },
+	      {
+	        urls: "turn:relay.metered.ca:80",
+	        username: "dec3bfb1efe32089e944d1e6",
+	        credential: "oNnsPnZj/IM/G+gU",
+	      },
+	      {
+	        urls: "turn:relay.metered.ca:443",
+	        username: "dec3bfb1efe32089e944d1e6",
+	        credential: "oNnsPnZj/IM/G+gU",
+	      },
+	      {
+	        urls: "turn:relay.metered.ca:443?transport=tcp",
+	        username: "dec3bfb1efe32089e944d1e6",
+	        credential: "oNnsPnZj/IM/G+gU",
+	      }
+			}
+		}
 	})
   mediaClient.on('error', function (err) {
     console.error('playMediaLink err: ' + err.message)
