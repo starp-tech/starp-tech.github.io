@@ -69,7 +69,7 @@ const playMesh = async (mediaLink, currentPosition, cb) =>
 			if(!prevMeshMedia[mediaLink])
 				prevMeshMedia[mediaLink] = media
 
-	    if(currentMediaLink === mediaLink && media.files.length) {
+	    if(media.files.length) {
 				console.info('playMediaLink on media', media)
 			  let file = media.files.find(function (file) {
 	        return file.name.endsWith(".mp4") 
@@ -101,27 +101,28 @@ const playMesh = async (mediaLink, currentPosition, cb) =>
 			play(prevMeshMedia[mediaLink])
 			return
 		}
+		let refreshMediaTimeout;
+		const refreshMediaTimeoutInterval = 1000;
 		const refreshMedia = () => {
 			let tm = mediaClient.torrents.find(t=>t.magnetURI === mediaLink)
 			if(tm) {
+				clearTimeout(refreshMediaTimeout)
 				console.info("stale peer media", tm)
 				tm.resume()
+				refreshMediaTimeout = 
+					setTimeout(refreshMedia, refreshMediaTimeoutInterval)
 			}
 		}
-		let refreshMediaTimeout;
-		const refreshMediaTimeoutInterval = 1000;
 		const download = () =>  {
 			console.info('playMediaLink on download')
 			if(meshLinksAdded[mediaLink]) {
 				refreshMedia()
 				return;
 			}
-			
 			meshLinksAdded[mediaLink] = true
 			refreshMediaTimeout = 
 				setTimeout(refreshMedia, refreshMediaTimeoutInterval)
 			mediaClient.add(mediaLink, (media) => {
-				clearTimeout(refreshMediaTimeout)
 				try {
 					play(media)
 				} catch(err) {
@@ -172,6 +173,7 @@ const hideVideoPlayer = (e) => {
 	videoContainer.className = "hidden"
 	isPlaying = false;
 }
+
 const parseMediaFile = async (nfile, cb) => {
 	console.info('nfile', nfile)
 	try {
