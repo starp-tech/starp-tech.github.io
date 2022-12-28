@@ -7,6 +7,7 @@ let meshLinksAdded = {}
 const fileHackingSelectButton = document.getElementById("fileHackingSelectButton")
 const hackingFileInput = document.getElementById("hackingFileInput")
 window.currentMediaLink = "";
+const mediaHosts = [["wss://media.starpy.me"]]
 const playMediaLink = async (mediaLink, currentPosition) => {
 	if(isPlaying)
 		return
@@ -189,7 +190,7 @@ const parseMediaFile = async (nfile, cb) => {
 			], filename)
 		}
 
-		mediaClient.seed(nfile
+		mediaClient.seed(nfile, {announceList:mediaHosts}
 		, (media)=>{
 			console.info("media", media)
 			const { magnetURI } = media
