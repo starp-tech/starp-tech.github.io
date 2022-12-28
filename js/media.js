@@ -6,7 +6,7 @@ let prevMeshMedia = {}
 let meshLinksAdded = {}
 const fileHackingSelectButton = document.getElementById("fileHackingSelectButton")
 const hackingFileInput = document.getElementById("hackingFileInput")
-window.currentMediaLink;
+window.currentMediaLink = "";
 const playMediaLink = async (mediaLink, currentPosition) => {
 	if(isPlaying)
 		return
@@ -69,7 +69,7 @@ const playMesh = async (mediaLink, currentPosition, cb) =>
 			if(!prevMeshMedia[mediaLink])
 				prevMeshMedia[mediaLink] = media
 
-	    if(currentMediaLink && currentMediaLink === mediaLink && media.files.length) {
+	    if(currentMediaLink === mediaLink && media.files.length) {
 				console.info('playMediaLink on media', media)
 			  let file = media.files.find(function (file) {
 	        return file.name.endsWith(".mp4") 
