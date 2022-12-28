@@ -38,7 +38,7 @@ const refreshMedia = (mediaLink) => {
 		tm.resume()
 	}
 	refreshMediaTimeout = 
-		setTimeout(refreshMedia, refreshMediaTimeoutInterval)
+		setTimeout(refreshMedia, refreshMediaTimeoutInterval, mediaLink)
 }
 
 const createMediaClient = (download) => {
