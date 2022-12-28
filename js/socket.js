@@ -238,6 +238,20 @@ new function() {
       currentExtract.url,
       currentMedia.currentPosition
       )
+    playerPlayButton.className = ""
+  }
+  const playerPlayButton = 
+    document.getElementById("playerPlayButton")
+
+  window.togglePlay = () => {
+    if(videoPlayer.paused) {
+      playerPlayButton.className = "hidden"
+      videoPlayer.play()
+    }
+    else {
+      playerPlayButton.className = ""
+      videoPlayer.pause()
+    }
   }
 
   const getCurrentMediaItem = () => {

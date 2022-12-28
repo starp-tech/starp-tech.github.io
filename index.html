@@ -344,7 +344,22 @@
 		 		margin-top:0px;
 			}
 		}
-
+		#playerPlayButton {
+		  border: 0;
+    background: transparent;
+    box-sizing: border-box;
+    width: 0;
+    height: 74px;
+    border-color: transparent transparent transparent palegoldenrod;
+    transition: 100ms all ease;
+    cursor: pointer;
+    border-style: solid;
+    border-width: 37px 0 37px 60px;
+    position: absolute;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+    z-index: 10000000000;
+		}
   </style>
 </head>
 <body>
@@ -494,13 +509,14 @@
 		<h1 id="partyTitle"></h1>
 		<h2 id="videoTitle"></h2>
 		<a href="#videoPlayer" class="close" onclick="hideVideoPlayer()"></a>
+		<div id="playerPlayButton" onclick="togglePlay()" class="hidden"></div>
   	<a class="chevron left playPrevParty" id="playPrevParty" href="#videoPlayer">
     </a>
   	<a class="chevron right playNextParty" id="playNextParty"  href="#videoPlayer">
     </a>
     <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 
-		<video id="videoPlayer" src="" autoplay playsinline></video>
+		<video id="videoPlayer" onclick="togglePlay()" src="" autoplay playsinline></video>
 	</div>
 
 	<script type="text/javascript" src="js/contact.js">
