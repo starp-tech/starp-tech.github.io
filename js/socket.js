@@ -413,6 +413,7 @@ new function() {
   }
 }
 const hashStart = window.location.hash
+
 const parsePartyQuery = async () => {
   const pid = hashStart.split("#partyId=")[1]
   console.info(hashStart, pid)
@@ -423,7 +424,6 @@ const parsePartyQuery = async () => {
     console.info("pressJoinPublic err", err)
   }
 }
-
 
 if(hashStart 
   && hashStart.search("partyId") > -1) {
