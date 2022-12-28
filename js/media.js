@@ -124,7 +124,7 @@ const playMesh = async (mediaLink, currentPosition, cb, blob) =>
 	      	file.getBlobURL((err, url)=>{
 		        console.log("download ready", url);
 		        if(cb) {
-		        	cb(url)
+		        	cb(url, file.name)
 		        	resolve(url)
 		        	return;
 		        }
@@ -267,10 +267,10 @@ const parseDownloadFile = async () => {
 		a.href = hashStart
 		await createMediaClient()
 		const mediaLink = hashStart.split("#download=")[1]
-		const meshUrl = await playMesh(mediaLink, 0, (mUrl)=>{
+		const meshUrl = await playMesh(mediaLink, 0, (mUrl, fileName)=>{
 			a.innerHTML = "Download File"
 			a.href = mUrl
-			// a.download = true
+      a.download = fileName
 		}, true)
 
 	} catch(err) {
