@@ -144,12 +144,12 @@ const playMesh = async (mediaLink, currentPosition, cb) =>
 		const download = () =>  {
 			console.info('playMediaLink on download')
 			if(meshLinksAdded[mediaLink]) {
-				refreshMedia()
+				refreshMedia(mediaLink)
 				return;
 			}
 			meshLinksAdded[mediaLink] = true
 			refreshMediaTimeout = 
-				setTimeout(refreshMedia, refreshMediaTimeoutInterval)
+				setTimeout(refreshMedia, refreshMediaTimeoutInterval, mediaLink)
 			mediaClient.add(mediaLink, (media) => {
 				try {
 					play(media)
