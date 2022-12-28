@@ -382,20 +382,20 @@ new function() {
   }
 
   joinRandomButton.addEventListener("click", (e)=>{
-    e.preventDefault()
     clearTimeout(swipeTimeout) 
     swipeTimeout = setTimeout(pressJoinPublic, 300)
+    return e.preventDefault()
   })
 
   playNextPartyButton.addEventListener("click", (e)=>{
-    e.preventDefault()
     clearTimeout(swipeTimeout) 
     swipeTimeout = setTimeout(pressNextParty, 300)
+    return e.preventDefault()
   })
   playPrevPartyButton.addEventListener("click", (e)=>{
-    e.preventDefault()
     clearTimeout(swipeTimeout) 
     swipeTimeout = setTimeout(pressPrevParty, 300)
+    return e.preventDefault()
   })
   
   window.videoPlayerErrorTimeout = null;

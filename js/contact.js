@@ -29,14 +29,6 @@ if(isMacintosh()) {
 	a.innerHTML = "Download For Mac OS X"
 	a.href = osXdownloadUrl
 }
-else {
-	a.innerHTML = "JOIN RANDOM PARTY"
-	a.href = "#platform"
-	a.addEventListener("click", (e)=>{
-		e.preventDefault()
-		window.startRandomMedia()
-	})
-}
 const processInitScreen = () => {
   try {
 		let sUrl = "starpy://"+window.location.search.replace("?", "")

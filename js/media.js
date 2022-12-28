@@ -35,12 +35,19 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 }
 let refreshMediaTimeout;
 const refreshMediaTimeoutInterval = 5000;
-const refreshMedia = (mediaLink) => {
+const refreshMedia = (mediaLink, cb) => {
 	clearTimeout(refreshMediaTimeout)
 	console.info("refreshMedia", mediaLink)
 	let tm = mediaClient.torrents.find(t=>t.magnetURI === mediaLink)
 	if(tm) {
-		tm.resume()
+		console.info('stale media', tm)
+		if(cb) {
+			tm.destroy()
+			mediaClient.add(mediaLink, cb)
+		}
+		else {
+			tm.resume()
+		}
 	}
 	refreshMediaTimeout = 
 		setTimeout(refreshMedia, refreshMediaTimeoutInterval, mediaLink)
@@ -205,11 +212,11 @@ const hideVideoPlayer = (e) => {
 	if(videoContainer.className === "hidden")
 		return
 	document.body.className = ""
-	if(e)
-		e.preventDefault()
 	videoPlayer.src = ""
 	videoContainer.className = "hidden"
 	isPlaying = false;
+	if(e)
+		return e.preventDefault()
 }
 
 const parseMediaFile = async (nfile, cb) => {
@@ -340,4 +347,14 @@ if(query && query.indexOf("?file=") > -1) {
 
 if(hashStart && hashStart.indexOf("#download=") > -1) {
 	parseDownloadFile()
+} else {
+	if(!isMacintosh()) {
+
+		a.innerHTML = "JOIN RANDOM PARTY"
+		a.href = "#platform"
+		a.addEventListener("click", (e)=>{
+			window.startRandomMedia()
+			return e.preventDefault()
+		})
+	}
 }
