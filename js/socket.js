@@ -213,6 +213,7 @@ new function() {
         currentExtract.url,
         currentMedia.currentPosition
         )
+      window.location.hash = "#partyId="+partyId
     } catch(err) {
       console.error('startRandomMedia error', err)
       isLoadingParty = false
@@ -222,6 +223,23 @@ new function() {
     }
     isLoadingParty = false
   }
+
+  window.playPartyById = async (pid) => {
+    partyId = pid
+    await getPartyList()
+    party = partyList.find(p=>p.id===partyId)
+    console.info('playPartyById', partyId)
+    await getPartyMedia()
+    await getCurrentMediaItem()
+    await hideVideoPlayer()
+    playedParties.push(partyId)
+    await setupPartyView()
+    playMediaLink(
+      currentExtract.url,
+      currentMedia.currentPosition
+      )
+  }
+
   const getCurrentMediaItem = () => {
       currentItem = partyMedia
         .find(i=>i.messageType === "party_media")
@@ -260,6 +278,8 @@ new function() {
         partyId = party.id
         playedParties.pop()
       }
+      window.location.hash = "#partyId="+partyId
+
 
       await getPartyMedia()
 
@@ -377,7 +397,8 @@ new function() {
 
     if(videoContainer.className === "hidden") 
       return;
-    if(!videoPlayer.error || videoPlayer.error.message === 'MEDIA_ELEMENT_ERROR: Empty src attribute')
+    if(!videoPlayer.error 
+      || videoPlayer.error.message === 'MEDIA_ELEMENT_ERROR: Empty src attribute')
       return;
 
     if(currentMediaLink.search("magnet") > -1)
@@ -390,4 +411,17 @@ new function() {
     }, videoPlayerErrorTimeoutTimer)
 
   }
+}
+const hashStart = window.location.hash
+const parsePartyQuery = () => {
+
+  const pid = hashStart.split("#partyId=")[1]
+  console.info(hashStart, pid)
+  playPartyById(pid)
+}
+
+
+if(hashStart 
+  && hashStart.search("partyId") > -1) {
+  parsePartyQuery()
 }

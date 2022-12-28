@@ -191,7 +191,9 @@ const parseMediaFile = async () => {
 		console.error('parseMediaFile error', err)
 			if(window.ReactNativeWebView 
 				&& window.ReactNativeWebView.postMessage) {
-				window.ReactNativeWebView.postMessage(
+				window
+				.ReactNativeWebView
+				.postMessage(
 					JSON.stringify(
 						{error:err.message}
 					)
