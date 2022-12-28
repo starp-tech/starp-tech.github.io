@@ -97,18 +97,20 @@ new function() {
     partyList = partyList.rows.map(i=>i.value)
     console.info(partyList)
   }
-  
+  const socketCreatTimeout = null;
+  const socketCreatTimeoutInterval = 20*1000
+  const resetSocket = async () => {
+      clearTimeout(socketCreatTimeout)
+      currentSocket.close()
+      currentSocket = null;
+      createSocket()
+  }
+
   const createSocket = async () => {
     
     timeJoined = new Date().valueOf()
     if(currentSocket) {
-      currentSocket.send(JSON.stringify({
-        name: username, 
-        partyId, 
-        chatId:partyId,
-        userId
-      }));
-
+      resetSocket()
       return
     }
     
@@ -123,6 +125,8 @@ new function() {
         chatId:partyId,
         userId
       }));
+      clearTimeout(socketCreatTimeout)
+      socketCreatTimeout = setTimeout(resetSocket, socketCreatTimeoutInterval)
     });
 
     ws.addEventListener("message", async (event) => {
@@ -179,9 +183,7 @@ new function() {
 
     ws.addEventListener("close", event => {
       console.log("WebSocket closed, reconnecting:", event.code, event.reason);
-      currentSocket.close()
-      currentSocket = null;
-      createSocket()
+      resetSocket()
     });
 
     ws.addEventListener("error", event => {
