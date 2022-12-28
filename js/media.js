@@ -287,6 +287,7 @@ hackingFileInput.addEventListener("change", (e)=>{
 		parseMediaFile(file, (media)=>{
 			console.info("new media", media)
 			clipboardMediaUrl = "https://starpy.me/#download="+media.magnetURI
+			window.location.hash = "#download="+media.magnetURI
 			navigator.clipboard.writeText(clipboardMediaUrl)
 			fileHackingSelectButton.innerHTML = "Share Link"
 			fileHackingSelectButton2.innerHTML = "Share Link"
