@@ -304,7 +304,7 @@ const parseDownloadFile = async () => {
 	try {
 		a.innerHTML = "Loading File 0.0%"
 		a.href = hashStart
-		fileHackingSelectButton.className = "hidden"
+		// fileHackingSelectButton.className = "hidden"
 		fileHackingSelectButton2.className = "hidden"
 		await createMediaClient()
 		const mediaLink = hashStart.split("#download=")[1]
