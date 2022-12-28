@@ -365,7 +365,7 @@ new function() {
     isLoadingParty = false
     isPlaying = false
     try {
-      await startRandomMedia()
+      startRandomMedia()
       await createSocket()
     } catch(err) {
       console.info("pressJoinPublic err", err)
@@ -418,7 +418,7 @@ const parsePartyQuery = async () => {
   const pid = hashStart.split("#partyId=")[1]
   console.info(hashStart, pid)
   try {
-    await playPartyById(pid)
+    playPartyById(pid)
     await createSocket()
   } catch(err) {
     console.info("pressJoinPublic err", err)
