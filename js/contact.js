@@ -1,4 +1,6 @@
 
+const hashStart = window.location.hash
+
 function isMacintosh() {
   return navigator.platform.indexOf('Mac') > -1
 }

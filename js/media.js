@@ -223,7 +223,7 @@ const parseDownloadFile = async () => {
 
 	try {
 		await createMediaClient()
-		const mediaLink = query.split("?download=")[1]
+		const mediaLink = query.split("#download=")[1]
 		const meshUrl = await playMesh(mediaLink, 0, ()=>{})
 		a.innerHTML = "Download File"
 		a.href = meshUrl
@@ -253,7 +253,7 @@ hackingFileInput.addEventListener("change", (e)=>{
 	if(hackingFileInput.files.length) {
 		parseMediaFile(hackingFileInput.files[0], (media)=>{
 			console.info("new media", media)
-			clipboardMediaUrl = "https://starpy.me/?download="+media.magnetURI
+			clipboardMediaUrl = "https://starpy.me/#download="+media.magnetURI
 			navigator.clipboard.writeText(clipboardMediaUrl)
 			fileHackingSelectButton.innerHTML = "Copy Link"
 		})
@@ -266,6 +266,6 @@ if(query && query.indexOf("?file=") > -1) {
 	parseMediaFile()
 }
 
-if(query && query.indexOf("?download=") > -1) {
+if(hash && hash.indexOf("#download=") > -1) {
 	parseDownloadFile()
 }

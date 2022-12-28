@@ -408,7 +408,6 @@ new function() {
     }, videoPlayerErrorTimeoutTimer)
 
   }
-  const hashStart = window.location.hash
 
   const parsePartyQuery = async () => {
     const pid = hashStart.split("#partyId=")[1]
