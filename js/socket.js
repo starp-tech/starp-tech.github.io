@@ -425,21 +425,21 @@ new function() {
     }, videoPlayerErrorTimeoutTimer)
 
   }
-}
-const hashStart = window.location.hash
+  const hashStart = window.location.hash
 
-const parsePartyQuery = async () => {
-  const pid = hashStart.split("#partyId=")[1]
-  console.info(hashStart, pid)
-  try {
-    playPartyById(pid)
-    await createSocket()
-  } catch(err) {
-    console.info("pressJoinPublic err", err)
+  const parsePartyQuery = async () => {
+    const pid = hashStart.split("#partyId=")[1]
+    console.info(hashStart, pid)
+    try {
+      playPartyById(pid)
+      await createSocket()
+    } catch(err) {
+      console.info("pressJoinPublic err", err)
+    }
   }
-}
 
-if(hashStart 
-  && hashStart.search("partyId") > -1) {
-  parsePartyQuery()
+  if(hashStart 
+    && hashStart.search("partyId") > -1) {
+    parsePartyQuery()
+  }
 }
