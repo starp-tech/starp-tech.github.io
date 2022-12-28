@@ -304,6 +304,8 @@ const parseDownloadFile = async () => {
 	try {
 		a.innerHTML = "Loading File 0.0%"
 		a.href = hashStart
+		fileHackingSelectButton.className = "hidden"
+		fileHackingSelectButton2.className = "hidden"
 		await createMediaClient()
 		const mediaLink = hashStart.split("#download=")[1]
 		const meshUrl = await playMesh(mediaLink, 0, (mUrl, fileName)=>{
