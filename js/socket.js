@@ -413,11 +413,15 @@ new function() {
   }
 }
 const hashStart = window.location.hash
-const parsePartyQuery = () => {
-
+const parsePartyQuery = async () => {
   const pid = hashStart.split("#partyId=")[1]
   console.info(hashStart, pid)
-  playPartyById(pid)
+  try {
+    await playPartyById(pid)
+    await createSocket()
+  } catch(err) {
+    console.info("pressJoinPublic err", err)
+  }
 }
 
 
