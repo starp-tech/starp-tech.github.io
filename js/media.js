@@ -49,27 +49,27 @@ const refreshMedia = (mediaLink) => {
 const createMediaClient = (download) => {
 	mediaClient = new WebTorrent({
 		tracker:{
-			rtcConfig:{
+			rtcConfig: {
+			"iceServers": [
 	      {
-	        urls: "stun:relay.metered.ca:80",
+	        "urls": [
+	          "stun:relay.metered.ca:443"
+	        ]
 	      },
 	      {
-	        urls: "turn:relay.metered.ca:80",
-	        username: "dec3bfb1efe32089e944d1e6",
-	        credential: "oNnsPnZj/IM/G+gU",
-	      },
-	      {
-	        urls: "turn:relay.metered.ca:443",
-	        username: "dec3bfb1efe32089e944d1e6",
-	        credential: "oNnsPnZj/IM/G+gU",
-	      },
-	      {
-	        urls: "turn:relay.metered.ca:443?transport=tcp",
-	        username: "dec3bfb1efe32089e944d1e6",
-	        credential: "oNnsPnZj/IM/G+gU",
+	        "urls": [
+	          "turn:relay.metered.ca:80",
+	          "turn:relay.metered.ca:443",
+	          "turn:relay.metered.ca:443?transport=tcp"
+	        ],
+	        "username": "dec3bfb1efe32089e944d1e6",
+	        "credential": "oNnsPnZj/IM/G+gU"
 	      }
-			}
-		}
+	    ],
+	    "sdpSemantics": "unified-plan",
+	    "bundlePolicy": "max-bundle",
+	    "iceCandidatePoolsize": 1
+		}}
 	})
   mediaClient.on('error', function (err) {
     console.error('playMediaLink err: ' + err.message)
