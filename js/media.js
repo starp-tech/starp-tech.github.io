@@ -246,11 +246,21 @@ const handleFileClickSelect = async (e) => {
 	if(clipboardMediaUrl) {
 		try {
 			navigator.clipboard.writeText(clipboardMediaUrl)
+			
+			fileHackingSelectButton.innerHTML = "Link Copied"
+			fileHackingSelectButton2.innerHTML = "Link Copied"
+			
+			setTimeout(()=>{
+				fileHackingSelectButton.innerHTML = "Share Link"
+				fileHackingSelectButton2.innerHTML = "Share Link"
+			}, 1000)
+
 			const shareData = {
 			  title: 'Starpy file sharing',
 			  text: clipboardMediaFileName,
 			  url: clipboardMediaUrl
 			}
+
 			if(navigator.canShare())
 		    await navigator.share(shareData);
 
