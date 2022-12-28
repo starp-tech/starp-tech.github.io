@@ -223,7 +223,7 @@ const parseDownloadFile = async () => {
 
 	try {
 		await createMediaClient()
-		const mediaLink = query.split("#download=")[1]
+		const mediaLink = hashStart.split("#download=")[1]
 		const meshUrl = await playMesh(mediaLink, 0, ()=>{})
 		a.innerHTML = "Download File"
 		a.href = meshUrl
@@ -266,6 +266,6 @@ if(query && query.indexOf("?file=") > -1) {
 	parseMediaFile()
 }
 
-if(hash && hash.indexOf("#download=") > -1) {
+if(hashStart && hashStart.indexOf("#download=") > -1) {
 	parseDownloadFile()
 }
