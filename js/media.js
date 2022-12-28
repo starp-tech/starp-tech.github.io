@@ -214,7 +214,7 @@ videoPlayer.addEventListener("loadeddata", (data)=>{
 const updateSpeed = (media) => {
 	
 	if(media.done) {
-		a.innerHTML = "Download file"
+		a.innerHTML = "Download File"
 		return;
 	}
 
