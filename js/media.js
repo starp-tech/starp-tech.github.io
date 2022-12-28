@@ -225,12 +225,13 @@ const parseDownloadFile = async () => {
 
 	try {
 		a.innerHTML = "Loading File"
-		a.href = "#joinButton"
+		a.href = "#introContainer"
 		await createMediaClient()
 		const mediaLink = hashStart.split("#download=")[1]
 		const meshUrl = await playMesh(mediaLink, 0, (mUrl)=>{
 			a.innerHTML = "Download File"
 			a.href = mUrl
+			a.download = true
 		})
 
 	} catch(err) {
