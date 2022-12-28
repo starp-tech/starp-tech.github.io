@@ -212,6 +212,12 @@ videoPlayer.addEventListener("loadeddata", (data)=>{
 })
 
 const updateSpeed = (media) => {
+	
+	if(media.done) {
+		a.innerHTML = "Download file"
+		return;
+	}
+
   const progress = (100 * media.progress).toFixed(1)
   a.innerHTML = "Loading file "+progress+"%"
   // let remaining
