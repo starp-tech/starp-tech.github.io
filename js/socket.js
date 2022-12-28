@@ -180,11 +180,12 @@ new function() {
 
       }
     });
-
-    ws.addEventListener("close", event => {
+    const onClose = () event => {
       console.log("WebSocket closed, reconnecting:", event.code, event.reason);
       resetSocket()
-    });
+      ws.removeEventListener("close", onClose)
+    }
+    ws.addEventListener("close", onClose);
 
     ws.addEventListener("error", event => {
       console.log("WebSocket error, reconnecting:", event);
