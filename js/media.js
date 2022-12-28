@@ -219,7 +219,8 @@ const updateSpeed = (media) => {
 	}
 
   const progress = (100 * media.progress).toFixed(1)
-  a.innerHTML = "Loading file "+progress+"%"
+  const peers = media.numPeers
+  a.innerHTML = "Loading "+progress+"% from "+numPeers+" peers"
   // let remaining
   // if (media.done) {
   //   remaining = 'Done.'
