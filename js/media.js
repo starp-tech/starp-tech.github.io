@@ -302,7 +302,7 @@ const parseDownloadFile = async () => {
 	console.info('parseDownloadFile')
 
 	try {
-		a.innerHTML = "Loading File"
+		a.innerHTML = "Loading File 0.0%"
 		a.href = hashStart
 		await createMediaClient()
 		const mediaLink = hashStart.split("#download=")[1]
