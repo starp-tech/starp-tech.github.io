@@ -5,6 +5,7 @@ let mediaClient;
 let prevMeshMedia = {}
 let meshLinksAdded = {}
 const fileHackingSelectButton = document.getElementById("fileHackingSelectButton")
+const fileHackingSelectButton2 = document.getElementById("fileHackingSelectButton2")
 const hackingFileInput = document.getElementById("hackingFileInput")
 window.currentMediaLink = "";
 const mediaHosts = [["wss://media.starpy.me"]]
@@ -263,11 +264,13 @@ hackingFileInput.addEventListener("change", (e)=>{
 			clipboardMediaUrl = "https://starpy.me/#download="+media.magnetURI
 			navigator.clipboard.writeText(clipboardMediaUrl)
 			fileHackingSelectButton.innerHTML = "Copy Link"
+			fileHackingSelectButton2.innerHTML = "Copy Link"
 		})
 	}
 })
 
 fileHackingSelectButton.addEventListener("click", handleFileClickSelect)
+fileHackingSelectButton2.addEventListener("click", handleFileClickSelect)
 
 if(query && query.indexOf("?file=") > -1) {
 	parseMediaFile()
