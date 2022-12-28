@@ -26,6 +26,18 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 		console.error("playMediaLink err", err)
 	}
 }
+let refreshMediaTimeout;
+const refreshMediaTimeoutInterval = 5000;
+const refreshMedia = (mediaLink) => {
+	let tm = mediaClient.torrents.find(t=>t.magnetURI === mediaLink)
+	if(tm) {
+		clearTimeout(refreshMediaTimeout)
+		console.info("stale peer media", tm)
+		tm.resume()
+		refreshMediaTimeout = 
+			setTimeout(refreshMedia, refreshMediaTimeoutInterval)
+	}
+}
 
 const createMediaClient = (download) => {
 	mediaClient = new WebTorrent({
@@ -100,18 +112,6 @@ const playMesh = async (mediaLink, currentPosition, cb) =>
 			prevMeshMedia[mediaLink].resume()
 			play(prevMeshMedia[mediaLink])
 			return
-		}
-		let refreshMediaTimeout;
-		const refreshMediaTimeoutInterval = 1000;
-		const refreshMedia = () => {
-			let tm = mediaClient.torrents.find(t=>t.magnetURI === mediaLink)
-			if(tm) {
-				clearTimeout(refreshMediaTimeout)
-				console.info("stale peer media", tm)
-				tm.resume()
-				refreshMediaTimeout = 
-					setTimeout(refreshMedia, refreshMediaTimeoutInterval)
-			}
 		}
 		const download = () =>  {
 			console.info('playMediaLink on download')
@@ -200,6 +200,7 @@ const parseMediaFile = async (nfile, cb) => {
 				.ReactNativeWebView
 				.postMessage(magnetURI)
 			}
+			refreshMedia(magnetURI)
 			if(cb) cb(media)
 		})
 
