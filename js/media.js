@@ -353,11 +353,26 @@ const leaveWarning = document.getElementById("leaveWarning")
 const gText = "If you close the tab file link will cease, register to make it permanent!"
 const goodbye = (e) => {
 	if (e) {
-      e.returnValue = gText;
+    e.returnValue = gText;
   }
 	leaveWarning.innerHTML = leaveWarning
   return gText;
 }
+const isScreenLockSupported = () => ('wakeLock' in navigator);
+
+const getScreenLock = async () => {
+  if(isScreenLockSupported()){
+    let screenLock;
+    try {
+       screenLock = await navigator.wakeLock.request('screen');
+    } catch(err) {
+       console.log(err.name, err.message);
+    }
+    return screenLock;
+  }
+}
+
+
 
 hackingFileInput.addEventListener("change", (e)=>{
 	console.info('new file', hackingFileInput.files)
