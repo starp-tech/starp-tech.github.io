@@ -99,7 +99,7 @@ const createMediaClient = (download) => {
 const playMesh = async (mediaLink, currentPosition, blob) => 
 	new Promise(async (resolve,reject)=> {
 
-    if(!cb) {
+    if(!blob) {
     	showVideoPlayer("", 0)
 		}
 
