@@ -102,11 +102,6 @@ const playMesh = async (mediaLink, currentPosition, cb, blob) =>
     if(!cb)
     	showVideoPlayer("", 0)
 
-		if(mediaClient) {
-			await Promise.all(
-				Object.keys(prevMeshMedia)
-				.map(m=>prevMeshMedia[m].pause())
-			)
 			// if(!prevMeshMedia[mediaLink])
 			// 	prevMeshMedia[mediaLink] = mediaClient.torrents.find((mt)=>mt.magnetURI===mediaLink)
 		}
@@ -141,6 +136,14 @@ const playMesh = async (mediaLink, currentPosition, cb, blob) =>
 	      	})
 	      	return;
 	      }
+
+				await Promise.all(
+					Object.keys(prevMeshMedia)
+					.map(m=>{
+						if(prevMeshMedia[m].magnetURI !== mediaLink)
+							prevMeshMedia[m].pause()
+					})
+				)
 			  console.info('playMediaLink on file', file)
 	      file.getStreamURL((err, url) => {
 	        console.log("playMediaLink ready", url);
