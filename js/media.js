@@ -96,14 +96,14 @@ const createMediaClient = (download) => {
 	})
 	registeredWorker = true;
 }
-const playMesh = async (mediaLink, currentPosition, cb, blob) => 
+const playMesh = async (mediaLink, currentPosition, blob) => 
 	new Promise(async (resolve,reject)=> {
 
     if(!cb) {
     	showVideoPlayer("", 0)
 		}
 
-		const play = (media) => {
+		const play = async (media) => {
 			
 			if(!prevMeshMedia[mediaLink])
 				prevMeshMedia[mediaLink] = media
@@ -124,11 +124,8 @@ const playMesh = async (mediaLink, currentPosition, cb, blob) =>
 
 	      	file.getBlobURL((err, url)=>{
 		        console.log("download ready", url);
-		        if(cb) {
-		        	cb(url, file.name)
-		        	resolve(url)
-		        	return;
-		        }
+	        	resolve({fileName:file.name, url})
+	        	return;
 	      	})
 	      	return;
 	      }
@@ -156,7 +153,7 @@ const playMesh = async (mediaLink, currentPosition, cb, blob) =>
 			play(prevMeshMedia[mediaLink])
 			return
 		}
-		const download = () =>  {
+		const download = async () =>  {
 			console.info('playMediaLink on download')
 			if(meshLinksAdded[mediaLink]) {
 				refreshMedia(mediaLink)
@@ -306,11 +303,10 @@ const parseDownloadFile = async () => {
 		fileHackingSelectButton2.className = "hidden"
 		await createMediaClient()
 		const mediaLink = hashStart.split("#download=")[1]
-		const meshUrl = await playMesh(mediaLink, 0, (mUrl, fileName)=>{
-			a.innerHTML = "Download File"
-			a.href = mUrl
-      a.download = fileName
-		}, true)
+		const {url, fileName} = await playMesh(mediaLink, 0, true)
+		a.innerHTML = "Download File"
+		a.href = mUrl
+    a.download = fileName
 
 	} catch(err) {
 		console.error('parseDownloadFile', err)
