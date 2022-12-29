@@ -388,6 +388,7 @@ hackingFileInput.addEventListener("change", (e)=>{
 			fileHackingSelectButton.innerHTML = "Share Link"
 			fileHackingSelectButton2.innerHTML = "Share Link"
 			window.onbeforeunload=goodbye;
+			await getScreenLock()
 		})
 	}
 })
