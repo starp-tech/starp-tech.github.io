@@ -304,10 +304,12 @@ const parseDownloadFile = async () => {
 		await createMediaClient()
 		const mediaLink = hashStart.split("#download=")[1]
 		await getScreenLock()
+		window.onbeforeunload=goodbye;
 		const {url, fileName} = await playMesh(mediaLink, 0, true)
 		a.innerHTML = "Download File"
 		a.href = url
     a.download = fileName
+		window.onbeforeunload=()=>{}
 
 
 	} catch(err) {
