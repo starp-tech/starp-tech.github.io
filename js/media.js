@@ -99,11 +99,8 @@ const createMediaClient = (download) => {
 const playMesh = async (mediaLink, currentPosition, cb, blob) => 
 	new Promise(async (resolve,reject)=> {
 
-    if(!cb)
+    if(!cb) {
     	showVideoPlayer("", 0)
-
-			// if(!prevMeshMedia[mediaLink])
-			// 	prevMeshMedia[mediaLink] = mediaClient.torrents.find((mt)=>mt.magnetURI===mediaLink)
 		}
 
 		const play = (media) => {
@@ -147,11 +144,6 @@ const playMesh = async (mediaLink, currentPosition, cb, blob) =>
 			  console.info('playMediaLink on file', file)
 	      file.getStreamURL((err, url) => {
 	        console.log("playMediaLink ready", url);
-	        if(cb) {
-	        	cb(url)
-	        	resolve(url)
-	        	return;
-	        }
 	        if(currentMediaLink === mediaLink) {
 	          showVideoPlayer(url, currentPosition)
 	          resolve(url)
