@@ -99,9 +99,9 @@ const createMediaClient = (download) => {
 const playMesh = async (mediaLink, currentPosition, blob) => 
 	new Promise(async (resolve,reject)=> {
 
-    if(!blob) {
+    if(!blob) 
     	showVideoPlayer("", 0)
-		}
+		
 
 		const play = async (media) => {
 			
@@ -350,6 +350,9 @@ const handleFileClickSelect = async (e) => {
 	return e.preventDefault();
 }
 
+const goodbye = (e) => {
+  return "If you close the tab file link will cease, register to make it permanent";
+}
 hackingFileInput.addEventListener("change", (e)=>{
 	console.info('new file', hackingFileInput.files)
 	if(hackingFileInput.files.length) {
@@ -362,6 +365,7 @@ hackingFileInput.addEventListener("change", (e)=>{
 			navigator.clipboard.writeText(clipboardMediaUrl)
 			fileHackingSelectButton.innerHTML = "Share Link"
 			fileHackingSelectButton2.innerHTML = "Share Link"
+			window.onbeforeunload=goodbye;
 		})
 	}
 })
