@@ -123,9 +123,8 @@ const playMesh = async (mediaLink, currentPosition, cb, blob) =>
 	      	file = media.files[0]
 	      }
 	      if(blob) {
-
-
 				  media.on('download', ()=>updateSpeed(media))
+
 	      	file.getBlobURL((err, url)=>{
 		        console.log("download ready", url);
 		        if(cb) {
@@ -141,7 +140,8 @@ const playMesh = async (mediaLink, currentPosition, cb, blob) =>
 					Object.keys(prevMeshMedia)
 					.map(m=>{
 						if(prevMeshMedia[m].magnetURI !== mediaLink)
-							prevMeshMedia[m].pause()
+							return prevMeshMedia[m].pause()
+						return m
 					})
 				)
 			  console.info('playMediaLink on file', file)
