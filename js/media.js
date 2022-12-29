@@ -352,7 +352,7 @@ const handleFileClickSelect = async (e) => {
 	return e.preventDefault();
 }
 const leaveWarning = document.getElementById("leaveWarning")
-const gText = "If you close the tab file link will cease, register to make it permanent!"
+const gText = "If you close the tab, file link will destroy, register to make it permanent!"
 const goodbye = (e) => {
 	if (e) {
     e.returnValue = gText;
@@ -386,7 +386,7 @@ hackingFileInput.addEventListener("change", (e)=>{
 			navigator.clipboard.writeText(clipboardMediaUrl)
 			fileHackingSelectButton.innerHTML = "Share Link"
 			fileHackingSelectButton2.innerHTML = "Share Link"
-			leaveWarning.innerHTML = leaveWarning
+			leaveWarning.innerHTML = gText
 			window.onbeforeunload=goodbye;
 			await getScreenLock()
 		})
