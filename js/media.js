@@ -309,7 +309,7 @@ const parseDownloadFile = async () => {
 		a.innerHTML = "Download File"
 		a.href = url
     a.download = fileName
-		window.onbeforeunload=()=>{}
+		window.onbeforeunload=null
 
 
 	} catch(err) {
