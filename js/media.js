@@ -352,6 +352,9 @@ const handleFileClickSelect = async (e) => {
 const leaveWarning = document.getElementById("leaveWarning")
 const gText = "If you close the tab file link will cease, register to make it permanent!"
 const goodbye = (e) => {
+	if (e) {
+      e.returnValue = gText;
+  }
 	leaveWarning.innerHTML = leaveWarning
   return gText;
 }
