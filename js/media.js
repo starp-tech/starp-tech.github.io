@@ -349,10 +349,13 @@ const handleFileClickSelect = async (e) => {
 	hackingFileInput.click(); 
 	return e.preventDefault();
 }
-
+const leaveWarning = document.getElementById("leaveWarning")
+const gText = "If you close the tab file link will cease, register to make it permanent!"
 const goodbye = (e) => {
-  return "If you close the tab file link will cease, register to make it permanent";
+	leaveWarning.innerHTML = leaveWarning
+  return gText;
 }
+
 hackingFileInput.addEventListener("change", (e)=>{
 	console.info('new file', hackingFileInput.files)
 	if(hackingFileInput.files.length) {
