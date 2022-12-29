@@ -380,7 +380,7 @@ hackingFileInput.addEventListener("change", (e)=>{
 	if(hackingFileInput.files.length) {
 		const file = hackingFileInput.files[0]
 		clipboardMediaFileName = file.fileName
-		parseMediaFile(file, (media)=>{
+		parseMediaFile(file, async (media)=>{
 			console.info("new media", media)
 			clipboardMediaUrl = "https://starpy.me/#download="+media.magnetURI
 			window.location.hash = "#download="+media.magnetURI
