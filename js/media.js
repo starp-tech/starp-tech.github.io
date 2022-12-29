@@ -303,10 +303,12 @@ const parseDownloadFile = async () => {
 		fileHackingSelectButton2.className = "hidden"
 		await createMediaClient()
 		const mediaLink = hashStart.split("#download=")[1]
+		await getScreenLock()
 		const {url, fileName} = await playMesh(mediaLink, 0, true)
 		a.innerHTML = "Download File"
 		a.href = url
     a.download = fileName
+
 
 	} catch(err) {
 		console.error('parseDownloadFile', err)
@@ -361,14 +363,13 @@ const goodbye = (e) => {
 const isScreenLockSupported = () => ('wakeLock' in navigator);
 
 const getScreenLock = async () => {
-  if(isScreenLockSupported()){
-    let screenLock;
-    try {
-       screenLock = await navigator.wakeLock.request('screen');
-    } catch(err) {
-       console.log(err.name, err.message);
-    }
-    return screenLock;
+  try {
+	  if(isScreenLockSupported()){
+	    let screenLock = await navigator.wakeLock.request('screen');
+	    console.info('screenLock', screenLock)
+	  }
+  } catch(err) {
+     console.log(err.name, err.message);
   }
 }
 
