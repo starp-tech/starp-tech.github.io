@@ -220,7 +220,7 @@ const updateSpeed = (media) => {
 
 	  const progress = (100 * media.progress).toFixed(1)
 	  const peers = media.numPeers
-	  a.innerHTML = "Loading "+progress+"% from "+numPeers+" peers"
+	  a.innerHTML = "Loading "+progress+"% from "+peers+" peers"
 	} catch(err) {
 		console.error('updateSpeed error', err)
 	}
