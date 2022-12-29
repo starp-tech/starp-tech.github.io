@@ -212,15 +212,18 @@ videoPlayer.addEventListener("loadeddata", (data)=>{
 })
 
 const updateSpeed = (media) => {
-	
-	if(media.done) {
-		a.innerHTML = "Download File"
-		return;
-	}
+	try {
+		if(media.done) {
+			a.innerHTML = "Download File"
+			return;
+		}
 
-  const progress = (100 * media.progress).toFixed(1)
-  const peers = media.numPeers
-  a.innerHTML = "Loading "+progress+"% from "+numPeers+" peers"
+	  const progress = (100 * media.progress).toFixed(1)
+	  const peers = media.numPeers
+	  a.innerHTML = "Loading "+progress+"% from "+numPeers+" peers"
+	} catch(err) {
+		console.error('updateSpeed error', err)
+	}
   // let remaining
   // if (media.done) {
   //   remaining = 'Done.'
