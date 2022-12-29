@@ -357,7 +357,6 @@ const goodbye = (e) => {
 	if (e) {
     e.returnValue = gText;
   }
-	leaveWarning.innerHTML = leaveWarning
   return gText;
 }
 const isScreenLockSupported = () => ('wakeLock' in navigator);
@@ -387,6 +386,7 @@ hackingFileInput.addEventListener("change", (e)=>{
 			navigator.clipboard.writeText(clipboardMediaUrl)
 			fileHackingSelectButton.innerHTML = "Share Link"
 			fileHackingSelectButton2.innerHTML = "Share Link"
+			leaveWarning.innerHTML = leaveWarning
 			window.onbeforeunload=goodbye;
 			await getScreenLock()
 		})
