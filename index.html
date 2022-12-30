@@ -231,9 +231,7 @@
 			getAuth, 
 			isSignInWithEmailLink, 
 			sendSignInLinkToEmail,
-			signInWithEmailLink,
-			signInWithPopup, 
-			GoogleAuthProvider  
+			signInWithEmailLink 
 		} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 	  // TODO: Add SDKs for Firebase products that you want to use
 	  // https://firebase.google.com/docs/web/setup#available-libraries
@@ -294,6 +292,20 @@
 		}
 
     const checkAuthOnMount = async () => {
+    	try {
+    		const domain = "https://www.starpy.me"
+	    	if(auth.currentUser) {
+	    		a.href = domain+"/webapp/"
+	    		a.innerHTML = "TO WEBAPP"
+	    		a.target = "_blank"
+	    		const authToken = await auth.currentUser.getIdToken(true)
+	    		const userData = await (await fetch(domain+"/api/v1/backend/?authToken"+authToken)).json()
+	    		console.info("userData", userData)
+	    	}
+    	} catch (err) {
+    		console.error('auth error for currentUser', err)
+    	}
+
       if (isSignInWithEmailLink(auth, window.location.href)) {
         let email = window.localStorage.getItem('emailForSignIn');
         if (!email) {
