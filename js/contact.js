@@ -26,7 +26,7 @@ const osXdownloadUrl = "https://www.starpy.me/appcast/StarpyApp.tar.xz"
 const a = document.getElementById('joinButton');
 a.className = ""
 if(isMacintosh()) {
-	a.innerHTML = "Download OSX App"
+	a.innerHTML = "Download MAC OSX App"
 	a.href = osXdownloadUrl
 }
 const processInitScreen = () => {
