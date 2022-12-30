@@ -55,7 +55,9 @@ new function() {
   }
   const getPartyMedia = async () => {
     try {
-      const data = await (await fetch(instantPartyUrl())).json()
+      const data = await (
+        await fetch(instantPartyUrl())
+      ).json()
       console.info(data.results)
       let red = data
         .results
@@ -68,7 +70,9 @@ new function() {
       partyMedia = [red.media]
       didSyncCurrentPosition = false
       if(red.sync 
-        && red.sync.syncData) {
+        && red.sync.syncData
+        && new Date(red.sync.createdAt).valueOf() 
+          > new Date(red.media.createdAt).valueOf()) {
         didSyncCurrentPosition = true
         currentPosition = red.sync.syncData.percent
       }
