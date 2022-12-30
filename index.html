@@ -337,7 +337,11 @@
           email = window.prompt('Please provide your email for confirmation');
         }
         const result = await signInWithEmailLink(auth, email, window.location.href)
+        const currentUser = auth.currentUser
+        const authToken = await auth.currentUser.getIdToken(true)
         localStorage.setItem('authData', JSON.stringify(result))
+        localStorage.setItem('currentUser', JSON.stringify(currentUser))
+        localStorage.setItem('authToken', authToken)
         window.location = "https://starpy.me/webapp"
         console.info('===== succesfully loggedin with email link ====', result)
       }
