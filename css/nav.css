@@ -41,7 +41,7 @@
 }
 .sys-nav-item:hover,
 .sys-nav-item:hover a:hover {
-  color:gray;
+  color:palegoldenrod;
 }
 .sys-nav-item::after {
   content: " ";
