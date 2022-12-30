@@ -85,11 +85,11 @@ const apiDomain = "https://www.starpy.me"
 const checkAuthOnMount = async () => {
 	try {
 		const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-		console.info('currentUser', currentUser)
+		// console.info('currentUser', currentUser)
   	if(currentUser) {
   		const authToken = localStorage.getItem("authToken")
   		const userData = await (await fetch(apiDomain+"/api/v1/backend/?authToken="+authToken)).json()
-  		console.info("userData", userData)
+  		// console.info("userData", userData)
   		
   		if(userData.error)
   			throw userData.error
@@ -108,7 +108,7 @@ const checkAuthOnMount = async () => {
   		return;
   	}
 	} catch (err) {
-		console.error('auth error for currentUser', err)
+		// console.error('auth error for currentUser', err)
 	}
 
   if (isSignInWithEmailLink(auth, window.location.href)) {
@@ -125,13 +125,13 @@ const checkAuthOnMount = async () => {
 		
 		const userData = await (await fetch(apiDomain+"/api/v1/backend/?authToken="+authToken)).json()
 		
-		console.info("userData", userData)
+		// console.info("userData", userData)
 		
 		if(userData.error)
 			throw userData.error
 
     window.location = "https://starpy.me/webapp"
-    console.info('===== succesfully loggedin with email link ====', result)
+    // console.info('===== succesfully loggedin with email link ====', result)
   }
 }
 checkAuthOnMount()
@@ -139,21 +139,3 @@ checkAuthOnMount()
 // const 
 let isLoginFormEnabled = false
 starpyLoginButton.addEventListener("click", loginButtonClick)
-let burgerActive = false
-const starpyBurger = document.getElementById("starpyBurger")
-const starpyNav = document.getElementById("starpyNav")
-
-window.toggleBurger = () => {
-	burgerActive = !burgerActive
-	starpyNav.className = getNavClass()	  	
-	starpyBurger.className = getBurgerClass()
-}
-
-const getBurgerClass = () => {
-  if(burgerActive) return "menu-icon is-active"
-  return "menu-icon"
-}
-const getNavClass = () => {
-  if(burgerActive) return "sys-nav burger_active"
-  return "sys-nav"
-}

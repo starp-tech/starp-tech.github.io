@@ -150,3 +150,22 @@ const drawLandscape = (cb) => {
 }
 
 drawLandscape()
+
+let burgerActive = false
+const starpyBurger = document.getElementById("starpyBurger")
+const starpyNav = document.getElementById("starpyNav")
+
+window.toggleBurger = () => {
+	burgerActive = !burgerActive
+	starpyNav.className = getNavClass()	  	
+	starpyBurger.className = getBurgerClass()
+}
+
+const getBurgerClass = () => {
+  if(burgerActive) return "menu-icon is-active"
+  return "menu-icon"
+}
+const getNavClass = () => {
+  if(burgerActive) return "sys-nav burger_active"
+  return "sys-nav"
+}

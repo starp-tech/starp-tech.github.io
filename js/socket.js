@@ -7,7 +7,7 @@ new function() {
     `${apiURL}party-one/?partyId=${partyId}`
   const partySyncUrl = () => 
     `${apiURL}party-one/?partyId=${partyId}&messageType=party_media_sync`
-  const socketUrl = `wss://${apiHost}/api/v1/socket`
+  const socketUrl = `wss://${apiHost}/api/v1/backend/`
 
   const joinRandomButton = 
     document.getElementById("joinParty")
