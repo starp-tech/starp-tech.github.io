@@ -313,6 +313,13 @@
     		const currentUser = JSON.parse(localStorage.getItem("currentUser"))
     		console.info('currentUser', currentUser)
 	    	if(currentUser) {
+	    		const authToken = localStorage.getItem("authToken")
+	    		const userData = await (await fetch(apiDomain+"/api/v1/backend/?authToken="+authToken)).json()
+	    		console.info("userData", userData)
+	    		
+	    		if(userData.error)
+	    			throw userData.error
+
 	    		if(a) {
 		    		a.href = apiDomain+"/webapp/"
 		    		a.innerHTML = "TO WEBAPP"
@@ -323,9 +330,7 @@
 		    		starpyLoginButton.target = "_blank"
 				    starpyLoginButton.removeEventListener("click", loginButtonClick)
 	    		}
-	    		const authToken = localStorage.getItem("authToken")
-	    		const userData = await (await fetch(apiDomain+"/api/v1/backend/?authToken="+authToken)).json()
-	    		console.info("userData", userData)
+	    		
 	    		return;
 	    	}
     	} catch (err) {
