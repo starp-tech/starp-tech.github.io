@@ -20,7 +20,7 @@
 </head>
 <body>
   <!-- <div class="nav-container"> -->
-    <div class="burger-container" @click="toggleBurger">
+    <div class="burger-container" onclick="toggleBurger()" id="starpyBurger">
         <div class="menu-button">
             <div class="menu-icon">
                <span></span>
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-		<div class="sys-nav">
+		<div class="sys-nav" id="starpyNav">
       <a 
 	      href="#" 
 	      id="starpyLoginButton" 
@@ -325,6 +325,25 @@
     		}
     	}
 	  })
+	  let burgerActive = false
+	  const starpyBurger = document.getElementById("starpyBurger")
+	  const starpyNav = document.getElementById("starpyNav")
+	  
+	  window.toggleBurger = () => {
+	  	burgerActive = !burgerActive
+	  	starpyNav.className = getNavClass()	  	
+	  	starpyBurger.className = getBurgerClass()
+	  }
+
+    const getBurgerClass = () => {
+      if(burgerActive) return "menu-icon is-active"
+      return "menu-icon"
+    }
+    const getNavClass = () => {
+      if(burgerActive) return "sys-nav burger_active"
+      return "sys-nav"
+    }
+    "sys-nav burger_active"
 	</script>
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

@@ -334,6 +334,8 @@ body, html {
 @media (max-width: 800px) {
 	#emailInput {
 		font-size: 24px;
+		width: 95%;
+		left:2.5%;
 	}
 	#leaveWarning {
     width: 100%;
