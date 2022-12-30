@@ -293,15 +293,17 @@
 
     const checkAuthOnMount = async () => {
     	try {
-    		const domain = "https://www.starpy.me"
-	    	if(auth.currentUser) {
-	    		console.info('has currentUser', auth.currentUser)
-	    		a.href = domain+"/webapp/"
+    		const apiDomain = "https://www.starpy.me"
+    		const currentUser = (await auth()).currentUser
+    		console.info('currentUser', currentUser)
+	    	if(currentUser) {
+	    		a.href = apiDomain+"/webapp/"
 	    		a.innerHTML = "TO WEBAPP"
 	    		a.target = "_blank"
 	    		const authToken = await auth.currentUser.getIdToken(true)
-	    		const userData = await (await fetch(domain+"/api/v1/backend/?authToken"+authToken)).json()
+	    		const userData = await (await fetch(apiDomain+"/api/v1/backend/?authToken"+authToken)).json()
 	    		console.info("userData", userData)
+	    		return;
 	    	}
     	} catch (err) {
     		console.error('auth error for currentUser', err)
