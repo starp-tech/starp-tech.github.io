@@ -259,6 +259,8 @@
 		  handleCodeInApp: true
 		};
 		let linkSent = false;
+
+    const starpyLoginButton = document.getElementById("starpyLoginButton")
 		const signInWithEmail = async () => {
 			
 			if(linkSent)
@@ -290,16 +292,36 @@
 			}
 			a.innerHTML = "Check Your Email"
 		}
-
+		const loginButtonClick = (e) => {
+      let email = localStorage.getItem('emailForSignIn') || "";
+    	isLoginFormEnabled = true;
+	    leaveWarning.innerHTML = 
+	    	'<input type="email" id="emailInput" placeholder="enter your email" value="'+email+'">'
+	    a.innerHTML = "Send Magic Link"
+    	document.getElementById("emailInput").focus()
+    	a.href = "#"
+    	a.onclick = (e) => {
+    		signInWithEmail()
+    		if(e) {
+    			return e.preventDefault()
+    		}
+    	}
+	  }
     const checkAuthOnMount = async () => {
     	try {
     		const apiDomain = "https://www.starpy.me"
-    		const currentUser = (await auth()).currentUser
+    		const currentUser = auth.currentUser
     		console.info('currentUser', currentUser)
 	    	if(currentUser) {
-	    		a.href = apiDomain+"/webapp/"
-	    		a.innerHTML = "TO WEBAPP"
-	    		a.target = "_blank"
+	    		if(a) {
+		    		a.href = apiDomain+"/webapp/"
+		    		a.innerHTML = "TO WEBAPP"
+		    		a.target = "_blank"
+		    		starpyLoginButton.href = apiDomain+"/webapp/"
+		    		starpyLoginButton.innerHTML = "TO WEBAPP"
+		    		starpyLoginButton.target = "_blank"
+				    starpyLoginButton.removeEventListener("click", loginButtonClick)
+	    		}
 	    		const authToken = await auth.currentUser.getIdToken(true)
 	    		const userData = await (await fetch(apiDomain+"/api/v1/backend/?authToken"+authToken)).json()
 	    		console.info("userData", userData)
@@ -322,24 +344,9 @@
     }
     checkAuthOnMount()
 
-    const starpyLoginButton = document.getElementById("starpyLoginButton")
     // const 
     let isLoginFormEnabled = false
-    starpyLoginButton.addEventListener("click", (e)=>{
-      let email = localStorage.getItem('emailForSignIn') || "";
-    	isLoginFormEnabled = true;
-	    leaveWarning.innerHTML = 
-	    	'<input type="email" id="emailInput" placeholder="enter your email" value="'+email+'">'
-	    a.innerHTML = "Send Magic Link"
-    	document.getElementById("emailInput").focus()
-    	a.href = "#"
-    	a.onclick = (e) => {
-    		signInWithEmail()
-    		if(e) {
-    			return e.preventDefault()
-    		}
-    	}
-	  })
+    starpyLoginButton.addEventListener("click", loginButtonClick)
 	  let burgerActive = false
 	  const starpyBurger = document.getElementById("starpyBurger")
 	  const starpyNav = document.getElementById("starpyNav")
