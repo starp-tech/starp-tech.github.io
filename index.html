@@ -300,6 +300,8 @@
           email = window.prompt('Please provide your email for confirmation');
         }
         const result = await signInWithEmailLink(auth, email, window.location.href)
+        localStorage.set('authData', JSON.stringify(result))
+        window.location = "https://starpy.me/webapp"
         console.info('===== succesfully loggedin with email link ====', result)
       }
     }
