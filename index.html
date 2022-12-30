@@ -324,7 +324,7 @@
 				    starpyLoginButton.removeEventListener("click", loginButtonClick)
 	    		}
 	    		const authToken = localStorage.getItem("authToken")
-	    		const userData = await (await fetch(apiDomain+"/api/v1/backend/?authToken"+authToken)).json()
+	    		const userData = await (await fetch(apiDomain+"/api/v1/backend/?authToken="+authToken)).json()
 	    		console.info("userData", userData)
 	    		return;
 	    	}
