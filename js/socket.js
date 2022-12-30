@@ -11,6 +11,8 @@ new function() {
 
   const joinRandomButton = 
     document.getElementById("joinParty")
+  const joinRandomButton2 = 
+    document.getElementById("joinParty2")
   const playPrevPartyButton = 
     document.getElementById("playPrevParty")
   const playNextPartyButton = 
@@ -380,12 +382,15 @@ new function() {
       console.info("pressJoinPublic err", err)
     }
   }
-
-  joinRandomButton.addEventListener("click", (e)=>{
+  const joinRandomButtonClick = (e)=>{
     clearTimeout(swipeTimeout) 
     swipeTimeout = setTimeout(pressJoinPublic, 300)
     return e.preventDefault()
-  })
+  }
+
+  joinRandomButton.addEventListener("click", joinRandomButtonClick)
+
+  joinRandomButton2.addEventListener("click", joinRandomButtonClick)
 
   playNextPartyButton.addEventListener("click", (e)=>{
     clearTimeout(swipeTimeout) 

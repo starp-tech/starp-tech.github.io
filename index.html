@@ -13,12 +13,36 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/webtorrent/1.9.6/webtorrent.min.js" integrity="sha512-XF9ds+vUoIZQm451mANDmt7l9JeuCrNWNwSFjQrtp6Vsme9+qlCanROSUNrskIAtJhMEghJ+u3HdxGNB/FcG+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/nav.css">
   <link rel="stylesheet" href="minimal-pace.css">
-
 </head>
 <body>
+  <!-- <div class="nav-container"> -->
+    <div class="burger-container" @click="toggleBurger">
+        <div class="menu-button">
+            <div class="menu-icon">
+               <span></span>
+               <span></span>
+               <span></span>
+               <span></span>
+            </div>
+        </div>
+    </div>
+		<div class="sys-nav">
+      <a 
+	      href="#" 
+	      id="starpyLoginButton" 
+	      class="sys-nav-item">
+	    	LOGIN
+    	</a>
+      <a href="#" 
+				 id="fileHackingSelectButton2"
+				 class="sys-nav-item"
+			>UPLOAD FILE</a>
+      <a id="joinParty2" class="sys-nav-item">JOIN PARTY</a>
+		</div>
+  <!-- </div> -->
 	<canvas id="bgCanvas"></canvas>
 	<canvas id="terCanvas"></canvas>
 	<script type="text/javascript" src="js/anim.js">
@@ -31,17 +55,12 @@
 			<div class="jumbotron">
 			  	<div class="container">
 				  	<h1>Starpy</h1>
-				  	<p class="big-message" id="leaveWarning">Same stars experience.</p>
+				  	<p 
+				  		class="big-message" 
+				  		id="leaveWarning"
+				  	>Same stars experience.</p>
 				  	<a class="hidden" id="joinButton" href="#">
 				  		Join  
-				  	</a>
-				  	<br>
-				  	<a 
-				  		id="fileHackingSelectButton2"
-				  		class="joinButton" 
-				  		target="blank" 
-				  		href="#">
-				  		Upload File 
 				  	</a>
 				  	</div>
 			  	</div>
@@ -74,7 +93,7 @@
 				  	<p class="big-message">
 				  		in a realtime party <br> with a magic link
 					  </p>
-				  	<a id="joinParty" class="joinButton" target="blank">
+				  	<a id="joinParty" class="joinButton">
 				  		JOIN RANDOM PARTY
 				  	</a>
 				  	</div>
@@ -131,8 +150,10 @@
 		<div class="container parent-vertical heading-info">
 			<div class="jumbotron">
 			  	<div class="container">
-				  	<h1>Transfer Your Data Encrypted</h1>
-				  	<p class="big-message">Try our instant upload</p>
+				  	<h1>Store Your Files</h1>
+				  	<p class="big-message">
+				  		Try our instant upload for free
+				  	</p>
 				  	<a 
 				  		id="fileHackingSelectButton"
 				  		class="joinButton" 
@@ -227,10 +248,14 @@
 	  const analytics = getAnalytics(app);
 	  const auth = getAuth(app)
 
-		const emailInput = document.getElementById("emailInput")
+		const actionCodeSettings = {
+		  url: 'https://www.starpy.me/?userId=1234',
+		  // This must be true.
+		  handleCodeInApp: true
+		};
 
 		const signInWithEmail = async () => {
-			
+			const emailInput = document.getElementById("emailInput")
 			console.info('==== try email ====')
 
 		  let email = emailInput.value
@@ -242,7 +267,6 @@
 		  }
 
 			try {
-		  	setIsLoading(true)
 		  	await sendSignInLinkToEmail(auth, email, actionCodeSettings)
 		  	console.info('==== after succesfully send email =====')
 		    window.localStorage.setItem('emailForSignIn', email);
@@ -262,6 +286,24 @@
       }
     }
     checkAuthOnMount()
+
+    const starpyLoginButton = document.getElementById("starpyLoginButton")
+    // const 
+    let isLoginFormEnabled = false
+    starpyLoginButton.addEventListener("click", (e)=>{
+    	isLoginFormEnabled = true;
+	    leaveWarning.innerHTML = 
+	    	'<input type="email" id="emailInput" placeholder="enter your email">'
+	    a.innerHTML = "Send Magic Link"
+    	document.getElementById("emailInput").focus()
+    	a.href = "#"
+    	a.onclick = (e) => {
+    		signInWithEmail()
+    		if(e) {
+    			return e.preventDefault()
+    		}
+    	}
+	  })
 	</script>
 </body>
 </html>
