@@ -311,10 +311,10 @@
     // const 
     let isLoginFormEnabled = false
     starpyLoginButton.addEventListener("click", (e)=>{
-      let email = window.localStorage.getItem('emailForSignIn');
+      let email = localStorage.getItem('emailForSignIn') || "";
     	isLoginFormEnabled = true;
 	    leaveWarning.innerHTML = 
-	    	'<input type="email" id="emailInput" placeholder="enter your email" value="'+email || ""+'">'
+	    	'<input type="email" id="emailInput" placeholder="enter your email" value="'+email+'">'
 	    a.innerHTML = "Send Magic Link"
     	document.getElementById("emailInput").focus()
     	a.href = "#"
