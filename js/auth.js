@@ -81,9 +81,9 @@ const loginButtonClick = (e) => {
 		}
 	}
 }
+const apiDomain = "https://www.starpy.me"
 const checkAuthOnMount = async () => {
 	try {
-		const apiDomain = "https://www.starpy.me"
 		const currentUser = JSON.parse(localStorage.getItem("currentUser"))
 		console.info('currentUser', currentUser)
   	if(currentUser) {
@@ -122,6 +122,14 @@ const checkAuthOnMount = async () => {
     localStorage.setItem('authData', JSON.stringify(result))
     localStorage.setItem('currentUser', JSON.stringify(currentUser))
     localStorage.setItem('authToken', authToken)
+		
+		const userData = await (await fetch(apiDomain+"/api/v1/backend/?authToken="+authToken)).json()
+		
+		console.info("userData", userData)
+		
+		if(userData.error)
+			throw userData.error
+
     window.location = "https://starpy.me/webapp"
     console.info('===== succesfully loggedin with email link ====', result)
   }
