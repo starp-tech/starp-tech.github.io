@@ -1,0 +1,132 @@
+.sys_navigation {
+  position: fixed;
+  top:0;
+  right: 0;
+  z-index:50;
+}
+.nav-container {
+	width: auto;
+	height: 100%;
+}
+.sys-nav {
+  position: fixed;
+  top: 10px;
+/*  right:10px;*/
+  width: 100%;
+  z-index: 1000;
+  text-align: left;
+  transition: top 0.6s ease-in-out, left 0.4s ease-in-out;
+  text-align: right;
+}
+.sys-nav.hidden {
+  top:-200px;
+  display: block;
+}
+.sys-nav-item {
+  line-height: 60px;
+  position: relative;
+  display: inline;
+  min-width: 100px;
+  text-align: left;
+  cursor: pointer;
+  color:palegoldenrod;
+  font-size: 16px;
+  text-align: center;
+  border: 2px solid palegoldenrod;
+  background: rgba(0, 0, 0, .3);
+  border-radius: 15px;
+  padding: 20px;
+  text-decoration: none;
+  margin-right: 10px;
+}
+.sys-nav-item:hover,
+.sys-nav-item:hover a:hover {
+  color:gray;
+}
+.sys-nav-item::after {
+  content: " ";
+  width: 0;
+  position: absolute;
+  height: 0px;
+  display: block;
+  background: white;
+  transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
+  bottom: 27px;
+  left: -13px;
+}
+.sys-active::after {
+    width: 8px;
+    height: 8px;
+}
+.burger-container {
+  position: fixed;
+  display: flex;
+  align-items: start;
+  z-index: 10000000000;
+  justify-content: center;
+  background-color: transparent;
+  min-height: 30px;
+  margin: 32px;
+  cursor: pointer;
+}
+.menu-icon {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+.menu-icon span {
+  position: absolute;
+  height: 0.1875em;
+  width: 100%;
+  background-color: palegoldenrod;
+  transition: all 250ms ease-in-out;
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+.menu-icon.menu-icon-black span {
+  background: black;
+}
+.menu-icon span:nth-child(1) {
+  top: 0.09375em;
+}
+.menu-icon span:nth-child(2),
+.menu-icon span:nth-child(3) {
+  top: 0.9975em;
+}
+.menu-icon span:nth-child(4) {
+  top: 1.875em;
+}
+.menu-button:hover span,
+.menu-button:focus span,
+.menu-button:active span {
+  background: palegoldenrod;
+}
+.menu-icon.is-active span:nth-child(1),
+.menu-icon.is-active span:nth-child(4) {
+  opacity: 0;
+}
+.menu-icon.is-active span:nth-child(2) {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+.menu-icon.is-active span:nth-child(3) {
+  top: 0.9375em;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+/*MOBILE MENU*/
+@media only screen and (min-width: 800px) {
+  .burger-container {
+      display:none;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .sys-nav {
+  		width: 180px;
+      left:-100%;
+  }
+  .sys-nav.burger_active {
+      left:0;
+  }
+}
