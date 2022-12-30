@@ -310,19 +310,20 @@
     const checkAuthOnMount = async () => {
     	try {
     		const apiDomain = "https://www.starpy.me"
-    		const currentUser = auth.currentUser
+    		const currentUser = JSON.parse(localStorage.getItem("currentUser"))
     		console.info('currentUser', currentUser)
 	    	if(currentUser) {
 	    		if(a) {
 		    		a.href = apiDomain+"/webapp/"
 		    		a.innerHTML = "TO WEBAPP"
 		    		a.target = "_blank"
+		    		delete a.download
 		    		starpyLoginButton.href = apiDomain+"/webapp/"
 		    		starpyLoginButton.innerHTML = "TO WEBAPP"
 		    		starpyLoginButton.target = "_blank"
 				    starpyLoginButton.removeEventListener("click", loginButtonClick)
 	    		}
-	    		const authToken = await auth.currentUser.getIdToken(true)
+	    		const authToken = localStorage.getItem("authToken")
 	    		const userData = await (await fetch(apiDomain+"/api/v1/backend/?authToken"+authToken)).json()
 	    		console.info("userData", userData)
 	    		return;
