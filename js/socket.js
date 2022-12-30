@@ -3,6 +3,8 @@ new function() {
   const apiHost = "www.starpy.me"
   const apiURL = `https://${apiHost}/api/v1/`
   const partyListUrl = `${apiURL}party-list`
+  const instantPartyUrl = () => 
+    `${apiURL}backend/party-one?partyId=${partyId}`
   const partyMediaUrl = () => 
     `${apiURL}party-one/?partyId=${partyId}`
   const partySyncUrl = () => 
@@ -53,30 +55,23 @@ new function() {
   }
   const getPartyMedia = async () => {
     try {
+      const data = await (await fetch(instantPartyUrl())).json()
+      console.info(data.results)
+      let red = data
+        .results
+        .reduce((a, i)=>{
+          return {...a, ...i}
+        },{})
+      console.info('red', red)
+
+      party = red.party
+      partyMedia = [red.media]
       didSyncCurrentPosition = false
-      const [f, s] = 
-        await Promise.all([
-          fetch(partyMediaUrl()), 
-          fetch(partySyncUrl())
-        ])
-      const [partyData, syncMessage] = 
-        await Promise.all([f.json(), s.json()])
-      if(partyData.results[0]) {
-        partyMedia = [partyData.results[0]._default]
-      }
-      else {
-        partyMedia = []
-      }
-      console.info('syncMessage', syncMessage)
-      if(syncMessage 
-        && syncMessage.results[0]
-        && syncMessage.results[0]._default
-        && syncMessage.results[0]._default.syncData) {
+      if(red.sync 
+        && red.sync.syncData) {
         didSyncCurrentPosition = true
-        const {syncData} = syncMessage.results[0]._default
-        currentPosition = syncData.percent
+        currentPosition = red.sync.syncData.percent
       }
-      console.info("partyMedia", partyMedia)
     } catch(err) {
       console.error("getPartyMedia error", err)
       partyMedia = []
