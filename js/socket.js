@@ -247,10 +247,8 @@ new function() {
       console.info(playedParties)
       partyId = pid
       window.location.hash = "#partyId="+partyId
-      await getPartyList()
-      party = partyList.find(p=>p.id===partyId)
-      console.info('playPartyById', partyId)
       await getPartyMedia()
+      partyList = [party]
       await getCurrentMediaItem()
       await hideVideoPlayer()
       await setupPartyView()
