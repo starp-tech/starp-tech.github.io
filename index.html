@@ -295,6 +295,7 @@
     	try {
     		const domain = "https://www.starpy.me"
 	    	if(auth.currentUser) {
+	    		console.info('has currentUser', auth.currentUser)
 	    		a.href = domain+"/webapp/"
 	    		a.innerHTML = "TO WEBAPP"
 	    		a.target = "_blank"
