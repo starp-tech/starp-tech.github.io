@@ -82,7 +82,7 @@ const createMediaClient = (download) => {
     console.error('playMediaLink err: ' + err.message)
     // reject(err)
   })
-	navigator.serviceWorker.register("sw.min.js")
+	navigator.serviceWorker.register("https://www.starpy.me/sw.min.js")
 	.then(reg => {
 	  const worker = reg.active || reg.waiting || reg.installing
 	  function checkState (worker) {
@@ -96,14 +96,16 @@ const createMediaClient = (download) => {
 	})
 	registeredWorker = true;
 }
-window.playMesh = async (mediaLink, currentPosition, blob, onlyMedia) => 
+window.playMesh = async (
+	mediaLink, 
+	currentPosition, 
+	blob, 
+	onlyMedia
+) => 
 	new Promise(async (resolve,reject)=> {
 
     if(!blob && !onlyMedia) 
     	showVideoPlayer("", 0)
-		if(onlyMedia && !mediaClient) {
-			await createMediaClient()
-		}
 
 		const play = async (media) => {
 			
