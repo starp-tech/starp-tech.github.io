@@ -391,15 +391,24 @@ const baseFileInputChangeListener = (e) => {
 			console.info("new media", media)
 			clipboardMediaUrl = "https://starpy.me/#download="+media.magnetURI
 			navigator.clipboard.writeText(clipboardMediaUrl)
-			fileHackingSelectButton.innerHTML = "Share Link"
-			fileHackingSelectButton2.innerHTML = "Share Link"
-			leaveWarning.innerHTML = gText
-			window.onbeforeunload=goodbye;
-			await getScreenLock()
+			
+			if(fileHackingSelectButton) {
+				fileHackingSelectButton.innerHTML = "Share Link"
+			}
+			
+			if(fileHackingSelectButton2) {
+				fileHackingSelectButton2.innerHTML = "Share Link"
+			}
+
+			if(leaveWarning) {
+				leaveWarning.innerHTML = gText
+				window.location.hash = "#download="+media.magnetURI
+				window.onbeforeunload=goodbye;
+				await getScreenLock()
+			}
+			
 			if(window.newMediaCallback)
 				window.newMediaCallback(file, media)
-			else 
-				window.location.hash = "#download="+media.magnetURI
 		})
 	}
 }
