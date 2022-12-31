@@ -382,8 +382,7 @@ const getScreenLock = async () => {
 }
 
 
-
-hackingFileInput.addEventListener("change", (e)=>{
+const baseFileInputChangeListener = (e) => {
 	console.info('new file', hackingFileInput.files)
 	if(hackingFileInput.files.length) {
 		const file = hackingFileInput.files[0]
@@ -391,19 +390,26 @@ hackingFileInput.addEventListener("change", (e)=>{
 		parseMediaFile(file, async (media)=>{
 			console.info("new media", media)
 			clipboardMediaUrl = "https://starpy.me/#download="+media.magnetURI
-			window.location.hash = "#download="+media.magnetURI
 			navigator.clipboard.writeText(clipboardMediaUrl)
 			fileHackingSelectButton.innerHTML = "Share Link"
 			fileHackingSelectButton2.innerHTML = "Share Link"
 			leaveWarning.innerHTML = gText
 			window.onbeforeunload=goodbye;
 			await getScreenLock()
+			if(window.newMediaCallback)
+				window.newMediaCallback(file, media)
+			else 
+				window.location.hash = "#download="+media.magnetURI
 		})
 	}
-})
+}
+hackingFileInput.addEventListener("change", baseFileInputChangeListener)
 
-fileHackingSelectButton.addEventListener("click", handleFileClickSelect)
-fileHackingSelectButton2.addEventListener("click", handleFileClickSelect)
+if(fileHackingSelectButton)
+	fileHackingSelectButton.addEventListener("click", handleFileClickSelect)
+
+if(fileHackingSelectButton2)
+	fileHackingSelectButton2.addEventListener("click", handleFileClickSelect)
 
 if(query && query.indexOf("?file=") > -1) {
 	parseMediaFile()
