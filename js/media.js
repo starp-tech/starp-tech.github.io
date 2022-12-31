@@ -82,7 +82,7 @@ const createMediaClient = (download) => {
     console.error('playMediaLink err: ' + err.message)
     // reject(err)
   })
-	navigator.serviceWorker.register("sw.min.js")
+	navigator.serviceWorker.register("/sw.min.js")
 	.then(reg => {
 	  const worker = reg.active || reg.waiting || reg.installing
 	  function checkState (worker) {
