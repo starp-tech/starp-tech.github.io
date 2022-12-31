@@ -96,7 +96,7 @@ const createMediaClient = (download) => {
 	})
 	registeredWorker = true;
 }
-const playMesh = async (mediaLink, currentPosition, blob) => 
+window.playMesh = async (mediaLink, currentPosition, blob, onlyMedia) => 
 	new Promise(async (resolve,reject)=> {
 
     if(!blob) 
@@ -105,6 +105,9 @@ const playMesh = async (mediaLink, currentPosition, blob) =>
 
 		const play = async (media) => {
 			
+			if(onlyMedia)
+				return resolve(media)
+
 			if(!prevMeshMedia[mediaLink])
 				prevMeshMedia[mediaLink] = media
 
