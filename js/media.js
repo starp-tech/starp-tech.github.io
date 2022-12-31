@@ -101,7 +101,9 @@ window.playMesh = async (mediaLink, currentPosition, blob, onlyMedia) =>
 
     if(!blob && !onlyMedia) 
     	showVideoPlayer("", 0)
-		
+		if(onlyMedia && !mediaClient) {
+			await createMediaClient()
+		}
 
 		const play = async (media) => {
 			
