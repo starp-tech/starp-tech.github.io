@@ -171,7 +171,7 @@ new function() {
           partyMedia = [data]
           isPlaying = false
           await getCurrentMediaItem()
-          setupPartyView()
+          setupPartyView(party, currentMedia)
           playMediaLink(
             currentExtract.url,
             currentMedia.currentPosition
@@ -221,11 +221,11 @@ new function() {
       await getPartyMedia()
       await getCurrentMediaItem()
       await hideVideoPlayer()
-      await setupPartyView()
+      await setupPartyView(party, currentMedia)
       playMediaLink(
         currentExtract.url,
         currentMedia.currentPosition
-        )
+      )
       window.location.hash = "#partyId="+partyId
       await createSocket()
     } catch(err) {
@@ -251,7 +251,7 @@ new function() {
       partyList = [party]
       await getCurrentMediaItem()
       await hideVideoPlayer()
-      await setupPartyView()
+      await setupPartyView(party, currentMedia)
       playMediaLink(
         currentExtract.url,
         currentMedia.currentPosition
@@ -308,10 +308,6 @@ new function() {
       console.error('startRandomMedia error', err)
     }
     isLoadingParty = false
-  }
-  const setupPartyView = () => {
-    partyTitle.innerHTML = `${party.name} by ${party.partyUserName}`
-    videoTitle.innerHTML = currentMedia.title
   }
   const pressNextParty = async () => {
     console.info('pressNextParty')

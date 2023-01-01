@@ -14,6 +14,12 @@ const mediaHosts = [
 	["tcp://media.starpy.me"], 
 	["http://media.starpy.me"]
 ]
+const setupPartyView = (party, currentMedia) => {
+  if(party)
+  	partyTitle.innerHTML = `${party.name} by ${party.partyUserName}`
+  if(currentMedia)
+	  videoTitle.innerHTML = currentMedia.title
+}
 const playMediaLink = async (mediaLink, currentPosition) => {
 	if(isPlaying)
 		return
