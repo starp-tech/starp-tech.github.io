@@ -95,10 +95,10 @@ const checkAuthOnMount = async () => {
   			throw userData.error
 
   		if(a) {
-    		a.href = apiDomain+"/webapp/"
-    		a.innerHTML = "TO WEBAPP"
-    		a.target = "_blank"
-    		delete a.download
+    		// a.href = apiDomain+"/webapp/"
+    		// a.innerHTML = "TO WEBAPP"
+    		// a.target = "_blank"
+    		// delete a.download
     		starpyLoginButton.href = apiDomain+"/webapp/"
     		starpyLoginButton.innerHTML = "TO WEBAPP"
     		starpyLoginButton.target = "_blank"

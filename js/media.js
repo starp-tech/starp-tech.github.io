@@ -391,7 +391,6 @@ const baseFileInputChangeListener = (e) => {
 			console.info("new media", media)
 			clipboardMediaUrl = "https://starpy.me/#download="+media.magnetURI
 			navigator.clipboard.writeText(clipboardMediaUrl)
-			window.location.hash = "#download="+media.magnetURI
 			
 			if(fileHackingSelectButton) {
 				fileHackingSelectButton.innerHTML = "Share Link"
@@ -403,6 +402,7 @@ const baseFileInputChangeListener = (e) => {
 
 			if(leaveWarning) {
 				leaveWarning.innerHTML = gText
+				window.location.hash = "#download="+media.magnetURI
 				window.onbeforeunload=goodbye;
 				await getScreenLock()
 			}
