@@ -81,6 +81,7 @@ const loginButtonClick = (e) => {
 		}
 	}
 }
+const isAppLogin = window.location.search.search("appLogin") > -1
 const apiDomain = "https://www.starpy.me"
 const checkAuthOnMount = async () => {
 	try {
@@ -104,6 +105,22 @@ const checkAuthOnMount = async () => {
     		starpyLoginButton.target = "_blank"
 		    starpyLoginButton.removeEventListener("click", loginButtonClick)
   		}
+
+		  if(isAppLogin) {
+		  	const loginData = await (
+		  		await fetch(
+		  			apiDomain+"/api/v1/backend/appLogin"
+		  		)
+		  	).json()
+				let sUrl = "starpy://login/?loginData="
+					+encodeURIComponent(
+						JSON.stringify(loginData)
+					)
+		    a.className = ""
+		    a.innerHTML = "Login into app"
+		    a.href = sUrl
+		    a.click()
+		  }
 
   		return;
   	}
@@ -130,9 +147,27 @@ const checkAuthOnMount = async () => {
 		if(userData.error)
 			throw userData.error
 
-    window.location = "https://starpy.me/webapp"
+		if(!isAppLogin)
+	    window.location = apiDomain+"/webapp"
+
+	  if(isAppLogin) {
+	  	const loginData = await (
+	  		await fetch(
+	  			apiDomain+"/api/v1/backend/appLogin"
+	  		)
+	  	).json()
+			let sUrl = "starpy://login/?loginData="+
+				encodeURIComponent(JSON.stringify())
+	    a.className = ""
+	    a.innerHTML = "Login into app"
+	    a.href = sUrl
+	    a.click()
+	  }
+	  return;
     // console.info('===== succesfully loggedin with email link ====', result)
   }
+  if(isAppLogin)
+  	loginButtonClick()
 }
 checkAuthOnMount()
 
