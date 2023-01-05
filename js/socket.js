@@ -281,8 +281,7 @@ new function() {
   }
 
   const getCurrentMediaItem = () => {
-      currentItem = partyMedia
-        .find(i=>i.messageType === "party_media")
+      currentItem = partyMedia[0]
       currentExtract = currentItem.ex
       currentMedia = currentItem.media
   }

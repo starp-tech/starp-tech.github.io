@@ -229,6 +229,10 @@ const updateSpeed = (media) => {
 
 const updateVideoSpeed = (media) => {
 	try {
+		
+		if(media.magnetURI !== currentMediaLink)
+			return;
+
 	  const progress = (100 * media.progress).toFixed(1)
 	  const peers = media.numPeers
 	  videoLoadProgress.innerHTML = "Buffered "+progress+"% from "+peers+" peers"
