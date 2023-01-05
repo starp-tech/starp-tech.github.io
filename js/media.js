@@ -25,6 +25,7 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 	if(isPlaying)
 		return
 	currentMediaLink = mediaLink;
+	videoLoadProgress.className = "hidden"
 	isPlaying = true;
 	
 	try {
@@ -143,7 +144,7 @@ window.playMesh = async (
 	      	})
 	      	return;
 	      }
-
+				videoLoadProgress.className = ""
 			  media.on('download', ()=>updateVideoSpeed(media))
 
 			  console.info('playMediaLink on file', file)
