@@ -106,10 +106,6 @@ body, html {
   z-index: 1000;
 	border-radius: 10px;
 }
-#videoLoadProgress {
-  bottom: 0;
-  top: initial;
-}
 .jumbotron p.big-message {
 /*			color:black;*/
 	font-size: 48px;
@@ -387,4 +383,8 @@ body, html {
 	.joinButton {
  		margin-top:0px;
 	}
+}
+#videoLoadProgress {
+  bottom: 0;
+  top: initial !important;
 }
