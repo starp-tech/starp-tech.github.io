@@ -144,7 +144,6 @@ window.playMesh = async (
 	      	})
 	      	return;
 	      }
-				videoLoadProgress.className = ""
 			  media.on('download', ()=>updateVideoSpeed(media))
 
 			  console.info('playMediaLink on file', file)
@@ -171,6 +170,7 @@ window.playMesh = async (
 			meshLinksAdded[mediaLink] = true
 			refreshMediaTimeout = 
 				setTimeout(refreshMedia, refreshMediaTimeoutInterval, mediaLink)
+			videoLoadProgress.className = ""
 			videoLoadProgress.innerHTML = "Connecting to peers"
 			mediaClient.add(mediaLink, (media) => {
 				try {
