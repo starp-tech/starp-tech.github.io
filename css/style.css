@@ -31,11 +31,11 @@ body, html {
 .jumbotron {
 	background: transparent;
 }
-.jumbotron h1, p, a, #partyTitle, #videoTitle {
+.jumbotron h1, p, a, #partyTitle, #videoTitle, #videoLoadProgress {
 	color:palegoldenrod;
 	font-family: CODE_Bold, Helvetica, Arial, sans-serif;
 }
-.jumbotron p, #videoTitle {
+.jumbotron p, #videoTitle, #videoTitle {
 	font-size: 28px;
 /*		  text-shadow: 2px 2px black;*/
 	-webkit-font-smoothing:antialiased;
@@ -218,7 +218,8 @@ body, html {
   position: absolute;
   z-index: 1001;
 }
-#videoTitle {
+#videoTitle,
+#videoLoadProgress {
 	margin: 5px;
   position: absolute;
   z-index: 1001;

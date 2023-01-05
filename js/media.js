@@ -4,6 +4,7 @@ let mediaWorker;
 let mediaClient;
 let prevMeshMedia = {}
 let meshLinksAdded = {}
+const videoLoadProgress = document.getElementById("videoLoadProgress")
 const fileHackingSelectButton = document.getElementById("fileHackingSelectButton")
 const fileHackingSelectButton2 = document.getElementById("fileHackingSelectButton2")
 const hackingFileInput = document.getElementById("hackingFileInput")
@@ -143,14 +144,8 @@ window.playMesh = async (
 	      	return;
 	      }
 
-				await Promise.all(
-					Object.keys(prevMeshMedia)
-					.map(m=>{
-						if(prevMeshMedia[m].magnetURI !== mediaLink)
-							return prevMeshMedia[m].pause()
-						return m
-					})
-				)
+			  media.on('download', ()=>updateVideoSpeed(media))
+
 			  console.info('playMediaLink on file', file)
 	      file.getStreamURL((err, url) => {
 	        console.log("playMediaLink ready", url);
@@ -229,23 +224,16 @@ const updateSpeed = (media) => {
 	} catch(err) {
 		console.error('updateSpeed error', err)
 	}
-  // let remaining
-  // if (media.done) {
-  //   remaining = 'Done.'
-  // } else {
-  //   remaining = media.timeRemaining !== Infinity
-  //     ? formatDistance(media.timeRemaining, 0, { includeSeconds: true })
-  //     : 'Infinity years'
-  //   remaining = remaining[0].toUpperCase() + remaining.substring(1) + ' remaining.'
-  // }
-  
-  // util.updateSpeed(
-  //   '<b>Peers:</b> ' + torrent.numPeers + ' ' +
-  //   '<b>Progress:</b> ' + progress + '% ' +
-  //   '<b>Download speed:</b> ' + prettierBytes(window.client.downloadSpeed) + '/s ' +
-  //   '<b>Upload speed:</b> ' + prettierBytes(window.client.uploadSpeed) + '/s ' +
-  //   '<b>ETA:</b> ' + remaining
-  // )
+}
+
+const updateVideoSpeed = (media) => {
+	try {
+	  const progress = (100 * media.progress).toFixed(1)
+	  const peers = media.numPeers
+	  videoLoadProgress.innerHTML = "Buffered "+progress+"% from "+peers+" peers"
+	} catch(err) {
+		console.error('updateSpeed error', err)
+	}
 }
 
 const hideVideoPlayer = (e) => {
