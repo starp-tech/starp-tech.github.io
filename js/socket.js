@@ -344,32 +344,34 @@ new function() {
     }
   }
 
-  document.addEventListener('touchstart', e => {
-    touchstartX = e.changedTouches[0].screenX
-  })
+  if(videoContainer) {
 
-  document.addEventListener('touchend', e => {
-    touchendX = e.changedTouches[0].screenX
-    checkDirection()
-  })
+    document.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX
+    })
 
-  videoContainer.addEventListener('touchstart', e => {
-    touchstartX = e.changedTouches[0].screenX
-  })
+    document.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX
+      checkDirection()
+    })
+    videoContainer.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX
+    })
 
-  videoContainer.addEventListener('touchend', e => {
-    touchendX = e.changedTouches[0].screenX
-    checkDirection()
-  })
-  
-  videoPlayer.addEventListener('touchend', e => {
-    touchendX = e.changedTouches[0].screenX
-    checkDirection()
-  })
+    videoContainer.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX
+      checkDirection()
+    })
+    
+    videoPlayer.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX
+      checkDirection()
+    })
 
-  videoPlayer.addEventListener('touchstart', e => {
-    touchstartX = e.changedTouches[0].screenX
-  })
+    videoPlayer.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX
+    })
+  }
 
 
   const pressJoinPublic = async () => {
@@ -388,21 +390,26 @@ new function() {
     swipeTimeout = setTimeout(pressJoinPublic, 300)
     return e.preventDefault()
   }
+  
+  if(joinRandomButton)
+    joinRandomButton.addEventListener("click", joinRandomButtonClick)
+  
+  if(joinRandomButton2)
+    joinRandomButton2.addEventListener("click", joinRandomButtonClick)
+  
+  if(playNextPartyButton)
+    playNextPartyButton.addEventListener("click", (e)=>{
+      clearTimeout(swipeTimeout) 
+      swipeTimeout = setTimeout(pressNextParty, 300)
+      return e.preventDefault()
+    })
 
-  joinRandomButton.addEventListener("click", joinRandomButtonClick)
-
-  joinRandomButton2.addEventListener("click", joinRandomButtonClick)
-
-  playNextPartyButton.addEventListener("click", (e)=>{
-    clearTimeout(swipeTimeout) 
-    swipeTimeout = setTimeout(pressNextParty, 300)
-    return e.preventDefault()
-  })
-  playPrevPartyButton.addEventListener("click", (e)=>{
-    clearTimeout(swipeTimeout) 
-    swipeTimeout = setTimeout(pressPrevParty, 300)
-    return e.preventDefault()
-  })
+  if(playPrevPartyButton)
+    playPrevPartyButton.addEventListener("click", (e)=>{
+      clearTimeout(swipeTimeout) 
+      swipeTimeout = setTimeout(pressPrevParty, 300)
+      return e.preventDefault()
+    })
   
   window.videoPlayerErrorTimeout = null;
 
