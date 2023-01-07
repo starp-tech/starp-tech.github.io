@@ -23,12 +23,12 @@ new function() {
     document.getElementById('partyTitle')
   const videoTitle = 
     document.getElementById('videoTitle')
+  let partyId;
   let currentSocket;
   let username = "anon"
   let userId = "anon"
   let partyList = [];
   let party;
-  let partyId;
   let partyMedia;
   let currentMedia;
   let currentItem;
@@ -142,6 +142,11 @@ new function() {
       // await getLastPartyMessage()
       if(event.data) {
         const data = JSON.parse(event.data)
+        
+        if(window.publicSocketCallback) {
+          window.publicSocketCallback(data)
+        }
+
         const {
           id, 
           chatId, 
@@ -150,8 +155,10 @@ new function() {
           messageType,
           syncData
         } = data
+        
         if(id === "sync" || chatId !== partyId)
           return;
+
         const messageTime = new Date(createdAt).valueOf()
         const now = new Date().valueOf()
 
@@ -237,27 +244,29 @@ new function() {
     isLoadingParty = false
   }
 
-  window.playPartyById = async (pid) => {
+  window.playPartyById = async (pid, onlyChat) => {
     clearTimeout(videoPlayerErrorTimeout)
     videoPlayerErrorTimeout = null;
     isLoadingParty = true;
     try {
-      if(partyId)
-        playedParties.push(partyId)
-      console.info(playedParties)
       partyId = pid
-      window.location.hash = "#partyId="+partyId
-      await getPartyMedia()
-      partyList = [party]
-      await getCurrentMediaItem()
-      await hideVideoPlayer()
-      await setupPartyView(party, currentMedia)
-      playMediaLink(
-        currentExtract.url,
-        currentMedia.currentPosition
-        )
-      playerPlayButton.className = ""
       await createSocket()
+      if(!onlyChat) {
+        if(partyId)
+          playedParties.push(partyId)
+        console.info(playedParties)
+        window.location.hash = "#partyId="+partyId
+        await getPartyMedia()
+        partyList = [party]
+        await getCurrentMediaItem()
+        await hideVideoPlayer()
+        await setupPartyView(party, currentMedia)
+        playMediaLink(
+          currentExtract.url,
+          currentMedia.currentPosition
+          )
+        playerPlayButton.className = ""
+      }
     } catch(err) {
       console.error('startRandomMedia error', err)
       isLoadingParty = false
