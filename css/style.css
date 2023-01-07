@@ -335,7 +335,23 @@ body, html {
 .onlymobile {
   display: none;
 }
+
+#chatContainer {
+  width:400px;
+  height:300px;
+  position: fixed;
+  display:flex;
+  z-index: 100000;
+  bottom: 0px;
+  right: 0;
+}
 @media (max-width: 800px) {
+
+  #chatContainer {
+    width:300px;
+    height: 200px;
+  }
+
   .onlymobile { 
     display: block;
   }
@@ -387,14 +403,4 @@ body, html {
 #videoLoadProgress {
   bottom: 0;
   top: initial !important;
-}
-
-#chatContainer {
-  width:400px;
-  height:300px;
-  position: fixed;
-  display:flex;
-  z-index: 100000;
-  bottom: 0px;
-  right: 0;
 }
