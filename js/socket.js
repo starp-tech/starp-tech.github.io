@@ -258,7 +258,6 @@ new function() {
           currentExtract.url,
           currentMedia.currentPosition
           )
-        playerPlayButton.className = ""
         window.runStarpyChatEmbed({
           chatId:partyId, 
           width:chatContainer.offsetWidth, 
@@ -434,8 +433,9 @@ new function() {
   }
   const parsePartyQuery = async () => {
     const pid = hashStart.split("#partyId=")[1]
-    console.info(hashStart, pid)
+    // console.info(hashStart, pid)
     try {
+      playerPlayButton.className = ""
       playPartyById(pid)
     } catch(err) {
       console.info("pressJoinPublic err", err)
