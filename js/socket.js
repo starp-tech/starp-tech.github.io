@@ -344,31 +344,31 @@ new function() {
 
   if(videoContainer) {
 
-    // document.addEventListener('touchstart', e => {
-    //   touchstartX = e.changedTouches[0].screenX
-    // })
+    document.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX
+    })
 
-    // document.addEventListener('touchend', e => {
-    //   touchendX = e.changedTouches[0].screenX
-    //   checkDirection()
-    // })
-    // videoContainer.addEventListener('touchstart', e => {
-    //   touchstartX = e.changedTouches[0].screenX
-    // })
+    document.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX
+      checkDirection()
+    })
+    videoContainer.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX
+    })
 
-    // videoContainer.addEventListener('touchend', e => {
-    //   touchendX = e.changedTouches[0].screenX
-    //   checkDirection()
-    // })
+    videoContainer.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX
+      checkDirection()
+    })
     
-    // videoPlayer.addEventListener('touchend', e => {
-    //   touchendX = e.changedTouches[0].screenX
-    //   checkDirection()
-    // })
+    videoPlayer.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX
+      checkDirection()
+    })
 
-    // videoPlayer.addEventListener('touchstart', e => {
-    //   touchstartX = e.changedTouches[0].screenX
-    // })
+    videoPlayer.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX
+    })
   }
 
 
