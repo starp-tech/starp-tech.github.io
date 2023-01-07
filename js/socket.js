@@ -259,7 +259,6 @@ new function() {
           currentMedia.currentPosition
           )
         playerPlayButton.className = ""
-        // chatContainer.innerHTML = ""
         window.runStarpyChatEmbed({
           chatId:partyId, 
           width:chatContainer.offsetWidth, 
@@ -294,6 +293,7 @@ new function() {
       currentMedia = currentItem.media
   }
   const playAnotherParty = async (prev) => {
+    playerPlayButton.className = "hidden"
     clearTimeout(videoPlayerErrorTimeout)
     videoPlayerErrorTimeout = null;
     try {
