@@ -23,6 +23,8 @@ new function() {
     document.getElementById('partyTitle')
   const videoTitle = 
     document.getElementById('videoTitle')
+  const chatContainer = 
+    document.getElementById('chatContainer')
   let partyId;
   let currentSocket;
   let username = "anon"
@@ -225,16 +227,7 @@ new function() {
       party = shuffle(partyList)
         .find(p=>!playedParties.includes(p.id))
       partyId = party.id
-      await getPartyMedia()
-      await getCurrentMediaItem()
-      await hideVideoPlayer()
-      await setupPartyView(party, currentMedia)
-      playMediaLink(
-        currentExtract.url,
-        currentMedia.currentPosition
-      )
-      window.location.hash = "#partyId="+partyId
-      await createSocket()
+      window.playPartyById(partyId)
     } catch(err) {
       console.error('startRandomMedia error', err)
       isLoadingParty = false
@@ -266,6 +259,12 @@ new function() {
           currentMedia.currentPosition
           )
         playerPlayButton.className = ""
+        chatContainer.innerHTML = ""
+        window.runStarpyChatEmbed({
+          chatId:partyId, 
+          width:chatContainer.offsetWidth, 
+          height:chatContainer.offsetHeight
+        }, "chatContainer")
       }
     } catch(err) {
       console.error('startRandomMedia error', err)
@@ -346,31 +345,31 @@ new function() {
 
   if(videoContainer) {
 
-    document.addEventListener('touchstart', e => {
-      touchstartX = e.changedTouches[0].screenX
-    })
+    // document.addEventListener('touchstart', e => {
+    //   touchstartX = e.changedTouches[0].screenX
+    // })
 
-    document.addEventListener('touchend', e => {
-      touchendX = e.changedTouches[0].screenX
-      checkDirection()
-    })
-    videoContainer.addEventListener('touchstart', e => {
-      touchstartX = e.changedTouches[0].screenX
-    })
+    // document.addEventListener('touchend', e => {
+    //   touchendX = e.changedTouches[0].screenX
+    //   checkDirection()
+    // })
+    // videoContainer.addEventListener('touchstart', e => {
+    //   touchstartX = e.changedTouches[0].screenX
+    // })
 
-    videoContainer.addEventListener('touchend', e => {
-      touchendX = e.changedTouches[0].screenX
-      checkDirection()
-    })
+    // videoContainer.addEventListener('touchend', e => {
+    //   touchendX = e.changedTouches[0].screenX
+    //   checkDirection()
+    // })
     
-    videoPlayer.addEventListener('touchend', e => {
-      touchendX = e.changedTouches[0].screenX
-      checkDirection()
-    })
+    // videoPlayer.addEventListener('touchend', e => {
+    //   touchendX = e.changedTouches[0].screenX
+    //   checkDirection()
+    // })
 
-    videoPlayer.addEventListener('touchstart', e => {
-      touchstartX = e.changedTouches[0].screenX
-    })
+    // videoPlayer.addEventListener('touchstart', e => {
+    //   touchstartX = e.changedTouches[0].screenX
+    // })
   }
 
 

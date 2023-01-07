@@ -388,3 +388,13 @@ body, html {
   bottom: 0;
   top: initial !important;
 }
+
+#chatContainer {
+  width:400px;
+  height:300px;
+  position: fixed;
+  display:flex;
+  z-index: 100000;
+  bottom: 0px;
+  right: 0;
+}
