@@ -259,7 +259,7 @@ new function() {
           currentMedia.currentPosition
           )
         playerPlayButton.className = ""
-        chatContainer.innerHTML = ""
+        // chatContainer.innerHTML = ""
         window.runStarpyChatEmbed({
           chatId:partyId, 
           width:chatContainer.offsetWidth, 
