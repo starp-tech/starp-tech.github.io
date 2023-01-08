@@ -27,12 +27,13 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app)
 
-const actionCodeSettings = {
-  url: 'https://www.starpy.me/?userId=1234',
-  // This must be true.
-  handleCodeInApp: true
-};
 let linkSent = false;
+
+window.SendSignInEmail = (email, actionCodeSettings) => {
+	await sendSignInLinkToEmail(auth, email, actionCodeSettings)
+	console.info('==== after succesfully send email =====')
+	window.localStorage.setItem('emailForSignIn', email);
+}
 
 const starpyLoginButton = document.getElementById("starpyLoginButton")
 const signInWithEmail = async () => {
@@ -51,10 +52,14 @@ const signInWithEmail = async () => {
     email = window.prompt('Please provide your email for confirmation');
   }
 
+	const actionCodeSettings = {
+	  url: 'https://www.starpy.me/?userId=1234',
+	  // This must be true.
+	  handleCodeInApp: true
+	};
+	
 	try {
-  	await sendSignInLinkToEmail(auth, email, actionCodeSettings)
-  	console.info('==== after succesfully send email =====')
-    window.localStorage.setItem('emailForSignIn', email);
+		window.SendSignInEmail(email, actionCodeSettings)
 	} catch(err) {
 		console.error(err)
 		a.innerHTML = err.message.toLowerCase().replace("firebase", "starpy")
