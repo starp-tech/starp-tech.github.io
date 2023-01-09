@@ -29,7 +29,7 @@ const auth = getAuth(app)
 
 let linkSent = false;
 
-window.SendSignInEmail = (email, actionCodeSettings) => {
+window.SendSignInEmail = async (email, actionCodeSettings) => {
 	await sendSignInLinkToEmail(auth, email, actionCodeSettings)
 	console.info('==== after succesfully send email =====')
 	window.localStorage.setItem('emailForSignIn', email);
@@ -57,7 +57,7 @@ const signInWithEmail = async () => {
 	  // This must be true.
 	  handleCodeInApp: true
 	};
-	
+
 	try {
 		window.SendSignInEmail(email, actionCodeSettings)
 	} catch(err) {
