@@ -2,7 +2,7 @@ let didSyncCurrentPosition = false
 new function() {
   const apiHost = "www.starpy.me"
   const apiURL = `https://${apiHost}/api/v1/`
-  const partyListUrl = `${apiURL}party-list`
+  const partyListUrl = `${apiURL}backend/party-list`
   const instantPartyUrl = () => 
     `${apiURL}backend/party-one?partyId=${partyId}`
   const partyMediaUrl = () => 
