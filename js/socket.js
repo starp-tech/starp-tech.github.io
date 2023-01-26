@@ -97,8 +97,8 @@ new function() {
 
   const getPartyList = async () => {
     partyList = await (await fetch(partyListUrl)).json()
-    partyList = partyList.rows.map(i=>i.value)
-    console.info(partyList)
+    partyList = partyList.results.map(i=>i.value)
+    // console.info(partyList)
   }
   let socketCreatTimeout = null;
   const socketCreatTimeoutInterval = 20*1000
