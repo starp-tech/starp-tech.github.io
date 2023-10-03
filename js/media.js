@@ -68,17 +68,11 @@ const createMediaClient = (download) => {
 			"iceServers": [
 	      {
 	        "urls": [
-	          "stun:relay.metered.ca:443"
-	        ]
-	      },
-	      {
-	        "urls": [
-	          "turn:relay.metered.ca:80",
-	          "turn:relay.metered.ca:443",
-	          "turn:relay.metered.ca:443?transport=tcp"
+	          "stun:turn.starpy.me",
+	          "turn:turn.starpy.me"
 	        ],
-	        "username": "dec3bfb1efe32089e944d1e6",
-	        "credential": "oNnsPnZj/IM/G+gU"
+	        "username": "turnserver",
+	        "credential": "490c224287e48b489ccb94a1f2fa07849aca1607841310e2666d573c3aa4e7cf"
 	      }
 	    ],
 	    "sdpSemantics": "unified-plan",
