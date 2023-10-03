@@ -15,6 +15,21 @@ const mediaHosts = [
 	["tcp://media.starpy.me"], 
 	["http://media.starpy.me"]
 ]
+const rtcConfig = {
+	"iceServers": [
+    {
+      "urls": [
+        "stun:turn.starpy.me",
+        "turn:turn.starpy.me"
+      ],
+      "username": "username1",
+      "credential": "password1"
+    }
+  ],
+  "sdpSemantics": "unified-plan",
+  "bundlePolicy": "max-bundle",
+  "iceCandidatePoolsize": 1
+}
 const setupPartyView = (party, currentMedia) => {
   if(party)
   	partyTitle.innerHTML = `${party.name} by ${party.partyUserName}`
@@ -64,21 +79,8 @@ const refreshMedia = (mediaLink, cb) => {
 const createMediaClient = (download) => {
 	mediaClient = new WebTorrent({
 		tracker:{
-			rtcConfig: {
-			"iceServers": [
-	      {
-	        "urls": [
-	          "stun:turn.starpy.me",
-	          "turn:turn.starpy.me"
-	        ],
-	        "username": "turnserver",
-	        "credential": "490c224287e48b489ccb94a1f2fa07849aca1607841310e2666d573c3aa4e7cf"
-	      }
-	    ],
-	    "sdpSemantics": "unified-plan",
-	    "bundlePolicy": "max-bundle",
-	    "iceCandidatePoolsize": 1
-		}}
+			rtcConfig
+		}
 	})
   mediaClient.on('error', function (err) {
     console.error('playMediaLink err: ' + err.message)
