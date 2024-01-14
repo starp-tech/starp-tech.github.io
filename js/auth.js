@@ -5,10 +5,11 @@ import {
 	getAuth, 
 	isSignInWithEmailLink, 
 	sendSignInLinkToEmail,
-	signInWithEmailLink 
+	signInWithEmailLink,
+	GoogleAuthProvider,
+	signInWithPopup
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -26,6 +27,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app)
+const googleAuth = new GoogleAuthProvider();
 
 let linkSent = false;
 
@@ -36,6 +38,7 @@ window.SendSignInEmail = async (email, actionCodeSettings) => {
 }
 
 const starpyLoginButton = document.getElementById("starpyLoginButton")
+const loginWithGoogle = document.getElementById("loginWithGoogle")
 const signInWithEmail = async () => {
 	
 	if(linkSent)
@@ -70,6 +73,38 @@ const signInWithEmail = async () => {
 		return 
 	}
 	a.innerHTML = "Check Your Email"
+}
+
+const signInWithGoogle = async (e) => {
+	e.preventDefault()
+	console.info('signIn')
+	signInWithPopup(auth, provider)
+	.then(async (result) => {
+		// This gives you a Google Access Token. You can use it to access the Google API.
+		const credential = GoogleAuthProvider.credentialFromResult(result);
+		const token = credential.accessToken;
+		// The signed-in user info.
+		console.info("result", result, credential, token)
+		const user = result.user;
+		console.info('user', user)
+		const currentUser = await (await fetch(apiDomain+"/api/v1/backend/?authToken="+token)).json()
+		console.info('currentUser', currentUser)
+		localStorage.setItem('authData', JSON.stringify(result))
+		localStorage.setItem('currentUser', JSON.stringify(currentUser))
+		localStorage.setItem('authToken', token)
+		// IdP data available using getAdditionalUserInfo(result)
+		// ...
+	}).catch((error) => {
+		// Handle Errors here.
+		console.error('auth', error)
+		const errorCode = error.code;
+		const errorMessage = error.message;
+		// The email of the user's account used.
+		const email = error.customData.email;
+		// The AuthCredential type that was used.
+		const credential = GoogleAuthProvider.credentialFromError(error);
+		// ...
+	});
 }
 const loginButtonClick = (e) => {
   let email = localStorage.getItem('emailForSignIn') || "";
@@ -179,3 +214,4 @@ checkAuthOnMount()
 // const 
 let isLoginFormEnabled = false
 starpyLoginButton.addEventListener("click", loginButtonClick)
+loginWithGoogle.addEventListener("click", signInWithGoogle)
