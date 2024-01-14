@@ -28,9 +28,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app)
-const googleAuthProvider = new GoogleAuthProvider();
-googleAuthProvider.addScope('profile');
-googleAuthProvider.addScope('email');
+const provider = new GoogleAuthProvider();
+provider.addScope('profile');
+provider.addScope('email');
 
 let linkSent = false;
 
@@ -82,7 +82,7 @@ const signInWithGoogle = async (e) => {
 	e.preventDefault()
 	console.info('signIn')
 
-	signInWithRedirect(googleAuthProvider);
+	signInWithRedirect(provider);
 	// signInWithPopup(auth, googleAuthProvider)
 	// .then(async (result) => {
 	// 	// This gives you a Google Access Token. You can use it to access the Google API.
