@@ -82,7 +82,7 @@ const signInWithGoogle = async (e) => {
 	e.preventDefault()
 	console.info('signIn')
 
-	signInWithRedirect(provider);
+	signInWithRedirect(googleAuthProvider);
 	// signInWithPopup(auth, googleAuthProvider)
 	// .then(async (result) => {
 	// 	// This gives you a Google Access Token. You can use it to access the Google API.
