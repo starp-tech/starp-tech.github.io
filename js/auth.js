@@ -7,7 +7,8 @@ import {
 	sendSignInLinkToEmail,
 	signInWithEmailLink,
 	GoogleAuthProvider,
-	signInWithPopup
+	signInWithPopup,
+	signInWithRedirect
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 
 
@@ -28,6 +29,8 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app)
 const googleAuthProvider = new GoogleAuthProvider();
+googleAuthProvider.addScope('profile');
+googleAuthProvider.addScope('email');
 
 let linkSent = false;
 
@@ -78,33 +81,35 @@ const signInWithEmail = async () => {
 const signInWithGoogle = async (e) => {
 	e.preventDefault()
 	console.info('signIn')
-	signInWithPopup(auth, googleAuthProvider)
-	.then(async (result) => {
-		// This gives you a Google Access Token. You can use it to access the Google API.
-		const credential = GoogleAuthProvider.credentialFromResult(result);
-		const token = credential.accessToken;
-		// The signed-in user info.
-		console.info("result", result, credential, token)
-		const user = result.user;
-		console.info('user', user)
-		const currentUser = await (await fetch(apiDomain+"/api/v1/backend/?authToken="+token)).json()
-		console.info('currentUser', currentUser)
-		localStorage.setItem('authData', JSON.stringify(result))
-		localStorage.setItem('currentUser', JSON.stringify(currentUser))
-		localStorage.setItem('authToken', token)
-		// IdP data available using getAdditionalUserInfo(result)
-		// ...
-	}).catch((error) => {
-		// Handle Errors here.
-		console.error('auth', error)
-		const errorCode = error.code;
-		const errorMessage = error.message;
-		// The email of the user's account used.
-		const email = error.customData.email;
-		// The AuthCredential type that was used.
-		const credential = GoogleAuthProvider.credentialFromError(error);
-		// ...
-	});
+
+	signInWithRedirect(provider);
+	// signInWithPopup(auth, googleAuthProvider)
+	// .then(async (result) => {
+	// 	// This gives you a Google Access Token. You can use it to access the Google API.
+	// 	const credential = GoogleAuthProvider.credentialFromResult(result);
+	// 	const token = credential.accessToken;
+	// 	// The signed-in user info.
+	// 	console.info("result", result, credential, token)
+	// 	const user = result.user;
+	// 	console.info('user', user)
+	// 	const currentUser = await (await fetch(apiDomain+"/api/v1/backend/?authToken="+token)).json()
+	// 	console.info('currentUser', currentUser)
+	// 	localStorage.setItem('authData', JSON.stringify(result))
+	// 	localStorage.setItem('currentUser', JSON.stringify(currentUser))
+	// 	localStorage.setItem('authToken', token)
+	// 	// IdP data available using getAdditionalUserInfo(result)
+	// 	// ...
+	// }).catch((error) => {
+	// 	// Handle Errors here.
+	// 	console.error('auth', error)
+	// 	const errorCode = error.code;
+	// 	const errorMessage = error.message;
+	// 	// The email of the user's account used.
+	// 	const email = error.customData.email;
+	// 	// The AuthCredential type that was used.
+	// 	const credential = GoogleAuthProvider.credentialFromError(error);
+	// 	// ...
+	// });
 }
 const loginButtonClick = (e) => {
   let email = localStorage.getItem('emailForSignIn') || "";
