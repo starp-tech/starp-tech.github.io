@@ -28,9 +28,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app)
-const googleAuthProvider = new GoogleAuthProvider();
-googleAuthProvider.addScope('profile');
-googleAuthProvider.addScope('email');
+const provider = new GoogleAuthProvider();
+provider.addScope('profile');
+provider.addScope('email');
 
 let linkSent = false;
 
