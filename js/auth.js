@@ -92,8 +92,6 @@ const signInWithGoogle = async (e) => {
 		console.info('user', user)
 		const currentUser = await (await fetch(apiDomain+"/api/v1/backend/?googleToken="+token)).json()
 		console.info('currentUser', currentUser)
-		localStorage.setItem('authData', JSON.stringify(result))
-		localStorage.setItem('currentUser', JSON.stringify(currentUser))
 		localStorage.setItem('authToken', currentUser.idToken)
 		checkAuthOnMount()
 		// IdP data available using getAdditionalUserInfo(result)
