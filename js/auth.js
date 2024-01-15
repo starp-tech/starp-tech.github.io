@@ -127,9 +127,6 @@ const isAppLogin = window.location.search.search("appLogin") > -1
 const apiDomain = "https://www.starpy.me"
 const checkAuthOnMount = async () => {
 	try {
-		const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-		// console.info('currentUser', currentUser)
-  	if(currentUser) {
   		const authToken = localStorage.getItem("authToken")
   		const userData = await (await fetch(apiDomain+"/api/v1/backend/?authToken="+authToken)).json()
   		// console.info("userData", userData)
@@ -165,7 +162,6 @@ const checkAuthOnMount = async () => {
 		  }
 
   		return;
-  	}
 	} catch (err) {
 		// console.error('auth error for currentUser', err)
 	}
