@@ -90,7 +90,7 @@ const signInWithGoogle = async (e) => {
 		console.info("result", result, credential, token)
 		const user = result.user;
 		console.info('user', user)
-		const currentUser = await (await fetch(apiDomain+"/api/v1/backend/?authToken="+token)).json()
+		const currentUser = await (await fetch(apiDomain+"/api/v1/backend/?googleToken="+token)).json()
 		console.info('currentUser', currentUser)
 		localStorage.setItem('authData', JSON.stringify(result))
 		localStorage.setItem('currentUser', JSON.stringify(currentUser))
