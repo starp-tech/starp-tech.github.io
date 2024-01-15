@@ -94,7 +94,7 @@ const signInWithGoogle = async (e) => {
 		console.info('currentUser', currentUser)
 		localStorage.setItem('authData', JSON.stringify(result))
 		localStorage.setItem('currentUser', JSON.stringify(currentUser))
-		localStorage.setItem('authToken', token)
+		localStorage.setItem('authToken', currentUser.idToken)
 		checkAuthOnMount()
 		// IdP data available using getAdditionalUserInfo(result)
 		// ...
