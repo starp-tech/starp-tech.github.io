@@ -16,7 +16,7 @@ import {
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAdmg-M42WaSQacbWa_-45mnhLPl5agzBE",
-  authDomain: "starpy.me",
+//   authDomain: "starpy.me",
   projectId: "starpy",
   storageBucket: "starpy.appspot.com",
   messagingSenderId: "1012103782424",
