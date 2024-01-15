@@ -16,7 +16,7 @@ import {
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAdmg-M42WaSQacbWa_-45mnhLPl5agzBE",
-//   authDomain: "starpy.me",
+  authDomain: "starpy.firebaseapp.me",
   projectId: "starpy",
   storageBucket: "starpy.appspot.com",
   messagingSenderId: "1012103782424",
@@ -95,6 +95,7 @@ const signInWithGoogle = async (e) => {
 		localStorage.setItem('authData', JSON.stringify(result))
 		localStorage.setItem('currentUser', JSON.stringify(currentUser))
 		localStorage.setItem('authToken', token)
+		checkAuthOnMount()
 		// IdP data available using getAdditionalUserInfo(result)
 		// ...
 	}).catch((error) => {
