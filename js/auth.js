@@ -92,6 +92,7 @@ const signInWithGoogle = async (e) => {
 		console.info('currentUser', currentUser)
 		localStorage.setItem('authToken', currentUser.idToken)
 		await checkAuthOnMount()
+		delete starpyLoginButton.target
 		starpyLoginButton.click()
 		
 	}).catch((error) => {
