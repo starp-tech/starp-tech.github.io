@@ -83,29 +83,19 @@ const signInWithGoogle = async (e) => {
 	console.info('signIn')
 	signInWithPopup(auth, googleAuthProvider)
 	.then(async (result) => {
-		// This gives you a Google Access Token. You can use it to access the Google API.
 		const credential = GoogleAuthProvider.credentialFromResult(result);
 		const token = credential.accessToken;
-		// The signed-in user info.
 		console.info("result", result, credential, token)
 		const user = result.user;
 		console.info('user', user)
 		const currentUser = await (await fetch(apiDomain+"/api/v1/backend/?googleToken="+token)).json()
 		console.info('currentUser', currentUser)
 		localStorage.setItem('authToken', currentUser.idToken)
-		checkAuthOnMount()
-		// IdP data available using getAdditionalUserInfo(result)
-		// ...
+		await checkAuthOnMount()
+		starpyLoginButton.click()
+		
 	}).catch((error) => {
-		// Handle Errors here.
 		console.error('auth', error)
-		const errorCode = error.code;
-		const errorMessage = error.message;
-		// The email of the user's account used.
-		const email = error.customData.email;
-		// The AuthCredential type that was used.
-		const credential = GoogleAuthProvider.credentialFromError(error);
-		// ...
 	});
 }
 const loginButtonClick = (e) => {
