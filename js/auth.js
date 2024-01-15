@@ -92,7 +92,7 @@ const signInWithGoogle = async (e) => {
 		console.info('currentUser', currentUser)
 		localStorage.setItem('authToken', currentUser.idToken)
 		await checkAuthOnMount()
-		window.location.pathname = "/webapp"
+		window.location.pathname = "/webapp/"
 		
 	}).catch((error) => {
 		console.error('auth', error)
