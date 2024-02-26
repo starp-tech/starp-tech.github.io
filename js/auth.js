@@ -7,8 +7,7 @@ import {
 	sendSignInLinkToEmail,
 	signInWithEmailLink,
 	GoogleAuthProvider,
-	signInWithPopup,
-	signInWithRedirect
+	signInWithPopup
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 
 

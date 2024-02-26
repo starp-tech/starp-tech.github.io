@@ -10,10 +10,6 @@ const fileHackingSelectButton2 = document.getElementById("fileHackingSelectButto
 const hackingFileInput = document.getElementById("hackingFileInput")
 window.currentMediaLink = "";
 const mediaHosts = [
-	["wss://media.starpy.me"], 
-	["udp://media.starpy.me"],
-	["tcp://media.starpy.me"], 
-	["http://media.starpy.me"]
 ]
 const rtcConfig = {
 	"iceServers": [
@@ -36,7 +32,7 @@ const setupPartyView = (party, currentMedia) => {
   if(currentMedia)
 	  videoTitle.innerHTML = currentMedia.title
 }
-const playMediaLink = async (mediaLink, currentPosition) => {
+const playMediaLink = async (mediaLink, currentPosition, filename) => {
 	if(isPlaying)
 		return
 	currentMediaLink = mediaLink;
@@ -46,9 +42,15 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 	try {
 		
 		if(mediaLink.search("magnet") > -1) {
-			await playMesh(mediaLink, currentPosition)
+			await playMesh(
+				mediaLink, 
+				currentPosition, 
+				undefined, 
+				undefined, 
+				filename
+			)
 		} else {
-			showVideoPlayer(mediaLink, currentPosition)
+			showVideoPlayer(mediaLink, currentPosition, filename)
 		}
 
 	} catch(err) {
@@ -59,21 +61,8 @@ const playMediaLink = async (mediaLink, currentPosition) => {
 let refreshMediaTimeout;
 const refreshMediaTimeoutInterval = 5000;
 const refreshMedia = (mediaLink, cb) => {
-	clearTimeout(refreshMediaTimeout)
 	console.info("refreshMedia", mediaLink)
-	let tm = mediaClient.torrents.find(t=>t.magnetURI === mediaLink)
-	if(tm) {
-		console.info('stale media', tm)
-		if(cb) {
-			tm.destroy()
-			mediaClient.add(mediaLink, cb)
-		}
-		else {
-			tm.resume()
-		}
-	}
-	// refreshMediaTimeout = 
-	// 	setTimeout(refreshMedia, refreshMediaTimeoutInterval, mediaLink)
+	if(cb) cb()
 }
 
 const createMediaClient = (download) => {
@@ -104,7 +93,8 @@ window.playMesh = async (
 	mediaLink, 
 	currentPosition, 
 	blob, 
-	onlyMedia
+	onlyMedia,
+	filename
 ) => 
 	new Promise(async (resolve,reject)=> {
 
@@ -121,12 +111,14 @@ window.playMesh = async (
 
 	    if(media.files.length) {
 				console.info('playMediaLink on media', media)
-			  let file = media.files.find(function (file) {
-	        return file.name.endsWith(".mp4") 
-	        || file.name.endsWith(".webm") 
-	        || file.name.endsWith(".mov");
-	      });
-	      
+			  let file = media.files.find( (file) => (
+				filename ? 
+				file.name === filename :
+				file.name.endsWith(".mp4") 
+				|| file.name.endsWith(".webm") 
+				|| file.name.endsWith(".mov")
+			  ));
+	      console.info('dling file', file)
 	      if(!file && media.files.length) {
 	      	file = media.files[0]
 	      }
@@ -185,7 +177,9 @@ window.playMesh = async (
 
 const videoContainer = document.getElementById("videoContainer")
 const videoPlayer = document.getElementById("videoPlayer")
+const videoPlayerSource = document.getElementById("videoPlayerSource")
 let currentPosition;
+
 
 const showVideoPlayer = (mediaLink, cp) => {
 	if(!didSyncCurrentPosition)
@@ -245,125 +239,12 @@ const hideVideoPlayer = (e) => {
 	videoPlayer.src = ""
 	videoContainer.className = "hidden"
 	isPlaying = false;
+	if(windowClosedCallback)
+		windowClosedCallback()
 	if(e)
 		return e.preventDefault()
 }
 
-const parseMediaFile = async (nfile, cb) => {
-	console.info('nfile', nfile)
-	try {
-		if(!nfile) {
-			const file = query.split("?file=")[1]
-			const fspl = file.split("/")
-			const filename = fspl[fspl.length-1]
-			createMediaClient(()=>{
-				console.info('worker did set up')
-			})
-			nfile = new File([
-				await (await fetch(file)).blob()
-			], filename)
-		}
-
-		mediaClient.seed(nfile, {announceList:mediaHosts}
-		, (media)=>{
-			console.info("media", media)
-			const { magnetURI } = media
-
-			refreshMedia(magnetURI)
-			if(window.ReactNativeWebView 
-				&& window.ReactNativeWebView.postMessage) {
-				window
-				.ReactNativeWebView
-				.postMessage(magnetURI)
-			}
-			if(cb) cb(media)
-		})
-
-	} catch(err) {
-		console.error('parseMediaFile error', err)
-			if(window.ReactNativeWebView 
-				&& window.ReactNativeWebView.postMessage) {
-				window
-				.ReactNativeWebView
-				.postMessage(
-					JSON.stringify(
-						{error:err.message}
-					)
-				)
-			}
-
-	}
-}
-let clipboardMediaUrl = null;
-let clipboardMediaFileName = "";
-const parseDownloadFile = async () => {
-	console.info('parseDownloadFile')
-
-	try {
-		a.innerHTML = "Loading File 0.0%"
-		a.href = hashStart
-		// fileHackingSelectButton.className = "hidden"
-		fileHackingSelectButton2.className = "hidden"
-		await createMediaClient()
-		const mediaLink = hashStart.split("#download=")[1]
-		await getScreenLock()
-		window.onbeforeunload=goodbye;
-		const {url, fileName} = await playMesh(mediaLink, 0, true)
-		a.innerHTML = "Download File"
-		a.href = url
-    a.download = fileName
-		window.onbeforeunload=null
-
-
-	} catch(err) {
-		console.error('parseDownloadFile', err)
-	}
-}
-const handleFileClickSelect = async (e) => {
-	
-	if(clipboardMediaUrl) {
-		try {
-			navigator.clipboard.writeText(clipboardMediaUrl)
-			
-			fileHackingSelectButton.innerHTML = "Link Copied"
-			fileHackingSelectButton2.innerHTML = "Link Copied"
-			
-			setTimeout(()=>{
-				fileHackingSelectButton.innerHTML = "Share Link"
-				fileHackingSelectButton2.innerHTML = "Share Link"
-			}, 1000)
-
-			const shareData = {
-			  title: 'Starpy file sharing',
-			  text: clipboardMediaFileName,
-			  url: clipboardMediaUrl
-			}
-
-			if(navigator.canShare())
-		    await navigator.share(shareData);
-
-		} catch(err) {
-			console.error(err)
-		}
-		return e.preventDefault();
-	}
-
-	try {
-		await createMediaClient()
-	} catch(err) {
-		console.error("handleFileClickSelect client err", err)
-	}
-	hackingFileInput.click(); 
-	return e.preventDefault();
-}
-const leaveWarning = document.getElementById("leaveWarning")
-const gText = "If you close the tab, file link will destroy, register to make it permanent!"
-const goodbye = (e) => {
-	if (e) {
-    e.returnValue = gText;
-  }
-  return gText;
-}
 const isScreenLockSupported = () => ('wakeLock' in navigator);
 
 const getScreenLock = async () => {
@@ -378,58 +259,45 @@ const getScreenLock = async () => {
 }
 
 
-const baseFileInputChangeListener = (e) => {
-	console.info('new file', hackingFileInput.files)
-	if(hackingFileInput.files.length) {
-		const file = hackingFileInput.files[0]
-		clipboardMediaFileName = file.fileName
-		parseMediaFile(file, async (media)=>{
-			console.info("new media", media)
-			clipboardMediaUrl = "https://starpy.me/#download="+media.magnetURI
-			navigator.clipboard.writeText(clipboardMediaUrl)
-			
-			if(fileHackingSelectButton) {
-				fileHackingSelectButton.innerHTML = "Share Link"
-			}
-			
-			if(fileHackingSelectButton2) {
-				fileHackingSelectButton2.innerHTML = "Share Link"
-			}
-
-			if(leaveWarning) {
-				leaveWarning.innerHTML = gText
-				window.location.hash = "#download="+media.magnetURI
-				window.onbeforeunload=goodbye;
-				await getScreenLock()
-			}
-			
-			if(window.newMediaCallback)
-				window.newMediaCallback(file, media)
-		})
+function dragElement(elmnt) {
+	var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+	if (videoPlayer) {
+	  // if present, the header is where you move the DIV from:
+	  videoPlayer.onmousedown = dragMouseDown;
+	} else {
+	  // otherwise, move the DIV from anywhere inside the DIV:
+	  elmnt.onmousedown = dragMouseDown;
+	}
+  
+	function dragMouseDown(e) {
+	  e = e || window.event;
+	  e.preventDefault();
+	  
+	  // get the mouse cursor position at startup:
+	  pos3 = e.clientX;
+	  pos4 = e.clientY;
+	  document.onmouseup = closeDragElement;
+	  // call a function whenever the cursor moves:
+	  document.onmousemove = elementDrag;
+	}
+  
+	function elementDrag(e) {
+	  e = e || window.event;
+	  e.preventDefault();
+	  // calculate the new cursor position:
+	  pos1 = pos3 - e.clientX;
+	  pos2 = pos4 - e.clientY;
+	  pos3 = e.clientX;
+	  pos4 = e.clientY;
+	  // set the element's new position:
+	  elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+	  elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+	}
+  
+	function closeDragElement() {
+	  // stop moving when mouse button is released:
+	  document.onmouseup = null;
+	  document.onmousemove = null;
 	}
 }
-hackingFileInput.addEventListener("change", baseFileInputChangeListener)
-
-if(fileHackingSelectButton)
-	fileHackingSelectButton.addEventListener("click", handleFileClickSelect)
-
-if(fileHackingSelectButton2)
-	fileHackingSelectButton2.addEventListener("click", handleFileClickSelect)
-
-if(query && query.indexOf("?file=") > -1) {
-	parseMediaFile()
-}
-
-if(hashStart && hashStart.indexOf("#download=") > -1) {
-	parseDownloadFile()
-} else {
-	if(!isMacintosh()) {
-
-		a.innerHTML = "JOIN RANDOM PARTY"
-		a.href = "#platform"
-		a.addEventListener("click", (e)=>{
-			window.startRandomMedia()
-			return e.preventDefault()
-		})
-	}
-}
+dragElement(videoContainer)

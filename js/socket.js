@@ -411,39 +411,7 @@ new function() {
   
   window.videoPlayerErrorTimeout = null;
 
-  const videoPlayerErrorTimeoutTimer = 5000
   videoPlayer.onerror = (e, err) => {
     console.error("videoPlayerError", e, videoPlayer.error)
-
-    if(videoContainer.className === "hidden") 
-      return;
-    if(!videoPlayer.error 
-      || videoPlayer.error.message === 'MEDIA_ELEMENT_ERROR: Empty src attribute')
-      return;
-
-    if(currentMediaLink.search("magnet") > -1)
-      return;
-
-    clearTimeout(videoPlayerErrorTimeout)
-    videoPlayerErrorTimeout = null;
-    videoPlayerErrorTimeout = setTimeout(()=>{
-      window.startRandomMedia()
-    }, videoPlayerErrorTimeoutTimer)
-
-  }
-  const parsePartyQuery = async () => {
-    const pid = hashStart.split("#partyId=")[1]
-    // console.info(hashStart, pid)
-    try {
-      playerPlayButton.className = ""
-      playPartyById(pid)
-    } catch(err) {
-      console.info("pressJoinPublic err", err)
-    }
-  }
-
-  if(hashStart 
-    && hashStart.search("partyId") > -1) {
-    parsePartyQuery()
   }
 }

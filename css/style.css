@@ -82,18 +82,22 @@ body, html {
   -ms-filter: contrast(1px);
   filter: contrast(1px);   
 }
+
 #videoContainer {
 	position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0%;
-  right: 0;
-  top: 0%;
+  width: 500px;
+  height: 300px;
   bottom: 0;
   margin: 0;
+  left: 0;
   background-color: black;
   z-index: 1000;
+  resize: both;
+  padding: 20px;
+  overflow: hidden;
 }
+
+
 #videoPlayer {
   width: 100%;
   height: 100%;
@@ -102,7 +106,7 @@ body, html {
   top: 0;
   bottom: 0;
   margin: 0;
-	position: fixed;
+	position: absolute;
   z-index: 1000;
 	border-radius: 10px;
 }
@@ -160,11 +164,11 @@ body, html {
 }
 
 .close {
-  position: fixed;
-  right: 0;
+  position: absolute;
+  right: 10px;
   top: 20px;
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   opacity: 0.7;
   cursor: pointer;
   z-index: 2000;
@@ -189,7 +193,7 @@ body, html {
   transform: rotate(-45deg);
 }
 .playPrevParty {
-	position: fixed;
+	position: absolute;
   top: calc(50% - 30px);
   left: 20px;
   font-size: 60px;
@@ -201,7 +205,7 @@ body, html {
 	left:0 !important;
 }
 .playNextParty {
-	position: fixed;
+	position: absolute;
   top: calc(50% - 30px);
   right: 20px;
   font-size: 60px;
@@ -227,7 +231,7 @@ body, html {
 }
 .lds-grid {
   display: block;
-  position: fixed;
+  position: absolute;
   width: 80px;
   height: 80px;
   top: calc( 50% - 40px);
@@ -340,10 +344,10 @@ body, html {
   width:400px;
   height:300px;
   position: fixed;
-  display:flex;
+  display: none;
   z-index: 100000;
   bottom: 0px;
-  right: 0;
+  right: 500px;
 }
 @media (max-width: 800px) {
 
