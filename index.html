@@ -17,52 +17,8 @@
   <link rel="stylesheet" href="minimal-pace.css">
 </head>
 <body>
-  <!-- <div class="nav-container"> -->
-    <div 
-    	class="burger-container" 
-    	onclick="toggleBurger()" 
-    	id="starpyBurger"
-    >
-        <div class="menu-button">
-            <div class="menu-icon">
-               <span></span>
-               <span></span>
-               <span></span>
-               <span></span>
-            </div>
-        </div>
-    </div>
-		<div class="sys-nav" id="starpyNav">
-      <a 
-	      href="#" 
-	      id="starpyLoginButton" 
-	      class="sys-nav-item">
-	    	LOGIN / REGISTER
-    	</a>
-		<a class="sys-nav-item"
-			href="#"
-			id="loginWithGoogle">
-			<ion-icon name="logo-google"></ion-icon>
-		</a>
-      <a href="#" 
-				 id="fileHackingSelectButton2"
-				 class="sys-nav-item"
-			>UPLOAD FILE</a>
-			<br class="onlymobile">
-      <a id="joinParty2" class="sys-nav-item">JOIN PARTY</a>
-      <a href="./ee" class="sys-nav-item">ENTERPRISE</a>
-      <a class="sys-nav-item"
-      	href="https://github.com/starp-tech" 
-      	target="_blank">
-      	<ion-icon name="logo-github"></ion-icon>
-      </a>
-
-		</div>
-  <!-- </div> -->
 	<canvas id="bgCanvas"></canvas>
 	<canvas id="terCanvas"></canvas>
-	<script type="text/javascript" src="js/anim.js">
-	</script>
 	<div class="pageContainer" id="introContainer">
 		<div class="background-overlay" style="
 			background-color: rgba(0,0,0,0.1);
@@ -74,172 +30,22 @@
 				  	<p 
 				  		class="big-message" 
 				  		id="leaveWarning"
-				  	>Same stars experience <br>
-				  With a Portable Blockchain.</p>
-				  	<a class="hidden" id="joinButton" href="#">
-				  		Join  
+				  	>Cloud Video Editor<br>
+				  Start Using For Free</p>
+				  	<a id="joinButton" href="https://www.starpy.me/webapp">
+				  		Take me to the app 
 				  	</a>
 				  	</div>
 			  	</div>
 			</div>
 		</div>
 
-    <div class="sys-intro-arrow">
+    <!-- <div class="sys-intro-arrow">
     	<a class="chevron bottom" href="#platform">
 	    </a>
-    </div>
+    </div> -->
 	</div>
-
-	<div class="pageContainer" 
-		id="platform" 
-		style="background-image: url(img/fr.jpeg);"
-	>
-    <div class="sys-intro-arrow">
-    	<a class="chevron bottom" href="#privacy">
-	    </a>
-    </div>
-		<div class="background-overlay" style="
-			background-color: rgba(0,0,0,0.5);
-		"></div>
-		<div class="container parent-vertical heading-info">
-			<div class="jumbotron">
-			  	<div class="container">
-				  	<h1>
-				  		Connect, Chat <br> & Share 4K Media
-				  	</h1>
-				  	<p class="big-message">
-				  		in a realtime party <br> with a magic link
-					  </p>
-				  	<a id="joinParty" class="joinButton">
-				  		JOIN RANDOM PARTY
-				  	</a>
-				  	</div>
-			  	</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="pageContainer" 
-		id="privacy" 
-		style="
-			background-image: url(img/privacy1.jpeg);
-			background-position: right;
-		"
-	>
-    <div class="sys-intro-arrow">
-    	<a class="chevron bottom" href="#hacking">
-	    </a>
-    </div>
-		<div class="background-overlay" style="
-			background-color: rgba(0,0,0,0.4);
-		"></div>
-		<div class="container parent-vertical heading-info">
-			<div class="jumbotron">
-			  	<div class="container">
-				  	<h1 style="color:palegoldenrod;">Ultimate <br> Privacy</h1>
-				  	<p class="big-message" style="color:palegoldenrod;">
-				  	no registration required<br> transparent p2p encryption
-				  	</p>
-				  	<a class="joinButton" target="blank" href="https://github.com/margelo/react-native-quick-crypto">
-				  		Learn More About Encryption
-				  	</a>
-				  	</div>
-			  	</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="pageContainer"
-		id="hacking" 
-		style="
-			background-image: url(img/cloud1.jpeg);
-			background-position: right;
-		"
-	>
-    <div class="sys-intro-arrow">
-    	<a class="chevron bottom" href="#connect">
-	    </a>
-    </div>
-		<div class="background-overlay" style="
-			background-color: rgba(0,0,0,0.5);
-		"></div>
-		<input class="hidden" id="hackingFileInput" type="file">
-		<div class="container parent-vertical heading-info">
-			<div class="jumbotron">
-			  	<div class="container">
-				  	<h1>Store Your Files</h1>
-				  	<p class="big-message">
-				  		Try our instant upload for free
-				  	</p>
-				  	<a 
-				  		id="fileHackingSelectButton"
-				  		class="joinButton" 
-				  		target="blank" 
-				  		href="#hacking">
-				  		Upload File 
-				  	</a>
-				  	</div>
-			  	</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="pageContainer" 
-		id="connect"
-		style="background-image: url(img/offline1.jpeg);"
-	>
-		<div class="background-overlay" style="
-			background-color: rgba(0,0,0,0.5);
-		"></div>
-		<div class="container parent-vertical heading-info">
-			<div class="jumbotron">
-			  	<div class="container">
-				  	<h1>
-				  		Offline First
-				  	</h1>
-				  	<p class="big-message"> Chat
-& Share Media <br> with users nearby <br> even when offline</p>
-				  	<a class="joinButton" href="https://www.starpy.me/appcast/StarpyApp.tar.xz">Download For Mac OS X</a>
-				  	</div>
-			  	</div>
-			</div>
-		</div>
-	</div>
-
-	<div 
-		class="hidden"
-		id="videoContainer"
-	>
-		<h1 id="partyTitle"></h1>
-		<h2 id="videoTitle"></h2>
-		<h3 id="videoLoadProgress"></h3>
-		<a href="#videoPlayer" class="close" onclick="hideVideoPlayer()"></a>
-		<div id="playerPlayButton" onclick="togglePlay()" class="hidden"></div>
-  	<a class="chevron left playPrevParty" id="playPrevParty" href="#videoPlayer">
-    </a>
-  	<a class="chevron right playNextParty" id="playNextParty"  href="#videoPlayer">
-    </a>
-    <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-
-		<video id="videoPlayer" onclick="togglePlay()" src="" autoplay playsinline></video>
-		<div id="chatContainer"></div>
-	</div>
-
-	<script type="text/javascript" src="js/contact.js">
-	</script>
-	<script type="text/javascript" src="js/resize.js">
-	</script>
-	<script type="text/javascript" src="js/socket.js">
-	</script>
-  </script>
-	<script type="text/javascript" src="js/media.js">
-	</script>
-
-	<script type="module" src="js/auth.js">
-	</script>
-	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-	<script type="text/javascript" src="https://www.starpy.me/webapp/bundle.chat.js">
+	<script type="text/javascript" src="js/anim.js">
 	</script>
 </body>
 </html>
