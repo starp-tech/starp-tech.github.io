@@ -16,6 +16,20 @@
   <link rel="stylesheet" href="minimal-pace.css">
 </head>
 <body>
+  <script type="speculationrules">
+    {
+      "prerender": [
+        {
+          "where": {
+            "and": [
+              { "href_matches": "/webapp/editor/folder/new_editor" },
+              { "not": { "href_matches": "/logout" } },
+            ]
+          }
+        }
+      ]
+    }
+  </script>
 	<canvas id="bgCanvas"></canvas>
 	<canvas id="terCanvas"></canvas>
 	<div class="pageContainer" id="introContainer">
