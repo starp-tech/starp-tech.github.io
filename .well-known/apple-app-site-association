@@ -1,10 +1,14 @@
 {
   "applinks": {
-    "apps": [],
     "details": [
       {
-        "appID": "N9DXS4JPC9.com.starpy.me",
-        "paths": ["/webapp/*"]
+        "appIDs": [ "N9DXS4JPC9.com.starpy.me"],
+        "components":[
+          {
+            "/": "/webapp/*",
+            "comment": "Matches any URL with a path that starts with /webapp/."
+         }
+        ]
       }
     ]
   },
