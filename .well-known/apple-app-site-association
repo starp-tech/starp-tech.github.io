@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "N9DXS4JPC9.com.starpy.me",
+        "paths": ["/webapp/*"]
+      }
+    ]
+  },
+  "activitycontinuation": {
+    "apps": ["N9DXS4JPC9.com.starpy.me"]
+  },
+  "webcredentials": {
+    "apps": ["N9DXS4JPC9.com.starpy.me"]
+  }
+}
