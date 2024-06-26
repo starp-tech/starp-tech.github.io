@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appIDs": [ "N9DXS4JPC9.com.starpy.me"],
+        "appIDs": [ "AMBX5RX244.me.starpy.complex"],
         "components":[
           {
             "/": "/webapp/*",
@@ -13,12 +13,12 @@
     ]
   },
   "activitycontinuation": {
-    "apps": ["N9DXS4JPC9.com.starpy.me"]
+    "apps": ["AMBX5RX244.me.starpy.complex"]
   },
   "appclips":{
-    "apps": ["N9DXS4JPC9.com.starpy.me"]
+    "apps": ["AMBX5RX244.me.starpy.complex"]
   },
   "webcredentials": {
-    "apps": ["N9DXS4JPC9.com.starpy.me"]
+    "apps": ["AMBX5RX244.me.starpy.complex"]
   }
 }
