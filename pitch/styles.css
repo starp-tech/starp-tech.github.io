@@ -67,3 +67,7 @@ a {
 a:hover {
   text-decoration: underline;
 }
+html, body {
+	position:relative;
+	overflow-x:hidden;
+}
