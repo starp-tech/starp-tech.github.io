@@ -74,5 +74,6 @@ a:hover {
 }
 html, body {
 	position:relative;
+  box-sizing: border-box;
 	overflow-x:hidden;
 }
