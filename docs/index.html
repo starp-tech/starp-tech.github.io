@@ -1,8 +1,8 @@
 <html><head><base href="https://starpy.me/docs">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Starpy.me Documentation - Decentralized Anonymous File Exchange on Polygon</title>
-    <meta name="description" content="Starpy.me - Decentralized Anonymous File Exchange on Polygon Documentation">
+    <title>starpy.me Documentation - Decentralized Anonymous File Exchange on Polygon</title>
+    <meta name="description" content="starpy.me - Decentralized Anonymous File Exchange on Polygon Documentation">
     <meta name="img" content="https://www.starpy.me/img/preview1.png">
     <meta property="og:image" content="https://www.starpy.me/img/preview1.png">
     <meta name="twitter:image" content="https://www.starpy.me/img/preview1.png">
@@ -172,7 +172,7 @@
     <header>
         <div class="container">
             <nav>
-                <div class="logo">Starpy.me</div>
+                <div class="logo">starpy.me</div>
                 <div class="nav-links">
                     <a href="https://starpy.me/">Home</a>
                     <a href="https://starpy.me/about">About</a>
@@ -199,17 +199,17 @@
         </aside>
 
         <main class="content">
-            <h1>Starpy.me Documentation</h1>
-            <p>Welcome to the official documentation for Starpy.me, your platform for creating decentralized anonymous file exchange shops on the Polygon network.</p>
+            <h1>starpy.me Documentation</h1>
+            <p>Welcome to the official documentation for starpy.me, your platform for creating decentralized anonymous file exchange shops on the Polygon network.</p>
 
             <section id="getting-started">
                 <h2>Getting Started</h2>
-                <p>Starpy.me allows you to create and manage decentralized file exchange shops on the Polygon network. This documentation will guide you through the process of setting up and using our SDK.</p>
+                <p>starpy.me allows you to create and manage decentralized file exchange shops on the Polygon network. This documentation will guide you through the process of setting up and using our SDK.</p>
             </section>
 
             <section id="installation">
                 <h2>Installation</h2>
-                <p>To get started with Starpy.me, install our SDK using npm:</p>
+                <p>To get started with starpy.me, install our SDK using npm:</p>
                 <pre><code>npm install starpy-polygon-sdk</code></pre>
             </section>
 
@@ -217,9 +217,9 @@
                 <h2>Initialization</h2>
                 <p>After installation, you need to initialize the SDK with your API key:</p>
                 <pre><code>
-import { StarpyPolygonSDK } from 'starpy-polygon-sdk';
+import { starpyPolygonSDK } from 'starpy-polygon-sdk';
 
-const starpy = new StarpyPolygonSDK({
+const starpy = new starpyPolygonSDK({
     apiKey: 'YOUR_API_KEY',
     network: 'mainnet' // or 'testnet' for Mumbai
 });
@@ -254,15 +254,15 @@ const files = await starpy.listFiles(shop.id);
 
             <section id="html-templates">
                 <h2>HTML Templates</h2>
-                <p>Starpy.me provides pre-built HTML templates for quick integration:</p>
+                <p>starpy.me provides pre-built HTML templates for quick integration:</p>
                 <pre><code>
-&lt;!-- Include the Starpy.me Polygon script --&gt;
+&lt;!-- Include the starpy.me Polygon script --&gt;
 &lt;script src="https://cdn.starpy.me/polygon-sdk/v1/starpy-polygon.js"&gt;&lt;/script&gt;
 
-&lt;!-- Use the Starpy.me file upload component --&gt;
+&lt;!-- Use the starpy.me file upload component --&gt;
 &lt;starpy-polygon-file-upload shop-id="YOUR_SHOP_ID"&gt;&lt;/starpy-polygon-file-upload&gt;
 
-&lt;!-- Use the Starpy.me file list component --&gt;
+&lt;!-- Use the starpy.me file list component --&gt;
 &lt;starpy-polygon-file-list shop-id="YOUR_SHOP_ID"&gt;&lt;/starpy-polygon-file-list&gt;
                 </code></pre>
             </section>
@@ -295,7 +295,7 @@ const files = await starpy.listFiles(shop.id);
 
             <section id="troubleshooting">
                 <h2>Troubleshooting</h2>
-                <p>If you encounter any issues while using Starpy.me, please check our troubleshooting guide or contact our support team.</p>
+                <p>If you encounter any issues while using starpy.me, please check our troubleshooting guide or contact our support team.</p>
                 <a href="https://starpy.me/support" class="btn">Contact Support</a>
             </section>
         </main>
