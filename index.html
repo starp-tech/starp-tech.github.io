@@ -1,71 +1,287 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>starpy app free video editor</title>
-  <link rel="icon" href="favicon.png">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="free video editor no registration no watermark unlimited collaboration private p2p storage">
-	<meta name="img" content="https://www.starpy.me/img/preview.png">
-  <meta property="og:image" content="https://www.starpy.me/img/preview.png">
-  <meta name="twitter:image" content="https://www.starpy.me/img/preview.png">
-  <meta name=”robots” content="index, follow">
-	<link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="minimal-pace.css">
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starpy.me - Decentralized Anonymous File Exchange on Polygon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Starpy.me - Decentralized Anonymous File Exchange on Polygon">
+    <meta name="img" content="https://www.starpy.me/img/preview1.png">
+    <meta property="og:image" content="https://www.starpy.me/img/preview1.png">
+    <meta name="twitter:image" content="https://www.starpy.me/img/preview1.png">
+    <meta name=”robots” content="index, follow">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
+    <style>
+        :root {
+            --colors-primary: #1FC7D4;
+            --colors-primaryBright: #53DEE9;
+            --colors-primaryDark: #0098A1;
+            --colors-secondary: #7645D9;
+            --colors-success: #31D0AA;
+            --colors-warning: #FFB237;
+            --colors-background: #08060B;
+            --colors-backgroundDisabled: #3c3742;
+            --colors-text: #F4EEFF;
+            --colors-textDisabled: #666171;
+            --card-background: #27262c;
+            --card-background-alt: #1C1C24;
+        }
+        
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--colors-background);
+            color: var(--colors-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        header {
+            background-color: var(--card-background);
+            padding: 16px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--colors-primary);
+        }
+        
+        .nav-links a {
+            color: var(--colors-text);
+            text-decoration: none;
+            margin-left: 24px;
+            transition: color 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .nav-links a:hover {
+            color: var(--colors-primary);
+        }
+        
+        main {
+            padding: 48px 0;
+        }
+        
+        h1, h2 {
+            color: var(--colors-primary);
+        }
+        
+        h1 {
+            font-size: 48px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 32px;
+            margin-top: 40px;
+            margin-bottom: 16px;
+        }
+        
+        p {
+            margin-bottom: 16px;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 32px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--colors-primary);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--colors-primaryBright);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+        
+        .feature-card {
+            background-color: var(--card-background);
+            border-radius: 24px;
+            padding: 32px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            color: var(--colors-primary);
+            margin-bottom: 16px;
+        }
+        
+        .how-it-works {
+            margin-top: 64px;
+        }
+        
+        .step {
+            background-color: var(--card-background);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--colors-primary);
+            margin-right: 24px;
+        }
+        
+        .connect-wallet {
+            text-align: center;
+            margin-top: 64px;
+        }
+        
+        #walletStatus {
+            margin-top: 16px;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-  <script type="speculationrules">
-    {
-      "prerender": [
-        {
-          "where": {
-            "and": [
-              { "href_matches": "/webapp/editor/folder/new_editor?title=New" },
-              { "not": { "href_matches": "/logout" } }
-            ]
-          }
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">starpy.me</div>
+                <div class="nav-links">
+                    <a href="https://exdc.cc/">EXDC</a>
+                    <!-- <a href="https://starpy.me/about">About</a>
+                    <a href="https://starpy.me/docs">Docs</a> -->
+                    <a href="mailto:contact@starpy.me">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h1>Welcome to Starpy.me</h1>
+                <p>Create decentralized, anonymous file exchange shops on the Polygon network. Share files securely and privately without compromising your identity.</p>
+                <a href="https://www.starpy.me/webapp/" class="cta-button">Get Started</a>
+            </section>
+
+            <section class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Anonymous</h3>
+                    <p>Exchange files without revealing your identity. Our platform ensures your privacy.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Decentralized</h3>
+                    <p>Built on the Polygon network, ensuring no single point of failure or control.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Fast & Efficient</h3>
+                    <p>Leverage Polygon's speed and low transaction costs for seamless file exchanges.</p>
+                </div>
+            </section>
+
+            <section class="how-it-works">
+                <h2>How It Works</h2>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h3>Create Your Shop</h3>
+                        <p>Set up your decentralized file exchange shop using our intuitive interface.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h3>Upload Files</h3>
+                        <p>Securely upload your files to the Polygon network using our SDK.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h3>Share & Exchange</h3>
+                        <p>Share your shop link or integrate it into your website for seamless file exchanges.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="connect-wallet">
+                <h2>Connect Your Wallet</h2>
+                <p>To get started, connect your Polygon-compatible wallet:</p>
+                <button id="connectWallet" class="cta-button">Connect Wallet</button>
+                <p id="walletStatus">Not connected</p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        let provider;
+        let signer;
+
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    // Request account access
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                    signer = provider.getSigner();
+                    
+                    const address = await signer.getAddress();
+                    document.getElementById('walletStatus').textContent = `Connected: ${address.slice(0, 6)}...${address.slice(-4)}`;
+                    
+                    // Check if we're on the Polygon network
+                    const network = await provider.getNetwork();
+                    if (network.chainId !== 137) {
+                        alert('Please switch to the Polygon network in your wallet.');
+                    }
+                } catch (error) {
+                    console.error('Failed to connect wallet:', error);
+                    document.getElementById('walletStatus').textContent = 'Failed to connect wallet';
+                }
+            } else {
+                alert('Please install a Web3 wallet like MetaMask to use this feature.');
+            }
         }
-      ]
-    }
-  </script>
-	<canvas id="bgCanvas"></canvas>
-	<canvas id="terCanvas"></canvas>
-	<div class="pageContainer" id="introContainer">
-    <img 
-    src="./img/preview.png"
-    alt="free video editor screenshot" 
-    style="left:calc(15% - 65px);position: absolute;width: 70%;height: auto;padding:50px;margin:20px;border-radius:20px;" />
-		<div class="background-overlay" style="
-			background-color: rgba(0,0,0,0.35);
-		"></div>
-		<div class="container parent-vertical heading-info">
-			<div class="jumbotron">
-			  	<div class="container">
 
-				  	<h1>Starpy</h1>
-				  	<p 
-				  		class="big-message" 
-				  		id="leaveWarning"
-				  	>P2P Video Editor & Storage <br>
-            A Single App For <br>
-            Cameraman, Editor & Director   
-            </p>
-				  	<a id="joinButton" href="https://www.starpy.me/webapp/editor/folder/new_editor?title=New">
-				  		Take me to the app 
-				  	</a>
-				  	</div>
-			  	</div>
-			</div>
-		</div>
-
-    <!-- <div class="sys-intro-arrow">
-    	<a class="chevron bottom" href="#platform">
-	    </a>
-    </div> -->
-	</div>
-	<script type="text/javascript" src="js/anim.js">
-	</script>
+        document.getElementById('connectWallet').addEventListener('click', connectWallet);
+    </script>
 </body>
 </html>
