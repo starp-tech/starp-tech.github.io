@@ -212,13 +212,13 @@
             <p>We reserve the right to modify or discontinue, temporarily or permanently, the service with or without notice. We shall not be liable to you or any third party for any modification, suspension, or discontinuance of the service.</p>
 
             <h2>9. Governing Law</h2>
-            <p>These Terms shall be governed and construed in accordance with the laws of [Jurisdiction], without regard to its conflict of law provisions.</p>
+            <p>These Terms shall be governed and construed in accordance with the laws of Georgia, without regard to its conflict of law provisions.</p>
 
             <h2>10. Changes to Terms</h2>
             <p>We reserve the right to update or change our Terms of Service at any time. We will provide notice of any significant changes by posting the new Terms of Service on this page.</p>
 
             <h2>11. Contact Us</h2>
-            <p>If you have any questions about these Terms, please contact us at terms@starpy.me.</p>
+            <p>If you have any questions about these Terms, please contact us at contact@starpy.me.</p>
         </section>
     </main>
 
@@ -233,52 +233,4 @@
             <p>&copy; 2023 Starpy.me. All rights reserved.</p>
         </div>
     </footer>
-
-    <script>
-        const networkSelector = document.getElementById('network-selector');
-
-        networkSelector.addEventListener('change', () => {
-            const selectedNetwork = networkSelector.value;
-            console.log(`Network changed to: ${selectedNetwork}`);
-            // Implement network change logic here
-        });
-
-        // Add Web3 functionality
-        if (typeof window.ethereum !== 'undefined') {
-            console.log('MetaMask is installed!');
-
-            const web3 = new Web3(window.ethereum);
-
-            // Example: Connect wallet button
-            const connectWalletButton = document.createElement('button');
-            connectWalletButton.textContent = 'Connect Wallet';
-            connectWalletButton.style.backgroundColor = 'var(--colors-primary)';
-            connectWalletButton.style.color = 'white';
-            connectWalletButton.style.border = 'none';
-            connectWalletButton.style.padding = '8px 16px';
-            connectWalletButton.style.borderRadius = '16px';
-            connectWalletButton.style.fontWeight = '600';
-            connectWalletButton.style.fontSize = '14px';
-            connectWalletButton.style.cursor = 'pointer';
-            connectWalletButton.style.transition = 'background-color 0.3s ease';
-            connectWalletButton.style.marginLeft = '24px';
-
-            document.querySelector('nav .nav-links').appendChild(connectWalletButton);
-
-            connectWalletButton.addEventListener('click', async () => {
-                try {
-                    // Request account access
-                    await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const accounts = await web3.eth.getAccounts();
-                    console.log('Connected account:', accounts[0]);
-                    connectWalletButton.textContent = 'Wallet Connected';
-                    connectWalletButton.disabled = true;
-                } catch (error) {
-                    console.error('Error connecting wallet:', error);
-                }
-            });
-        } else {
-            console.log('MetaMask is not installed');
-        }
-    </script>
 </body></html>

@@ -207,7 +207,7 @@
             <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "effective date" at the top of this Privacy Policy.</p>
 
             <h2>7. Contact Us</h2>
-            <p>If you have any questions about this Privacy Policy, please contact us at privacy@starpy.me.</p>
+            <p>If you have any questions about this Privacy Policy, please contact us at contact@starpy.me.</p>
         </section>
     </main>
 
@@ -222,52 +222,4 @@
             <p>&copy; 2023 Starpy.me. All rights reserved.</p>
         </div>
     </footer>
-
-    <script>
-        const networkSelector = document.getElementById('network-selector');
-
-        networkSelector.addEventListener('change', () => {
-            const selectedNetwork = networkSelector.value;
-            console.log(`Network changed to: ${selectedNetwork}`);
-            // Implement network change logic here
-        });
-
-        // Add Web3 functionality
-        if (typeof window.ethereum !== 'undefined') {
-            console.log('MetaMask is installed!');
-
-            const web3 = new Web3(window.ethereum);
-
-            // Example: Connect wallet button
-            const connectWalletButton = document.createElement('button');
-            connectWalletButton.textContent = 'Connect Wallet';
-            connectWalletButton.style.backgroundColor = 'var(--colors-primary)';
-            connectWalletButton.style.color = 'white';
-            connectWalletButton.style.border = 'none';
-            connectWalletButton.style.padding = '8px 16px';
-            connectWalletButton.style.borderRadius = '16px';
-            connectWalletButton.style.fontWeight = '600';
-            connectWalletButton.style.fontSize = '14px';
-            connectWalletButton.style.cursor = 'pointer';
-            connectWalletButton.style.transition = 'background-color 0.3s ease';
-            connectWalletButton.style.marginLeft = '24px';
-
-            document.querySelector('nav .nav-links').appendChild(connectWalletButton);
-
-            connectWalletButton.addEventListener('click', async () => {
-                try {
-                    // Request account access
-                    await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const accounts = await web3.eth.getAccounts();
-                    console.log('Connected account:', accounts[0]);
-                    connectWalletButton.textContent = 'Wallet Connected';
-                    connectWalletButton.disabled = true;
-                } catch (error) {
-                    console.error('Error connecting wallet:', error);
-                }
-            });
-        } else {
-            console.log('MetaMask is not installed');
-        }
-    </script>
 </body></html>
