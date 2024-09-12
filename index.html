@@ -2,6 +2,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Starpy.me - Decentralized Video Creation Platform</title>
+    <link rel="icon" href="favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="starpy.me free video editor no registration no watermark unlimited collaboration private p2p storage">
     <meta name="img" content="https://www.starpy.me/img/preview.png">
@@ -9,7 +10,7 @@
     <meta name="twitter:image" content="https://www.starpy.me/img/preview.png">
     <meta name=”robots” content="index, follow">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&amp;display=swap" rel="stylesheet">
-    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
+    <!-- <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script> -->
     <style>
         :root {
             --colors-primary: #FF3366;
@@ -694,25 +695,5 @@
             <p>© 2023 Starpy.me. All rights reserved.</p>
         </div>
     </footer>
-
-    <script>
-        const networkSelector = document.getElementById('network-selector');
-        const trendingPrices = document.querySelectorAll('.trending-price');
-        
-        const conversionRates = {
-            matic: 1,
-            eth: 0.0005,
-            bnb: 0.003
-        };
-        
-        networkSelector.addEventListener('change', function() {
-            const selectedNetwork = this.value;
-            trendingPrices.forEach(priceElement => {
-                const originalPrice = parseFloat(priceElement.textContent.split(' ')[0]);
-                const convertedPrice = (originalPrice * conversionRates[selectedNetwork]).toFixed(6);
-                priceElement.textContent = `${convertedPrice} ${selectedNetwork.toUpperCase()}`;
-            });
-        });
-    </script>
 
 </body></html>
