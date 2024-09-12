@@ -1,32 +1,25 @@
-<html><head>
+<!DOCTYPE html><html><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Starpy.me - Decentralized Anonymous File Exchange on Polygon</title>
-    <link rel="icon" href="favicon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Starpy.me - Decentralized Anonymous File Exchange on Polygon">
-    <meta name="img" content="https://www.starpy.me/img/preview1.png">
-    <meta property="og:image" content="https://www.starpy.me/img/preview1.png">
-    <meta name="twitter:image" content="https://www.starpy.me/img/preview1.png">
-    <meta name=”robots” content="index, follow">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Starpy.me - Decentralized Video Stock Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&amp;display=swap" rel="stylesheet">
     <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
     <style>
         :root {
-            --colors-primary: #1FC7D4;
-            --colors-primaryBright: #53DEE9;
-            --colors-primaryDark: #0098A1;
-            --colors-secondary: #7645D9;
-            --colors-success: #31D0AA;
-            --colors-warning: #FFB237;
-            --colors-background: #08060B;
-            --colors-backgroundDisabled: #3c3742;
-            --colors-text: #F4EEFF;
-            --colors-textDisabled: #666171;
-            --card-background: #27262c;
-            --card-background-alt: #1C1C24;
+            --colors-primary: #FF3366;
+            --colors-primaryBright: #FF6699;
+            --colors-primaryDark: #CC0033;
+            --colors-secondary: #33CCFF;
+            --colors-success: #00CC66;
+            --colors-warning: #FFCC00;
+            --colors-background: #0A0A0A;
+            --colors-backgroundAlt: #1A1A1A;
+            --colors-text: #FFFFFF;
+            --colors-textAlt: #CCCCCC;
+            --card-background: #1A1A1A;
+            --card-border-radius: 16px;
         }
-        
+
         body {
             font-family: 'Kanit', sans-serif;
             background-color: var(--colors-background);
@@ -35,146 +28,362 @@
             margin: 0;
             padding: 0;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
         }
-        
+
         header {
-            background-color: var(--card-background);
+            background-color: var(--colors-backgroundAlt);
             padding: 16px 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        
+
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             font-size: 24px;
             font-weight: 700;
             color: var(--colors-primary);
         }
-        
+
         .nav-links a {
             color: var(--colors-text);
             text-decoration: none;
             margin-left: 24px;
             transition: color 0.3s ease;
-            font-weight: 600;
         }
-        
+
         .nav-links a:hover {
             color: var(--colors-primary);
         }
-        
-        main {
-            padding: 48px 0;
+
+        .hero {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/img/800.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
         }
-        
-        h1, h2 {
-            color: var(--colors-primary);
+
+        .hero-content {
+            max-width: 800px;
         }
-        
-        h1 {
+
+        .hero h1 {
             font-size: 48px;
             margin-bottom: 24px;
-            text-align: center;
         }
-        
-        h2 {
-            font-size: 32px;
-            margin-top: 40px;
-            margin-bottom: 16px;
-        }
-        
-        p {
-            margin-bottom: 16px;
-        }
-        
-        .hero {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-        
+
         .hero p {
-            font-size: 20px;
-            max-width: 800px;
-            margin: 0 auto 32px;
+            font-size: 24px;
+            margin-bottom: 32px;
         }
-        
+
         .cta-button {
             display: inline-block;
             background-color: var(--colors-primary);
             color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
             text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 16px;
             font-weight: 600;
+            font-size: 18px;
             transition: background-color 0.3s ease;
         }
-        
+
         .cta-button:hover {
             background-color: var(--colors-primaryBright);
         }
-        
+
         .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-top: 48px;
+            padding: 80px 0;
         }
-        
+
+        .features h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 48px;
+            color: var(--colors-primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+
         .feature-card {
             background-color: var(--card-background);
-            border-radius: 24px;
-            padding: 32px;
+            border-radius: var(--card-border-radius);
+            padding: 24px;
             text-align: center;
-            transition: transform 0.3s ease;
         }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
+
         .feature-icon {
             font-size: 48px;
-            color: var(--colors-primary);
+            margin-bottom: 16px;
+            color: var(--colors-secondary);
+        }
+
+        .feature-title {
+            font-size: 24px;
+            font-weight: 600;
             margin-bottom: 16px;
         }
-        
-        .how-it-works {
-            margin-top: 64px;
+
+        .app-showcase {
+            padding: 80px 0;
+            background-color: var(--colors-backgroundAlt);
         }
-        
-        .step {
-            background-color: var(--card-background);
-            border-radius: 24px;
-            padding: 32px;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .step-number {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--colors-primary);
-            margin-right: 24px;
-        }
-        
-        .connect-wallet {
+
+        .app-showcase h2 {
             text-align: center;
-            margin-top: 64px;
+            font-size: 36px;
+            margin-bottom: 48px;
+            color: var(--colors-primary);
         }
-        
-        #walletStatus {
-            margin-top: 16px;
+
+        .app-grid {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+
+        .app-screenshot {
+            text-align: center;
+        }
+
+        .app-screenshot img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+
+        .download-button {
+            display: inline-block;
+            background-color: var(--colors-primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
             font-weight: 600;
+            margin-top: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-button:hover {
+            background-color: var(--colors-primaryBright);
+        }
+
+        .trending {
+            padding: 80px 0;
+            background-color: var(--colors-backgroundAlt);
+        }
+
+        .trending h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 48px;
+            color: var(--colors-primary);
+        }
+
+        .trending-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .trending-item {
+            background-color: var(--card-background);
+            border-radius: var(--card-border-radius);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .trending-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .trending-thumbnail {
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trending-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .trending-info {
+            padding: 16px;
+        }
+
+        .trending-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .trending-author {
+            font-size: 14px;
+            color: var(--colors-textAlt);
+        }
+
+        .trending-price {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--colors-success);
+            margin-top: 8px;
+        }
+
+        .collaborative-editing {
+            padding: 80px 0;
+        }
+
+        .collaborative-editing h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 48px;
+            color: var(--colors-primary);
+        }
+
+        .collab-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+
+        .collab-feature {
+            background-color: var(--card-background);
+            border-radius: var(--card-border-radius);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .collab-feature h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--colors-secondary);
+        }
+
+        .collab-feature p {
+            font-size: 16px;
+            color: var(--colors-textAlt);
+        }
+
+        .cryptid-integration {
+            padding: 80px 0;
+            background-color: var(--colors-backgroundAlt);
+        }
+
+        .cryptid-integration h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 48px;
+            color: var(--colors-primary);
+        }
+
+        .cryptid-content {
+            background-color: var(--card-background);
+            border-radius: var(--card-border-radius);
+            padding: 32px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cryptid-content p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .cryptid-content ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-bottom: 24px;
+        }
+
+        .cryptid-content ul li {
+            font-size: 16px;
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .cryptid-content ul li::before {
+            content: '✓';
+            color: var(--colors-success);
+            position: absolute;
+            left: 0;
+        }
+
+        footer {
+            background-color: var(--colors-backgroundAlt);
+            color: var(--colors-textAlt);
+            padding: 48px 0;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .footer-links a {
+            color: var(--colors-textAlt);
+            text-decoration: none;
+            margin: 0 16px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--colors-primary);
+        }
+
+        .network-dropdown {
+            background-color: var(--colors-primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            padding-right: 32px;
+        }
+
+        .network-dropdown:hover {
+            background-color: var(--colors-primaryBright);
         }
     </style>
 </head>
@@ -182,107 +391,322 @@
     <header>
         <div class="container">
             <nav>
-                <div class="logo">starpy.me</div>
+                <div class="logo">Starpy.me</div>
                 <div class="nav-links">
-                    <a href="https://exdc.cc/">EXDC</a>
+                    <!-- <a href="https://starpy.me/">Home</a> -->
                     <!-- <a href="https://starpy.me/about">About</a> -->
-                    <a href="https://starpy.me/docs">Docs</a>
-                    <a href="mailto:contact@starpy.me">Contact</a>
+                    <!-- <a href="https://starpy.me/browse">Browse</a> -->
+                    <!-- <a href="https://starpy.me/upload">Upload</a> -->
+                    <!-- <a href="https://starpy.me/contact">Contact</a> -->
+                    <!-- <select id="network-selector" class="network-dropdown">
+                        <option value="matic">Polygon (MATIC)</option>
+                        <option value="eth">Ethereum (ETH)</option>
+                        <option value="bnb">Binance Smart Chain (BNB)</option>
+                    </select> -->
                 </div>
             </nav>
         </div>
     </header>
 
     <main>
-        <div class="container">
-            <section class="hero">
-                <h1>Welcome to starpy.me</h1>
-                <p>Create decentralized, anonymous file exchange shops on the Polygon network. Share files securely and privately without compromising your identity.</p>
-                <a href="https://www.starpy.me/webapp/" class="cta-button">Get Started</a>
-            </section>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Decentralized Video Creation Platform</h1>
+                <p>Create amazing videos anywhere anytime online or offline</p>
+                <a href="/webapp/" class="cta-button">Start Creating</a>
+            </div>
+        </section>
 
-            <section class="features">
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Anonymous</h3>
-                    <p>Exchange files without revealing your identity. Our platform ensures your privacy.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3>Decentralized</h3>
-                    <p>Built on the Polygon network, ensuring no single point of failure or control.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3>Fast & Efficient</h3>
-                    <p>Leverage Polygon's speed and low transaction costs for seamless file exchanges.</p>
-                </div>
-            </section>
+        <section class="app-showcase">
+    <div class="container">
+        <h2>Edit Anywhere, Anytime</h2>
+        <div class="app-grid">
+        <svg width="1280" height="800" viewBox="0 0 800 600">
+    <defs>
+        <filter id="drop-shadow">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3"></feGaussianBlur>
+            <feOffset dx="2" dy="2" result="offsetblur"></feOffset>
+            <feComponentTransfer>
+                <feFuncA type="linear" slope="0.5"></feFuncA>
+            </feComponentTransfer>
+            <feMerge>
+                <feMergeNode></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <defs>
+      <pattern id="img-desktop" width="1" height="1" patternUnits="objectBoundingBox">
+        <image href="/img/preview.png" width="480" height="300" />
+      </pattern>
+    </defs>
+    <defs>
+      <pattern id="img-mobile" width="1" height="1" patternUnits="objectBoundingBox">
+        <image href="/img/mobile-preview.png" width="130" height="250"  />
+      </pattern>
+    </defs>
+    <!-- Desktop frame -->
+    <rect x="50" y="50" width="500" height="350" rx="10" ry="10" fill="#333" filter="url(#drop-shadow)"></rect>
+    <rect x="60" y="60" width="480" height="300" rx="5" ry="5" fill="#1a1a1a"></rect>
+    <rect x="60" y="60" width="480" height="300" rx="5" ry="5" fill="url(#img-desktop)"></rect>
+    <circle cx="300" cy="380" r="10" fill="#444"></circle>
 
-            <section class="how-it-works">
-                <h2>How It Works</h2>
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div>
-                        <h3>Create Your Shop</h3>
-                        <p>Set up your decentralized file exchange shop using our intuitive interface.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div>
-                        <h3>Upload Files</h3>
-                        <p>Securely upload your files to the Polygon network using our SDK.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div>
-                        <h3>Share & Exchange</h3>
-                        <p>Share your shop link or integrate it into your website for seamless file exchanges.</p>
-                    </div>
-                </div>
-            </section>
+    <!-- Mobile frame -->
+    <rect x="600" y="150" width="150" height="300" rx="20" ry="20" fill="#333" filter="url(#drop-shadow)"></rect>
+    <rect x="610" y="170" width="130" height="250" rx="10" ry="10" fill="#1a1a1a"></rect>
+    <rect x="610" y="170" width="130" height="250" rx="10" ry="10" fill="url(#img-mobile)"></rect>
+    <circle cx="675" cy="440" r="15" fill="#444"></circle>
 
-            <section class="connect-wallet">
-                <h2>Connect Your Wallet</h2>
-                <p>To get started, connect your Polygon-compatible wallet:</p>
-                <button id="connectWallet" class="cta-button">Connect Wallet</button>
-                <p id="walletStatus">Not connected</p>
-            </section>
+    <!-- WiFi symbol (moved down) -->
+    <g transform="translate(400, 550) scale(0.8)">
+        <path d="M0,-100 A150,150 0 0,1 100,0" stroke="#33CCFF" fill="none" stroke-width="20">
+            <animate attributeName="stroke-dasharray" from="0, 236" to="236, 236" dur="2s" repeatCount="indefinite"></animate>
+        </path>
+        <path d="M0,-60 A90,90 0 0,1 60,0" stroke="#33CCFF" fill="none" stroke-width="20">
+            <animate attributeName="stroke-dasharray" from="0, 142" to="142, 142" dur="2s" repeatCount="indefinite" begin="0.5s"></animate>
+        </path>
+        <path d="M0,-20 A30,30 0 0,1 20,0" stroke="#33CCFF" fill="none" stroke-width="20">
+            <animate attributeName="stroke-dasharray" from="0, 47" to="47, 47" dur="2s" repeatCount="indefinite" begin="1s"></animate>
+        </path>
+    </g>
+
+    <!-- Bidirectional Connection lines -->
+    <line x1="300" y1="250" x2="550" y2="250" stroke="#33CCFF" stroke-width="3" stroke-dasharray="5,5">
+        <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1s" repeatCount="indefinite"></animate>
+    </line>
+    <line x1="550" y1="250" x2="675" y2="300" stroke="#33CCFF" stroke-width="3" stroke-dasharray="5,5">
+        <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1s" repeatCount="indefinite"></animate>
+    </line>
+
+    <!-- Bidirectional data packets -->
+    <circle cx="50" cy="100" r="5" fill="#FFFFFF">
+        <animateMotion path="M250,150 Q400,100 625,200" dur="3s" repeatCount="indefinite"></animateMotion>
+    </circle>
+    <circle cx="50" cy="100" r="5" fill="#FFFFFF">
+        <animateMotion path="M250,150 Q400,100 625,200" dur="3s" repeatCount="indefinite" begin="1s"></animateMotion>
+    </circle>
+    <circle cx="50" cy="100" r="5" fill="#FFFFFF">
+        <animateMotion path="M625,200 Q400,100 250,150" dur="3s" repeatCount="indefinite" begin="0.5s"></animateMotion>
+    </circle>
+    <circle cx="50" cy="100" r="5" fill="#FFFFFF">
+        <animateMotion path="M625,200 Q400,100 250,150" dur="3s" repeatCount="indefinite" begin="1.5s"></animateMotion>
+    </circle>
+
+    <!-- Text -->
+    <!-- <text x="400" y="550" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="24" text-anchor="middle">Seamless Sync Across Devices</text> -->
+</svg>
+<h2 style="margin-top: -50px;">Seamless Sync Across Devices</h2>
         </div>
-    </main>
+    </div>
+</section>
+
+        <section class="collaborative-editing">
+            <div class="container">
+                <h2>Collaborative Editing Reimagined</h2>
+                <div class="collab-features">
+                    <div class="collab-feature">
+                        <h3>Distributed Video Editing</h3>
+                        <p>Edit your videos seamlessly across multiple devices. Start on your phone, continue on your desktop, and finish on your tablet.</p>
+                    </div>
+                    <div class="collab-feature">
+                        <h3>Real-time Collaboration</h3>
+                        <p>Work together with your team in real-time, whether you're using our browser, desktop, or mobile apps. See changes instantly and streamline your workflow.</p>
+                    </div>
+                    <div class="collab-feature">
+                        <h3>Cloud Sync</h3>
+                        <p>Your projects are always up-to-date across all your devices. Never worry about version conflicts or lost work again.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cryptid-integration">
+    <div class="container">
+        <h2>Unlimited Integration Possibilities</h2>
+        <div class="cryptid-content">
+            <p>
+                Take your video rendering to the next level with Starpy.me's Cryptid service. Seamlessly integrate your video rendering pipelines with any API, unlocking a world of possibilities for your content creation.
+            </p>
+            <ul>
+                <li>Connect to AI-powered editing tools</li>
+                <li>Integrate with content delivery networks</li>
+                <li>Leverage cloud computing resources for faster rendering</li>
+                <li>Access vast libraries of stock footage and effects</li>
+            </ul>
+            <p>
+                With Cryptid, your creativity knows no bounds. Enhance your videos with cutting-edge technologies and services, all within the Starpy.me ecosystem.
+            </p>
+        </div>
+        <svg width="100%" height="200" viewBox="0 0 800 200">
+            <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#FF3366;stop-opacity:1"></stop>
+                    <stop offset="100%" style="stop-color:#33CCFF;stop-opacity:1"></stop>
+                </linearGradient>
+            </defs>
+            
+            <!-- Pipeline -->
+            <path d="M50,100 Q200,50 400,100 T750,100" fill="none" stroke="url(#gradient)" stroke-width="10" stroke-linecap="round">
+                <animate attributeName="stroke-dasharray" from="0,1000" to="1000,1000" dur="5s" repeatCount="indefinite"></animate>
+            </path>
+            
+            <!-- Nodes -->
+            <g>
+                <circle cx="50" cy="100" r="20" fill="#FF3366">
+                    <animate attributeName="r" values="15;20;15" dur="2s" repeatCount="indefinite"></animate>
+                </circle>
+                <text x="50" y="140" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Input</text>
+            </g>
+            
+            <g>
+                <circle cx="400" cy="100" r="20" fill="#FFCC00">
+                    <animate attributeName="r" values="15;20;15" dur="2s" repeatCount="indefinite" begin="0.5s"></animate>
+                </circle>
+                <text x="400" y="140" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Process</text>
+            </g>
+            
+            <g>
+                <circle cx="750" cy="100" r="20" fill="#33CCFF">
+                    <animate attributeName="r" values="15;20;15" dur="2s" repeatCount="indefinite" begin="1s"></animate>
+                </circle>
+                <text x="750" y="140" text-anchor="middle" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="14">Output</text>
+            </g>
+            
+            <!-- Data packets -->
+            <circle cx="50" cy="100" r="5" fill="#FFFFFF">
+                <animateMotion path="M0,0 Q150,-50 350,0 T700,0" dur="3s" repeatCount="indefinite"></animateMotion>
+            </circle>
+            <circle cx="50" cy="100" r="5" fill="#FFFFFF">
+                <animateMotion path="M0,0 Q150,-50 350,0 T700,0" dur="3s" repeatCount="indefinite" begin="1s"></animateMotion>
+            </circle>
+            <circle cx="50" cy="100" r="5" fill="#FFFFFF">
+                <animateMotion path="M0,0 Q150,-50 350,0 T700,0" dur="3s" repeatCount="indefinite" begin="2s"></animateMotion>
+            </circle>
+        </svg>
+    </div>
+    <style>
+        .cryptid-integration {
+            overflow: hidden;
+        }
+    </style>
+</section>
+
+<section class="features">
+  <div class="container">
+      <h2>Why Choose Starpy.me?</h2>
+      <div class="features-grid">
+          <div class="feature-card">
+              <div class="feature-icon">💰</div>
+              <h3 class="feature-title">Direct Payouts</h3>
+              <p>Creators receive payments directly through smart contracts</p>
+          </div>
+          <div class="feature-card">
+              <div class="feature-icon">🔒</div>
+              <h3 class="feature-title">Secure Transactions</h3>
+              <p>Blockchain-powered security for all your transactions</p>
+          </div>
+          <div class="feature-card">
+              <div class="feature-icon">🌐</div>
+              <h3 class="feature-title">Global Marketplace</h3>
+              <p>Connect with creators and buyers from around the world</p>
+          </div>
+          <div class="feature-card">
+              <div class="feature-icon">🎥</div>
+              <h3 class="feature-title">High-Quality Content</h3>
+              <p>Curated selection of professional-grade video stock</p>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- 
+        <section class="trending">
+            <div class="container">
+                <h2>Trending Videos</h2>
+                <div class="trending-grid">
+                    <div class="trending-item">
+                        <a href="https://starpy.me/video/urban-rush">
+                            <div class="trending-thumbnail">
+                                <img src="https://picsum.photos/seed/urbanrush/300/200" alt="Busy city street during rush hour, urban videography" width="300" height="200">
+                            </div>
+                            <div class="trending-info">
+                                <div class="trending-title">Urban Rush</div>
+                                <div class="trending-author">by CityScape</div>
+                                <div class="trending-price">0.06 MATIC</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="trending-item">
+                        <a href="https://starpy.me/video/serene-nature">
+                            <div class="trending-thumbnail">
+                                <img src="https://picsum.photos/seed/serenenature/300/200" alt="Tranquil forest scene with a flowing stream, nature videography" width="300" height="200">
+                            </div>
+                            <div class="trending-info">
+                                <div class="trending-title">Serene Nature</div>
+                                <div class="trending-author">by NatureLens</div>
+                                <div class="trending-price">0.08 MATIC</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="trending-item">
+                        <a href="https://starpy.me/video/tech-closeup">
+                            <div class="trending-thumbnail">
+                                <img src="https://picsum.photos/seed/techcloseup/300/200" alt="Close-up of electronic components, technology videography" width="300" height="200">
+                            </div>
+                            <div class="trending-info">
+                                <div class="trending-title">Tech Closeup</div>
+                                <div class="trending-author">by TechVision</div>
+                                <div class="trending-price">0.05 MATIC</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="trending-item">
+                        <a href="https://starpy.me/video/aerial-coastline">
+                            <div class="trending-thumbnail">
+                                <img src="https://picsum.photos/seed/aerialcoastline/300/200" alt="Aerial view of a beautiful coastline, drone videography" width="300" height="200">
+                            </div>
+                            <div class="trending-info">
+                                <div class="trending-title">Aerial Coastline</div>
+                                <div class="trending-author">by SkyHigh</div>
+                                <div class="trending-price">0.09 MATIC</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main> -->
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="/terms">Terms of Service</a>
+                <a href="/privacy">Privacy Policy</a>
+                <!-- <a href="https://starpy.me/faq">FAQ</a> -->
+                <!-- <a href="https://starpy.me/support">Support</a> -->
+            </div>
+            <p>© 2023 Starpy.me. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
-        let provider;
-        let signer;
-
-        async function connectWallet() {
-            if (typeof window.ethereum !== 'undefined') {
-                try {
-                    // Request account access
-                    await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    provider = new ethers.providers.Web3Provider(window.ethereum);
-                    signer = provider.getSigner();
-                    
-                    const address = await signer.getAddress();
-                    document.getElementById('walletStatus').textContent = `Connected: ${address.slice(0, 6)}...${address.slice(-4)}`;
-                    
-                    // Check if we're on the Polygon network
-                    const network = await provider.getNetwork();
-                    if (network.chainId !== 137) {
-                        alert('Please switch to the Polygon network in your wallet.');
-                    }
-                } catch (error) {
-                    console.error('Failed to connect wallet:', error);
-                    document.getElementById('walletStatus').textContent = 'Failed to connect wallet';
-                }
-            } else {
-                alert('Please install a Web3 wallet like MetaMask to use this feature.');
-            }
-        }
-
-        document.getElementById('connectWallet').addEventListener('click', connectWallet);
+        const networkSelector = document.getElementById('network-selector');
+        const trendingPrices = document.querySelectorAll('.trending-price');
+        
+        const conversionRates = {
+            matic: 1,
+            eth: 0.0005,
+            bnb: 0.003
+        };
+        
+        networkSelector.addEventListener('change', function() {
+            const selectedNetwork = this.value;
+            trendingPrices.forEach(priceElement => {
+                const originalPrice = parseFloat(priceElement.textContent.split(' ')[0]);
+                const convertedPrice = (originalPrice * conversionRates[selectedNetwork]).toFixed(6);
+                priceElement.textContent = `${convertedPrice} ${selectedNetwork.toUpperCase()}`;
+            });
+        });
     </script>
-</body>
-</html>
+
+</body></html>
