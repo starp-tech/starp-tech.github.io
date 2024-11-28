@@ -1,0 +1,401 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - Starpy.me</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles from previous page */
+        :root {
+            --colors-primary: #FF3366;
+            --colors-primaryBright: #FF6699;
+            --colors-primaryDark: #CC0033;
+            --colors-secondary: #33CCFF;
+            --colors-success: #00CC66;
+            --colors-warning: #FFCC00;
+            --colors-background: #0A0A0A;
+            --colors-backgroundAlt: #1A1A1A;
+            --colors-text: #FFFFFF;
+            --colors-textAlt: #CCCCCC;
+            --card-background: #1A1A1A;
+            --card-border-radius: 16px;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--colors-background);
+            color: var(--colors-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header styles */
+        header {
+            background-color: var(--colors-backgroundAlt);
+            padding: 16px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--colors-primary);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--colors-text);
+            text-decoration: none;
+            margin-left: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--colors-primary);
+        }
+
+        /* Support specific styles */
+        .support-hero {
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(to bottom, var(--colors-backgroundAlt), var(--colors-background));
+        }
+
+        .support-hero h1 {
+            font-size: 48px;
+            margin-bottom: 24px;
+            color: var(--colors-primary);
+        }
+
+        .support-search {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            background: var(--colors-backgroundAlt);
+            color: var(--colors-text);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--colors-primary);
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            padding: 60px 0;
+        }
+
+        .support-category {
+            background: var(--card-background);
+            border-radius: var(--card-border-radius);
+            padding: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .support-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .category-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--colors-secondary);
+        }
+
+        .faq-section {
+            padding: 60px 0;
+        }
+
+        .faq-item {
+            background: var(--card-background);
+            border-radius: var(--card-border-radius);
+            margin-bottom: 16px;
+            padding: 24px;
+            cursor: pointer;
+        }
+
+        .faq-question {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--colors-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            display: none;
+            padding-top: 16px;
+            border-top: 1px solid var(--colors-backgroundAlt);
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .contact-section {
+            padding: 60px 0;
+            text-align: center;
+            background: var(--colors-backgroundAlt);
+        }
+
+        .contact-options {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .contact-option {
+            background: var(--card-background);
+            border-radius: var(--card-border-radius);
+            padding: 24px;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .contact-button {
+            display: inline-block;
+            background-color: var(--colors-primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background-color: var(--colors-primaryBright);
+        }
+
+        /* Add new styles for the disclaimer section */
+        .disclaimer-section {
+            padding: 40px 0;
+            background: var(--colors-backgroundAlt);
+            margin-top: 40px;
+            border-top: 1px solid var(--colors-primaryDark);
+        }
+
+        .disclaimer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px;
+            background: var(--card-background);
+            border-radius: var(--card-border-radius);
+            border-left: 4px solid var(--colors-warning);
+        }
+
+        .disclaimer-title {
+            color: var(--colors-warning);
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .disclaimer-text {
+            color: var(--colors-textAlt);
+            margin-bottom: 16px;
+        }
+
+        .disclaimer-email {
+            color: var(--colors-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .disclaimer-email:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://starpy.me" class="logo">Starpy.me</a>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <!-- <a href="https://starpy.me/about">About</a>
+                    <a href="https://starpy.me/browse">Browse</a>
+                    <a href="https://starpy.me/upload">Upload</a>
+                    <a href="https://starpy.me/contact">Contact</a> -->
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="support-hero">
+            <div class="container">
+                <h1>How can we help you?</h1>
+                <!-- <div class="support-search">
+                    <input type="text" class="search-input" placeholder="Search for help articles...">
+                </div> -->
+            </div>
+        </section>
+<!-- 
+        <section class="container">
+            <div class="support-grid">
+                <div class="support-category">
+                    <div class="category-icon">🎥</div>
+                    <h2 class="category-title">Getting Started</h2>
+                    <ul>
+                        <li>Creating an account</li>
+                        <li>Connecting your wallet</li>
+                        <li>Browsing videos</li>
+                        <li>Making your first purchase</li>
+                    </ul>
+                </div>
+
+                <div class="support-category">
+                    <div class="category-icon">💰</div>
+                    <h2 class="category-title">Payments & Transactions</h2>
+                    <ul>
+                        <li>Supported cryptocurrencies</li>
+                        <li>Transaction fees</li>
+                        <li>Payment processing</li>
+                        <li>Refund policy</li>
+                    </ul>
+                </div>
+
+                <div class="support-category">
+                    <div class="category-icon">📤</div>
+                    <h2 class="category-title">Uploading Content</h2>
+                    <ul>
+                        <li>Video requirements</li>
+                        <li>Metadata guidelines</li>
+                        <li>Pricing your content</li>
+                        <li>Content review process</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                    How do I sell my videos on Starpy.me?
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    To sell videos on Starpy.me, you'll need to create an account, connect your wallet, and complete the creator verification process. Once approved, you can upload your videos, set prices, and start earning cryptocurrency for your content.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What video formats are supported?
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    We support most common video formats including MP4, MOV, and AVI. Videos should be in high quality (minimum 1080p) and follow our technical specifications for optimal performance.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How are royalties and payments handled?
+                    <span class="toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Payments are handled automatically through smart contracts. Creators receive 85% of the sale price directly to their wallet, while 15% goes to platform maintenance and development.
+                </div>
+            </div>
+        </section> -->
+
+
+        <section class="disclaimer-section">
+            <div class="container">
+                <div class="disclaimer-content">
+                    <h2 class="disclaimer-title">Software Disclaimer</h2>
+                    <p class="disclaimer-text">
+                        The software and services provided by Starpy.me are offered "as is" and without any warranty, either express or implied. We make no warranties of any kind, including but not limited to merchantability, fitness for a particular purpose, or non-infringement.
+                    </p>
+                    <p class="disclaimer-text">
+                        Users acknowledge that any use of the platform and its features is at their own risk. We do not guarantee that the services will be uninterrupted, timely, secure, or error-free.
+                    </p>
+                    <p class="disclaimer-text">
+                        For additional support or inquiries beyond what's covered in our documentation, please contact us at <a href="mailto:contact@starpy.me" class="disclaimer-email">contact@starpy.me</a>. While we strive to respond to all inquiries, response times may vary based on request volume and complexity.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+          <div class="container">
+              <h2>Still need help?</h2>
+              <p>Our support team is ready to assist you</p>
+              <div class="contact-options">
+                  <div class="contact-option">
+                      <h3>Email Support</h3>
+                      <p>Get help within 24 hours</p>
+                      <a href="mailto:contact@starpy.me" class="contact-button">Send Email</a>
+                  </div>
+                  <!-- <div class="contact-option">
+                      <h3>Live Chat</h3>
+                      <p>Chat with our support team</p>
+                      <a href="https://starpy.me/chat" class="contact-button">Start Chat</a>
+                  </div>
+                  <div class="contact-option">
+                      <h3>Community</h3>
+                      <p>Join our Discord community</p>
+                      <a href="https://discord.gg/starpy" class="contact-button">Join Discord</a>
+                  </div> -->
+              </div>
+          </div>
+      </section>
+    </main>
+
+    <!-- <script>
+        // FAQ Toggle functionality
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+                const toggle = item.querySelector('.toggle');
+                toggle.textContent = item.classList.contains('active') ? '-' : '+';
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.support-category li').forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(searchTerm) ? 'list-item' : 'none';
+            });
+        });
+    </script> -->
+</body></html>
