@@ -4,9 +4,8 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.starpy.me",
-      "sha256_cert_fingerprints": [
-        "F6:A3:CF:4E:15:BA:FC:39:A7:2B:72:E2:11:2C:7C:8E:F1:F8:91:17:CB:6B:E7:A6:A8:D5:E9:A2:D7:BD:AB:37"
-      ]
+      "sha256_cert_fingerprints":
+        ["F6:A3:CF:4E:15:BA:FC:39:A7:2B:72:E2:11:2C:7C:8E:F1:F8:91:17:CB:6B:E7:A6:A8:D5:E9:A2:D7:BD:AB:37"]
     }
   }
 ]
