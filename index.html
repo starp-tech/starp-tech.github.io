@@ -567,26 +567,15 @@
         </filter>
     </defs>
     <defs>
-      <pattern id="img-desktop" width="1" height="1" patternUnits="objectBoundingBox">
-        <image href="/img/preview.png" width="480" height="300" />
+      <pattern id="img-desktop" width="1" preserveAspectRatio="none" height="1" patternUnits="objectBoundingBox">
+        <image href="/img/preview.png" preserveAspectRatio="none" width="480" height="300" />
       </pattern>
     </defs>
     <defs>
-      <pattern id="img-mobile" width="1" height="1" patternUnits="objectBoundingBox">
-        <image href="/img/mobile-preview.png" width="130" height="250"  />
+      <pattern id="img-mobile" width="1" height="1" preserveAspectRatio="none" patternUnits="objectBoundingBox">
+        <image href="/img/mobile-preview.png" preserveAspectRatio="none" width="130" height="250"  />
       </pattern>
     </defs>
-    <!-- Desktop frame -->
-    <rect x="50" y="50" width="500" height="350" rx="10" ry="10" fill="#333" filter="url(#drop-shadow)"></rect>
-    <rect x="60" y="60" width="480" height="300" rx="5" ry="5" fill="#1a1a1a"></rect>
-    <rect x="60" y="60" width="480" height="300" rx="5" ry="5" fill="url(#img-desktop)"></rect>
-    <circle cx="300" cy="380" r="10" fill="#444"></circle>
-
-    <!-- Mobile frame -->
-    <rect x="600" y="150" width="150" height="300" rx="20" ry="20" fill="#333" filter="url(#drop-shadow)"></rect>
-    <rect x="610" y="170" width="130" height="250" rx="10" ry="10" fill="#1a1a1a"></rect>
-    <rect x="610" y="170" width="130" height="250" rx="10" ry="10" fill="url(#img-mobile)"></rect>
-    <circle cx="675" cy="440" r="15" fill="#444"></circle>
 
     <!-- WiFi symbol (moved down) -->
     <!-- <g transform="translate(400, 550) scale(0.8)">
@@ -601,13 +590,20 @@
         </path>
     </g> -->
 
-    <!-- Bidirectional Connection lines -->
-    <line x1="300" y1="250" x2="550" y2="250" stroke="#33CCFF" stroke-width="3" stroke-dasharray="5,5">
-        <animate attributeName="stroke-dashoffset" from="10" to="0" dur="0.3s" repeatCount="indefinite"></animate>
-    </line>
     <line x1="550" y1="250" x2="675" y2="300" stroke="#33CCFF" stroke-width="3" stroke-dasharray="5,5">
         <animate attributeName="stroke-dashoffset" from="10" to="0" dur="0.3s" repeatCount="indefinite"></animate>
     </line>
+    <!-- Desktop frame -->
+    <rect x="50" y="50" width="500" height="350" rx="10" ry="10" fill="#333" filter="url(#drop-shadow)"></rect>
+    <rect x="60" y="60" width="480" height="300" rx="5" ry="5" fill="#1a1a1a"></rect>
+    <rect x="60" y="60" width="480" height="300" rx="5" ry="5" fill="url(#img-desktop)"></rect>
+    <circle cx="300" cy="380" r="10" fill="#444"></circle>
+
+    <!-- Mobile frame -->
+    <rect x="600" y="150" width="150" height="300" rx="20" ry="20" fill="#333" filter="url(#drop-shadow)"></rect>
+    <rect x="610" y="170" width="130" height="250" rx="10" ry="10" fill="#1a1a1a"></rect>
+    <rect x="610" y="170" width="130" height="250" rx="10" ry="10" fill="url(#img-mobile)"></rect>
+    <circle cx="675" cy="440" r="15" fill="#444"></circle>
 
     <!-- Bidirectional data packets -->
     <!-- <circle cx="50" cy="100" r="5" fill="#FFFFFF">
