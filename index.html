@@ -505,6 +505,9 @@
       font-size: 16px;
       font-weight: 600;
     }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 
@@ -887,7 +890,15 @@
         <p>© 2023-2025 Starpy.me. All rights reserved.</p>
       </div>
     </footer>
+<script>
 
+let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+if(isIOS) {
+  const webstart = document.getElementById('web-start-link')
+  webstart.className = "hidden"
+}
+</script>
 </body>
 
 </html>
