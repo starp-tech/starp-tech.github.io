@@ -1,0 +1,416 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starpy.me - Decentralized Video Stock Platform with Direct Payouts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&amp;display=swap" rel="stylesheet">
+    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
+    <style>
+        :root {
+            --colors-primary: #FF3366;
+            --colors-primaryBright: #FF6699;
+            --colors-primaryDark: #CC0033;
+            --colors-secondary: #33CCFF;
+            --colors-success: #00CC66;
+            --colors-warning: #FFCC00;
+            --colors-background: #0A0A0A;
+            --colors-backgroundDisabled: #333333;
+            --colors-text: #FFFFFF;
+            --colors-textDisabled: #666666;
+            --card-background: #1A1A1A;
+            --card-background-alt: #222222;
+        }
+        
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--colors-background);
+            color: var(--colors-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        header {
+            background-color: var(--card-background);
+            padding: 16px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--colors-primary);
+        }
+        
+        .nav-links a {
+            color: var(--colors-text);
+            text-decoration: none;
+            margin-left: 24px;
+            transition: color 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .nav-links a:hover {
+            color: var(--colors-primary);
+        }
+        
+        main {
+            padding: 48px 0;
+        }
+        
+        h1, h2 {
+            color: var(--colors-primary);
+        }
+        
+        h1 {
+            font-size: 48px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 32px;
+            margin-top: 40px;
+            margin-bottom: 16px;
+        }
+        
+        p {
+            margin-bottom: 16px;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 32px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--colors-primary);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--colors-primaryBright);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+        
+        .feature-card {
+            background-color: var(--card-background);
+            border-radius: 24px;
+            padding: 32px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            color: var(--colors-primary);
+            margin-bottom: 16px;
+        }
+        
+        .how-it-works {
+            margin-top: 64px;
+        }
+        
+        .step {
+            background-color: var(--card-background);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--colors-primary);
+            margin-right: 24px;
+        }
+        
+        .connect-wallet {
+            text-align: center;
+            margin-top: 64px;
+        }
+        
+        #walletStatus {
+            margin-top: 16px;
+            font-weight: 600;
+        }
+
+        .video-categories {
+            margin-top: 64px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .category-card {
+            background-color: var(--card-background);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            color: var(--colors-text);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            background-color: var(--colors-primaryDark);
+        }
+
+        .desktop-apps {
+            text-align: center;
+            margin: 48px 0;
+            padding: 32px;
+            background-color: var(--card-background);
+            border-radius: 24px;
+        }
+
+        .app-downloads {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 24px;
+        }
+
+        .download-option {
+            background-color: var(--card-background-alt);
+            padding: 24px;
+            border-radius: 16px;
+            min-width: 200px;
+        }
+
+        .platform-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .download-button {
+            display: block;
+            background-color: var(--colors-primary);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            margin: 16px auto;
+            width: fit-content;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-button:hover {
+            background-color: var(--colors-primaryBright);
+        }
+
+        .eula-link {
+            display: block;
+            color: var(--colors-text);
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .eula-link:hover {
+            opacity: 1;
+            color: var(--colors-primary);
+        }
+        
+        /* Preloader styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--colors-background);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .logo-preloader {
+            width: 100px;
+            height: 100px;
+        }
+
+        .logo-preloader rect {
+            fill: none;
+            stroke: var(--colors-primary);
+            stroke-width: 5;
+            stroke-linecap: round;
+            transform-origin: 50px 50px;
+            animation: rotate 2s linear infinite;
+        }
+
+        .logo-preloader polygon {
+            fill: var(--colors-primary);
+            opacity: 0;
+            animation: fade-in 0.5s ease-in-out forwards;
+            animation-delay: 1s;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .eula-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .eula-content {
+            background-color: var(--card-background);
+            border-radius: 24px;
+            padding: 32px;
+        }
+
+        .eula-section {
+            margin-bottom: 32px;
+        }
+
+        .eula-section h2 {
+            color: var(--colors-primary);
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .eula-section p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .eula-section ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .eula-section li {
+            margin-bottom: 8px;
+        }
+
+        .eula-footer {
+            margin-top: 48px;
+            text-align: center;
+            color: var(--colors-textDisabled);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Starpy.me</div>
+                <div class="nav-links">
+                    <a href="https://starpy.me/">Home</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="eula-container">
+            <h1>End User License Agreement</h1>
+            
+            <div class="eula-content">
+                <div class="eula-section">
+                    <h2>1. Acceptance of Terms</h2>
+                    <p>By downloading, installing, or using the Starpy.me Video Desktop Application (&quot;Software&quot;), you agree to be bound by the terms of this End User License Agreement (&quot;EULA&quot;).</p>
+                </div>
+
+                <div class="eula-section">
+                    <h2>2. License Grant</h2>
+                    <p>Subject to the terms of this EULA, Starpy.me grants you a limited, non-exclusive, non-transferable license to:</p>
+                    <ul>
+                        <li>Install and use the Software on your personal devices</li>
+                        <li>Use the Software for creating, editing, and managing video content</li>
+                        <li>Access and utilize the Starpy.me platform services through the Software</li>
+                    </ul>
+                </div>
+
+                <div class="eula-section">
+                    <h2>3. Restrictions</h2>
+                    <p>You may not:</p>
+                    <ul>
+                        <li>Modify, reverse engineer, or decompile the Software</li>
+                        <li>Create derivative works based on the Software</li>
+                        <li>Remove any proprietary notices from the Software</li>
+                        <li>Use the Software for any illegal purposes</li>
+                    </ul>
+                </div>
+
+                <div class="eula-section">
+                    <h2>4. Privacy and Data Collection</h2>
+                    <p>The Software may collect usage data and analytics to improve service quality. All data collection complies with our Privacy Policy.</p>
+                </div>
+
+                <div class="eula-section">
+                    <h2>5. Updates and Maintenance</h2>
+                    <p>Starpy.me may provide Software updates periodically. These updates may be automatic and are intended to improve, enhance, or further develop the Software.</p>
+                </div>
+
+                <div class="eula-section">
+                    <h2>6. Termination</h2>
+                    <p>This license is effective until terminated. Your rights under this license will terminate automatically if you fail to comply with any terms of this EULA.</p>
+                </div>
+
+                <div class="eula-footer">
+                    <p>Last updated: 2024</p>
+                    <p>Starpy.me Video - All rights reserved</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
